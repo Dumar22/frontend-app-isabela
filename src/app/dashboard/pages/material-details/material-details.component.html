@@ -1,0 +1,68 @@
+
+<!-- Formulario para agregar detalles de materiales -->
+<div class="container">
+  <h4 class="text-center">Agregar materiales a la factura</h4>
+<form class="row" [formGroup]="materialForm" (ngSubmit)="addMaterial()">
+  <div class="col-md-3">
+    <label class="form-label">Código:</label>
+    <select class="form-select" aria-label="Default select example" formControlName="code" (change)="onMaterialSelect()">
+        <option selected >--Seleccione un código--</option>
+        <option *ngFor="let materialItem of material">{{ materialItem.code }}</option>          
+    </select>
+</div>
+<div class="col-md-4">
+    <label class="form-label">Material:</label>
+    <select class="form-select" aria-label="Default select example" formControlName="name"
+    (change)="onMaterialSelectCode()">
+        <option selected >--Seleccione un material--</option>
+        <option *ngFor="let materialItem of material">{{ materialItem.name }}</option>          
+    </select>       
+</div>
+    <div class="col-md-2">
+      <label class="form-label">Cantidad:</label>
+      <input type="number" id="quantity" formControlName="quantity" class="form-control" required>
+    </div>
+    <div class="col-md-3 mb-1">
+      <label class="form-label">Serie:</label>
+      <input type="text" id="serial" formControlName="serial" class="form-control">
+    </div>
+    <div class="col-md-12 mb-4">
+      <label class="form-label">Observaciones:</label>
+      <textarea id="observaciones" formControlName="observaciones" class="form-control"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Agregar Material</button>
+  </form>
+</div>
+
+
+  
+  <!-- Tabla para mostrar los materiales agregados -->
+  <table class="table mt-5 table-striped">
+    <thead class="table-primary">
+      <tr>
+        <th scope="col" >Código</th>
+        <th scope="col" >Nombre</th>
+        <th scope="col" >Unidad</th>
+        <th scope="col" >Cantidad</th>
+        <th scope="col" >Serie</th>
+        <th scope="col" >valor</th>
+        <th scope="col" >Observaciones</th>
+        <th scope="col" >Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let material of materials">
+        <td>{{ material.code }}</td>
+        <td>{{ material.name }}</td>
+        <td>{{ material.unity }}</td>
+        <td>{{ material.quantity }}</td>
+        <td>{{ material.serial }}</td>
+        <td>{{ material.value }}</td>
+        <td>{{ material.obs }}</td>
+        <td><button (click)="removeMaterial(material)" class="btn btn-danger">Eliminar</button></td>
+      </tr>
+    </tbody>
+  </table>
+  
+
+

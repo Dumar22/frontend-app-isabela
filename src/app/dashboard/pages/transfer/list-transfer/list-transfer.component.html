@@ -1,0 +1,93 @@
+
+<div class="container">
+    <div class="row animated fadeIn fast mb-4">
+      <div class="col-12">
+          <div class="card">
+              <div class="card-body">
+  
+                  <input type="text"
+                          class="form-control"
+                          placeholder="Buscar usuario..."
+                          (keyup)="search( txtTermino.value )"
+                          #txtTermino/>
+  
+              </div>
+          </div>
+      </div>
+    </div>
+  
+  <div class="bg-info.bg-gradient d-flex">
+    <button type="button" class="btn btn-primary " (click)="addInvoice()"  >Nueva salida</button>
+  
+  </div>
+   </div>
+  
+  <div class="row animated fadeIn fast"
+       *ngIf="loading">
+      <div class="col-12">
+          <div class="alert text-center">
+            <h4 class="alert-heading">Cargando</h4>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0">Por favor espere</p>
+          </div>
+  
+      </div>
+  </div>
+  <div class="d-flex col-sm-12 col-md-12 col-lg-12 mt-5 mx-auto rounded row-cols-2 m-auto justify-content-center text-center" >
+  
+    <table
+    class="table align-middle mb-0 bg-white"
+  
+    >
+      <thead class="bg-light">
+        <tr>
+        <th>#</th>
+        <th>Fecha</th>
+        <th>Número de Factura</th>
+        <th>Detalles</th>
+        <th>Descargar</th>
+        <th>Editar</th>
+        <th>Eliminar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr  *ngFor="let factura of invoice; let i = index">
+          <td>
+            <p class="fw-normal mb-1 text-primary">{{i+1}}.</p>
+          </td>
+          <td>
+            <p class="fw-bold mb-1">{{factura.date}}</p>
+          </td>
+          <td>
+            <p class="fw-normal mb-1">{{factura.invoiceNumber}}</p>
+          </td>
+          <!-- <td>
+            <span class="badge badge-success ">{{factura.providerName}}</span>
+          </td> -->
+          <td>Ver detalles</td>
+          <td> <button class="btn btn-secondary btn-sm btn-rounded"
+            (click)="downloadInvoice(factura)">
+            Descargar PDF
+          </button></td>
+          <td>
+            <button type="button" class="btn btn-secondary btn-sm btn-rounded" (click)="editInvoice(factura)">
+              Editar
+            </button>
+          </td>
+          <td>
+            <button type="button" (click)="deleteInvoice(factura)" class="btn btn-secondary btn-sm btn-rounded text-danger">
+              Eliminar
+            </button>
+          </td>
+        </tr>
+  
+      </tbody>
+    </table>
+  
+  
+  </div>
+  <div>
+  
+  </div>
+  
+  

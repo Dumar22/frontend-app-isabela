@@ -1,0 +1,37 @@
+
+<!-- Crea la estructura HTML del formulario -->
+<div class="container d-flex justify-content-center">
+
+
+  <div class="col-md-6">
+    <form [formGroup]="form" (ngSubmit)="addProvider()">
+      <div class="justify-content-center text-center mb-4">
+
+        <h2 >{{ operation }} Proveedor </h2>
+      </div>
+      <div class="form-group mb-2">
+        <label for="name">Nombre</label>
+        <input type="text" id="name" class="form-control" formControlName="name">
+      </div>
+      <div class="form-group mb-2">
+        <label for="name">Nit</label>
+        <input type="number" id="nit" placeholder="sin digito de verificación " class="form-control" formControlName="nit">
+      </div>
+      
+      <div class="form-group mb-2">   
+        <div class="form-check form-check-inline mb-2">
+          <input mdbInput type="radio" formControlName="ally" id="activo" value="true" [ngClass]="{'is-invalid': form.get('ally').invalid && form.get('ally').touched}" [checked]="form.get('ally').value">
+          <label class="form-check-label" for="activo">Aliado</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input mdbInput type="radio" formControlName="ally" id="inactivo" value="false" [ngClass]="{'is-invalid': form.get('ally').invalid && form.get('ally').touched}" [checked]="form.get('ally').value === false">
+          <label class="form-check-label" for="inactivo">No aliado</label>
+        </div>
+      </div>
+      
+    
+
+      <button type="submit" class="btn btn-primary ">{{ operation }} Proveedor</button>
+    </form>
+  </div>
+</div>

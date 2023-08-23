@@ -1,0 +1,116 @@
+
+<div class="d-flex col-sm-12 col-md-8 col-lg-8 my-3 mx-auto rounded row-cols-2 justify-content-center text-center">
+  <div class="col rounded m-1 text-blue text-center d-none d-md-block">
+    <img src="../assets/Rgister2.jpg" class="w-100">
+  </div>
+
+  <div class="container">
+
+    <div class="col-sm-12 col-md-12 col-lg-12 w-100 mt-5 rounded justify-content-center">
+      <h2 class="my-4">Registro de usuarios</h2>
+      <form autocomplete="off"
+      [formGroup]="formulario"
+      (ngSubmit)="onSubmit()"  >
+        <!-- Name input -->
+        <mdb-form-control class="mb-4">
+          <input mdbInput type="text"  class="form-control"  formControlName="name"
+        placeholder="*" [ngClass]="{'form-control': true, 'is-invalid': !formulario.controls['name'].valid && formulario.controls['name'].touched}" />
+          <label mdbLabel class="form-label" for="form1Example1">Nombres y Apellidos</label>
+
+          <div *ngIf="isValidField('name')" class="invalid-feedback">
+            * El campo es obligatorio
+          </div>
+
+        </mdb-form-control>
+
+        <!-- UserName input -->
+        <mdb-form-control class="mb-4">
+          <input mdbInput type="text" class="form-control" formControlName="user"
+          placeholder="*" [ngClass]="{'form-control': true, 'is-invalid': !formulario.controls['user'].valid && formulario.controls['user'].touched}" required/>
+          <label mdbLabel class="form-label" for="form1Example1">Usuario</label>
+          <div *ngIf="isValidField('user')" class="invalid-feedback">
+            * El campo es obligatorio.
+          </div>
+        </mdb-form-control>
+        <!-- Rol input -->
+    <select class="form-select mb-2" formControlName="rol" [ngClass]="{'form-control': true, 'is-invalid': !formulario.controls['rol'].valid && formulario.controls['rol'].touched}" required>
+      <option value="" disabled selected>Seleccione un rol</option>
+      <option value="usuario">Usuario</option>
+      <option value="administrador">Administrador</option>
+    </select>
+        <!-- Warehouse -->
+    <select class="form-select mb-2" formControlName="warehouse" [ngClass]="{'form-control': true, 'is-invalid': !formulario.controls['warehouse'].valid && formulario.controls['warehouse'].touched}" required>
+      <option value="" disabled selected>Seleccione una bodega</option>
+      <option *ngFor="let warehouse of warehouses" [value]="warehouse.name">{{ warehouse.name }}</option>
+     
+    </select>
+
+       <!-- Status input -->
+
+       <div class="form-group">
+        <div *ngFor="let option of options" class="form-check">
+          <input mdbRadio class="form-check-input" type="radio" formControlName="status" [id]="option.id" [value]="option.value" [name]="'status'" [checked]="formulario.get('status').value === option.value">
+          <label class="form-check-label" [for]="option.id">{{ option.label }}</label>
+        </div>
+      </div>
+
+        <!-- Password input -->
+        <mdb-form-control class="mb-4 ">
+          <input mdbInput [type]="hide ? 'password' : 'text'"
+            class="form-control"
+            formControlName="password"
+            [ngClass]="{'form-control': true, 'is-invalid': !formulario.controls['password'].valid && formulario.controls['password'].touched}"
+            (blur)="hide = true" />
+          <label mdbLabel class="form-label">Contraseña</label>
+          <div class="input-group-append">
+            <a (click)="hide = !hide" class="eye" role="button">
+              <i class="fas" [ngClass]="hide ? 'fa-eye-slash' : 'fa-eye'"></i>
+            </a>
+          </div>
+          <div *ngIf="formulario.controls['password'].invalid && formulario.controls['password'].touched" class="invalid-feedback">
+            <div *ngIf="formulario.controls['password'].hasError('required')">
+              * El campo es obligatorio
+            </div>
+            <div *ngIf="formulario.controls['password'].hasError('minlength')">
+              * La contraseña debe tener al menos 6 caracteres
+            </div>
+          </div>
+        </mdb-form-control>
+        <!-- RepeatPassword input -->
+        <mdb-form-control class="mb-4 ">
+          <input mdbInput [type]="hiden ? 'password' : 'text'"
+            class="form-control"
+            formControlName="repeat_password"
+            [ngClass]="{'form-control': true, 'is-invalid': !formulario.controls['repeat_password'].valid && formulario.controls['repeat_password'].touched}"
+            (blur)="hiden = true" />
+          <label mdbLabel class="form-label">Repetir Contraseña</label>
+          <div class="input-group-append">
+            <a (click)="hiden = !hiden" class="eye" role="button">
+              <i class="fas" [ngClass]="hiden ? 'fa-eye-slash' : 'fa-eye'"></i>
+            </a>
+          </div>
+
+          <div *ngIf="formulario.controls['repeat_password'].invalid && formulario.controls['repeat_password'].touched" class="invalid-feedback">
+            <div *ngIf="formulario.controls['repeat_password'].hasError('required')">
+              * El campo es obligatorio
+            </div >
+            <div *ngIf="formulario.controls['repeat_password'].hasError('mismatch')">
+              * Las contraseñas no coinciden
+            </div>
+          </div>
+        </mdb-form-control>
+
+
+
+        <!-- Submit button -->
+        <input type="submit"
+        value="Enviar"
+        class="btn btn-primary btn-block" />
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+

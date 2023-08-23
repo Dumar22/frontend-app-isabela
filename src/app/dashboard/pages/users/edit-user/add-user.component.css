@@ -1,0 +1,19 @@
+.invalid-feedback {
+  position: absolute;
+  top: 30px;
+  left: 0;
+}
+
+.eye{
+  position: absolute;
+  top: 6px;
+ right: 10px;
+}
+
+
+
+@media screen and (max-width: 480px) {
+  .form-control.is-invalid {
+    border-color: #ced4da;
+  }
+}

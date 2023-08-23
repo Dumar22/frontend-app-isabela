@@ -1,0 +1,104 @@
+
+
+
+
+ <div class="container">
+   <div class="row animated fadeIn fast mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+
+                <input type="text"
+                        class="form-control"
+                        placeholder="Buscar usuario..."
+                        (keyup)="search( txtTermino.value )"
+                        #txtTermino/>
+
+            </div>
+        </div>
+    </div>
+  </div>
+  
+<div class="bg-info.bg-gradient d-flex">
+  
+  <button type="button" class="btn btn-primary " (click)="addUser()"  >Nuevo Usuario</button>
+
+</div>
+ </div>
+
+<div class="row animated fadeIn fast"
+     *ngIf="loading">
+    <div class="col-12">
+        <div class="alert text-center">
+          <h4 class="alert-heading">Cargando</h4>
+          <i class="fa fa-spin fa-refresh fa-2x"></i>
+          <p class="mb-0">Por favor espere</p>
+        </div>
+
+    </div>
+</div>
+<div class=" d-flex col-sm-10 col-md-10 col-lg-12 mt-5 mx-auto rounded row-cols-2 m-auto justify-content-center text-center table-responsive " >
+
+  <table
+  class="table align-middle mb-0 bg-white"
+
+  >
+    <thead class="bg-light">
+      <tr>
+        <th>No.</th>
+        <th>Nombre</th>
+        <th>Usuario</th>
+        <th>Estado</th>
+        <th>Rol</th>
+        <th>Bodega</th>
+        <th>Actualizar</th>
+        <th>Eliminar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users; let i = index">
+        <td>
+          <p class="fw-normal mb-1 text-primary">{{i+1}}.</p>
+        </td>
+        <td>
+          <p class="fw-bold mb-1">{{user.name}}</p>
+        </td>
+        <td>
+          <p class="fw-normal mb-1">{{user.user}}</p>
+        </td>
+        <td>
+          <span [ngClass]="user.status ? 'badge badge-success' : 'badge badge-danger'">
+            {{ user.status ? 'activo' : 'inactivo' }}</span>
+          
+        </td>
+        <td>{{user.rol}}</td>
+        <td>{{user.warehouse}}</td>
+        <td>
+          <button type="button" class="btn btn-secondary btn-sm btn-rounded" (click)="editUser(user)">
+            Editar
+          </button>
+        </td>
+        <td>
+          <button type="button" (click)="deleteUser(user)" class="btn btn-secondary btn-sm btn-rounded text-danger">
+            Eliminar
+          </button>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+
+
+</div>
+
+<div class="d-flex col-sm-8 col-md-8 col-lg-8 mt-5 mx-auto rounded row-cols-2 m-2">
+
+  <p>Total: {{usersCount}}</p>
+</div>
+
+
+
+
+
+
+

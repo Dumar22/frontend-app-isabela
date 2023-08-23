@@ -1,0 +1,24 @@
+.menu{
+    background:#001529;
+    min-height: 90vh;   
+    width: 20%;  
+    margin: 0;
+    padding: 0 0 0 2%;   
+    
+}
+
+
+li{
+  background: #001529;
+  cursor: pointer;
+  color: azure;
+}
+ 
+.col{
+  width: 80%;
+}
+  
+  .footer {
+    text-align: center;
+  }
+  

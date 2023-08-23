@@ -1,0 +1,68 @@
+<div class="container">
+
+  <div class="row animated fadeIn fast mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+
+                <input type="text"
+                        class="form-control"
+                        placeholder="Buscar proveedor..."
+                        (keyup)="search( txtTermino.value )"
+                        #txtTermino/>
+
+            </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="bg-info.bg-gradient d-flex justify-content-between ">  
+   <button type="button"
+    class="btn btn-primary"
+     (click)="addProvider()"> Nuevo Proveedor</button>     
+ </div> 
+ <div class="row animated fadeIn fast"
+     *ngIf="loading">
+    <div class="col-12">
+        <div class="alert text-center">
+          <h4 class="alert-heading">Cargando</h4>
+          <i class="fa fa-spin fa-refresh fa-2x"></i>
+          <p class="mb-0">Por favor espere</p>
+        </div>
+
+  </div>
+</div>
+ <div>
+   <table class="table">
+     <thead>
+       <tr  >
+         <th scope="col">#</th>
+         <th scope="col">Proveedor</th>
+         <th scope="col">Nit</th>
+         <th scope="col">Actualizar</th>
+         <th scope="col">Eliminar</th>
+         
+       </tr>
+     </thead>
+     <tbody>
+       <tr *ngFor="let item of providers; let i = index">
+         <th scope="row">{{i + 1}}</th>
+         <td>{{item.name}}</td>
+         <td>{{item.nit}}</td>
+
+         <td>  <button type="button"
+           class="btn btn-secondary btn-sm btn-rounded text-primary"
+           (click)=" updateProvider(item)">
+           Actualizar
+         </button>
+       </td>
+         <td>  <button type="button" (click)="deleteProvider(item)" class="btn btn-secondary btn-sm btn-rounded text-danger">
+           Eliminar
+         </button>
+       </td>
+       </tr>
+     </tbody>
+   </table>
+ </div>
+
+ </div>

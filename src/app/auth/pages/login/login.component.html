@@ -1,0 +1,49 @@
+<div class="container justify-content">
+  
+  <div class="row">
+    <div class="col-4 rounded text-blue w-50 ">
+      <img src="../assets/Rgister2.jpg" class="w-75">
+    </div>
+        <div class="col-4 ">
+
+            <h2> Iniciar Sesión</h2>
+            <form  autocomplete="off"
+            [formGroup]="formulario"
+            (ngSubmit)="onSubmit()">
+                <!-- User input -->
+                <mdb-form-control class="mb-4">
+                  <input mdbInput type="text" class="form-control"
+                  formControlName="user"
+                  placeholder="*" [ngClass]="{'form-control': true, 'is-invalid': !formulario.controls['user'].valid && formulario.controls['user'].touched}" required />
+                  <label mdbLabel class="form-label" for="form1Example1">Usuario</label>
+                  <div *ngIf="isValidField('user')" class="invalid-feedback">
+                    * El campo es obligatorio.
+                  </div>
+                </mdb-form-control>
+              
+                <!-- Password input -->
+                <mdb-form-control class="mb-4">
+                  <input mdbInput type="password" class="form-control" 
+                  formControlName="password"
+                 [ngClass]="{'form-control': true, 'is-invalid': !formulario.controls['password'].valid && formulario.controls['password'].touched}" />
+                  <label mdbLabel class="form-label" for="form1Example2">Contraseña</label>
+
+                  <div *ngIf="formulario.controls['password'].invalid && formulario.controls['password'].touched" class="invalid-feedback">
+                    <div *ngIf="formulario.controls['password'].hasError('required')">
+                      * El campo es obligatorio
+                    </div>
+                    <div *ngIf="formulario.controls['password'].hasError('minlength')">
+                      * La contraseña debe tener al menos 6 caracteres
+                    </div>
+                  </div>
+                </mdb-form-control>
+              
+                <!-- 2 column grid layout for inline styling -->
+                
+              
+                <!-- Submit button -->
+                <button mdbRipple type="submit" class="btn btn-primary btn-block" [disabled]="formulario.invalid">Iniciar</button>
+              </form>
+        </div>
+    </div>
+</div>
