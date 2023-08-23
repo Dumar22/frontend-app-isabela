@@ -5,7 +5,8 @@ export interface Meter{
     unity: string,
     quantity: number,
     value: number,  
-    serial: string,    
+    serial: string,
+    brand: string,    
     warehouse:string,
     available: boolean,
    
@@ -20,6 +21,7 @@ export interface Meter{
       public quantity: number,
       public value: number,
       public serial: string,    
+      public brand: string,    
       public available: boolean,
   
     ) {}

@@ -51,6 +51,10 @@ export class SidenavComponent {
       ruta: 'list-providers'
      },
      {
+      texto: 'Cargas ecxel',
+      ruta: 'load-file'
+     },
+     {
       texto: 'Bodegas',
       ruta: 'list-warehuses'
      },

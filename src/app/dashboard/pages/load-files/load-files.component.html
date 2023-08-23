@@ -1,0 +1,12 @@
+
+
+<div id="drop-area" (drop)="onFileDropped($event)" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
+    <p>Arrastra y suelta un archivo Excel aquí</p>
+    <img *ngIf="fileLoaded" src="../../../../assets/loadExcel1.png" alt="Archivo cargado">
+  </div>
+
+  <div >
+    <label for="excel-file">Seleccionar archivo Excel:</label>
+    <input type="file" id="excel-file" (change)="onFileSelected($event)">
+    <img *ngIf="fileLoaded" src="../../../../assets/loadExcel1.png" alt="Archivo cargado">
+  </div>

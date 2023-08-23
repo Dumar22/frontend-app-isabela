@@ -85,7 +85,8 @@ export class SearchService {
       meter.unity, 
       meter.quantity, 
       meter.value, 
-      meter.serial,      
+      meter.serial,  
+      meter.brand,    
       meter.available )
     );
   }

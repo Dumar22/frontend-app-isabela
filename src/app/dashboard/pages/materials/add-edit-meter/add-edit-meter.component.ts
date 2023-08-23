@@ -40,6 +40,7 @@ export class AddEditMeterComponent {
       quantity: ['', Validators.required],
       value: ['', Validators.required],     
       serial: ['', Validators.required],     
+      brand: ['', Validators.required],     
       warehouse: [this.warehouse, Validators.required],
       available: [false],
     });
@@ -83,6 +84,7 @@ export class AddEditMeterComponent {
         quantity: meter.quantity,
         value: meter.value,
         serial: meter.serial,
+        brand: meter.brand,
         warehouse: this.warehouse,
         available: meter.available,        
       });
@@ -98,6 +100,7 @@ export class AddEditMeterComponent {
       quantity: this.form.value.quantity,
       value: this.form.value.value,   
       serial: this.form.value.serial,
+      brand: this.form.value.brand,
       warehouse: this.warehouse,
       available: this.form.value.available,
     };

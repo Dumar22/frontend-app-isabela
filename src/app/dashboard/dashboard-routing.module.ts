@@ -23,6 +23,7 @@ import { DetailsEntriesComponent } from './pages/entries/details-entries/details
 import { AddEditTransferComponent } from './pages/transfer/add-edit-transfer/add-edit-transfer.component';
 import { AddEditExitSerialsComponent } from './pages/exit-series/add-edit-exit-serials/add-edit-exit-serials.component';
 import { AddEditMaterialsComponent } from './pages/exit-materials/add-edit-materials/add-edit-materials.component';
+import { LoadFilesComponent } from './pages/load-files/load-files.component';
 
 
 export const routes: Routes = [
@@ -60,6 +61,7 @@ export const routes: Routes = [
   {path: 'list-exit-materials',component:ListexitMaterialsComponent},
   {path: 'add-exit-material',component:AddEditMaterialsComponent},
   {path: 'edit-exit-material/:id',component:AddEditMaterialsComponent},
+  {path: 'load-file',component:LoadFilesComponent},
 ]
   }
    ] 

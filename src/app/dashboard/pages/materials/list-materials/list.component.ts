@@ -21,7 +21,7 @@ export class ListComponent implements OnInit {
   public materialsTemp: Material[] = [];
   public total: number; 
   public loading: boolean = true;
-  limit = 5; // Establecer el límite de unidades para marcar en amarillo
+  limit = 20; // Establecer el límite de unidades para marcar en amarillo
   constructor(private materialsService: MaterialsService,
     private searchService: SearchService,
     private router: Router) { }
