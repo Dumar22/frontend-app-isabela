@@ -1,1 +1,55 @@
-<p>add-edit-materials works!</p>
+
+
+<div class="container">
+    <h3 class="text-center mb-5">Agregar nueva salida</h3>
+  
+    <form class="row" (ngSubmit)="addExit()" autocomplete="off" [formGroup]="formExit">
+      <div class="col-md-4 mb-3">
+        <label class="form-label">Fecha</label>
+        <input type="date" class="form-control" formControlName="date" />
+        <!-- <div *ngIf="isValidField('date')" class="form-text text-danger">La fecha es requerida</div> -->
+      </div>
+      <div class="col-md-4 mb-3">
+        <label class="form-label">Salida N°</label>
+        <input type="number" class="form-control" formControlName="exitNumber" placeholder="0" />
+        <!-- <div *ngIf="isValidField('id_add')" class="form-text text-danger">El campo es requerido</div> -->
+      </div>
+      
+      <div class="col-md-4 mb-3">
+        <label class="form-label">Código Móvil</label>
+        <select class="form-select" aria-label="Default select example" formControlName="collaboratorCode" (change)="onCollaboratorSelect()">
+          <option selected>--Seleccione--</option>
+          <option *ngFor="let collaborator of collaborator">{{ collaborator.code }}</option>
+        </select>
+      </div>
+      <div class="col-md-4 mb-3">
+        <label class="form-label">Nombre</label>
+        <input type="text" class="form-control" formControlName="collaboratorName" placeholder="" />
+        <!-- <div *ngIf="isValidField('invoiceorigin')" class="form-text text-danger">El campo es requerido</div> -->
+      </div>
+      <div class="col-md-4 mb-3">
+        <label class="form-label">Documento</label>
+        <input type="number" class="form-control" formControlName="collaboratorDocument" placeholder="" />
+      </div>
+      <div class="col-md-4 mb-3">
+        <label class="form-label">Operación</label>
+        <input type="text" class="form-control" formControlName="collaboratorOperation" placeholder="" />
+      </div>
+  
+      <material-details
+        [materials]="materials"
+        (materialsChange)="onMaterialsChange($event)"
+      ></material-details>
+  
+      <hr />
+  
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary">Guardar Entrada</button>
+      </div>
+  
+    </form>
+  
+  </div>
+  
+  
+  

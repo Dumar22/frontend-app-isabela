@@ -1,12 +1,49 @@
 
+<div class="container mt-5">
+   
+    <form (ngSubmit)="send()" [formGroup]="form">
+        <div class="form-group col-md-6 mb-3">
+          <label class="mb-4" >Archivo</label>
+          <input type="file" id="file" formControlName="file" (change)="onSelectedFile($event)">
+          <div  class="progress" style="height: 20px">
+            <div class="progress-bar" role="progressbar" [style.width.%]="progress" [attr.aria-valuenow]="progress"
+                 aria-valuemin="0" aria-valuemax="100">
+              {{progress}}%
+            </div>
+          </div>
+          <div *ngIf="form.get('file').invalid && form.get('file').touched"
+               class="alert alert-danger">
+            Debe seleccionar un archivo válido.
+          </div>
+        </div>
+      
+        <div class="form-group col-md-6 mb-3">
+          <label>Tipo de archivo</label>
+          <select id="type" name="type" (change)="onTipoSeleccionado($event)" class="form-control"
+                  formControlName="type">
+            <option selected value="">Seleccione un tipo</option>
+            <option value="materials">Materiales</option>
+            <option value="meters">Medidores</option>
+            <option value="provedores">Proveedores</option>
+            <!-- Opciones del menú desplegable -->
+          </select>
+          <div *ngIf="form.get('type').invalid && form.get('type').touched"
+               class="alert alert-danger">
+            Debe seleccionar un tipo de archivo válido.
+          </div>
+        </div>
+      
+        <!-- Botón de envío -->
+        <button type="submit" class="btn btn-primary mt-1 mb-5">Enviar</button>
+      </form>
 
-<div id="drop-area" (drop)="onFileDropped($event)" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)">
-    <p>Arrastra y suelta un archivo Excel aquí</p>
-    <img *ngIf="fileLoaded" src="../../../../assets/loadExcel1.png" alt="Archivo cargado">
-  </div>
+      
+  
+</div>
 
-  <div >
-    <label for="excel-file">Seleccionar archivo Excel:</label>
-    <input type="file" id="excel-file" (change)="onFileSelected($event)">
-    <img *ngIf="fileLoaded" src="../../../../assets/loadExcel1.png" alt="Archivo cargado">
-  </div>
+
+  
+  
+      
+       
+        

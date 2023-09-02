@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { SearchService } from 'src/app/dashboard/services/search.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { EntriesService } from 'src/app/dashboard/services/entries.service';
+import { Transfers } from 'src/app/dashboard/interfaces/transferInterface';
+import { TransferServiceService } from 'src/app/dashboard/services/transfer-service.service';
 
 @Component({
   selector: 'app-list-transfer',
@@ -17,106 +18,103 @@ export class ListTransferComponent {
 
   route: [] = [];
 
-  public invoice: any[] = [];
-  //public factura : Invoice;
- // public invoicesTemp: Invoice[] = [];
+  public transfer: any[] = [];
+  public factura : Transfers;
+  public transferTemp: Transfers[] = [];
   public loading: boolean = true;
 
-  constructor(private invoiceService: EntriesService,
+  constructor(private transferService: TransferServiceService,
     private searchService: SearchService,
     private router: Router) { }
 
     ngOnInit(): void{
 
-      this.getListInvoices();
+      this.getListTransfers();
   
      };
   
   
-     getListInvoices(){
+     getListTransfers(){
   
-      // this.loading = true;
-      // this.invoiceService.getInvoices()
-      // .subscribe((data:any) =>{
-      //   this.invoice = data.invoiceAuth;
-      //   //console.log(data);        
-      //   this.invoicesTemp = data;
-      //   this.loading = false;
-      // } );
+      this.loading = true;
+      this.transferService.getTransfers()
+      .subscribe((data:any) =>{
+        this.transfer = data.transferAuth;
+        //console.log(data);        
+        this.transferTemp = data;
+        this.loading = false;
+      } );
      }
 
 
      //Buscar
  search (term: string ) {
 
-  // if ( term.length === 0 ) {
-  //   this.invoice = this.invoicesTemp;
-  //   return ;
-  // }
-  //  this.searchService.search('invoices', term )
-  //       .subscribe( resp => {
-  //         this.invoice = resp;
-  //       });
+  if ( term.length === 0 ) {
+    this.transfer = this.transferTemp;
+    return ;
+  }
+   this.searchService.search('invoices', term )
+        .subscribe( resp => {
+          this.transfer = resp;
+        });
   }
 
-  downloadInvoice(invoice: any) {
-    console.log('dowload',invoice.id);
+  downloadTransfer(transfer: Transfers) {
+    console.log('dowload',transfer.id);
     
-    // this.invoiceService.downloadInvoicePDF(invoice.id)
-    // .subscribe(response => {
+    this.transferService.downloadTransfersPDF(transfer.id)
+    .subscribe(response => {
       
-    //   const url = window.URL.createObjectURL(response);
+      const url = window.URL.createObjectURL(response);
       
-    //   const link = document.createElement('a');
-    //   link.href = url;
-    //   link.download = `factura-${invoice.invoiceNumber}.pdf`;
-    //   link.click();
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `factura-${transfer.transferNumber}.pdf`;
+      link.click();
 
-    //   window.URL.revokeObjectURL(url);
+      window.URL.revokeObjectURL(url);
 
-   // });
+   });
   }
 
 
-  deleteInvoice(invoice: any) {
+  deleteTransfer(transfer: Transfers) {
 
-    // if ( user.id === this.userService.id ) {
-    //   return Swal.fire('Error', 'No puede borrarse a si mismo', 'error');
-    // }
 
     Swal.fire({
-    //   title: '¿Borrar entrada?',
-    //   text: `Esta a punto de borrar a ${ invoice.invoiceNumber }`,
-    //   icon: 'question',
-    //   showCancelButton: true,
-    //   confirmButtonText: 'Si, borrar'
-    // }).then((result) => {
-    //   if (result.value) {
+      title: '¿Borrar traslado?',
+      text: `Esta a punto de borrar a ${ transfer.transferNumber }`,
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Si, borrar'
+    }).then((result) => {
+      if (result.value) {
 
-    //     this.invoiceService.deleteInvoice( invoice )
-    //       .subscribe( resp => {
+        this.transferService.deleteTransfers( transfer )
+          .subscribe( resp => {
 
-    //         this.getListInvoices();
-    //         Swal.fire(
-    //           'Usuario borrado',
-    //           `${ invoice.invoiceNumber } fue eliminado correctamente`,
-    //           'success'
-    //         );
+            this.getListTransfers();
+            Swal.fire(
+              'Translado Eliminado',
+              `${ transfer.transferNumber } fue eliminado correctamente`,
+              'success'
+            );
 
-    //       });
+          });
 
-    //   }
+      }
     })
 
 
   }
 
-addInvoice(){
-    this.router.navigate(['dashboard/add-invoice']);
+addTransfer(){
+    this.router.navigate(['dashboard/add-transfer']);
   }
   
-editInvoice(invoice:any) {
-  this.router.navigate(['dashboard/edit-invoice', invoice.id]);
+editTransfer(transfer:Transfers) {
+  this.router.navigate(['dashboard/edit-transfer', transfer.id]);
 }
 
 

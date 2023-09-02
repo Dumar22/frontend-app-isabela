@@ -1,9 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialDetailsComponent } from '../../material-details/material-details.component';
-import { ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { ValidatorsService } from 'src/app/dashboard/services/Validate.service';
+import { Exit, Material } from 'src/app/dashboard/interfaces/exitInterfaces';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ExitService } from 'src/app/dashboard/services/exit.service';
+import { Collaborator } from 'src/app/dashboard/interfaces/collaboratorInterface';
+import { CollaboratorService } from 'src/app/dashboard/services/list-collaborator.service';
 
 @Component({
   standalone: true,
@@ -13,149 +18,180 @@ import { ValidatorsService } from 'src/app/dashboard/services/Validate.service';
 })
 export class AddEditMaterialsComponent {
 
-  // materials: Material[] = [];
-  // formEntry: FormGroup;
-  // id: string ;
-  // materialEntryDetail: FormArray;
-  // mode: string = 'Agregar '; 
-  // public provider: Provider[];
+  materials: Material[] = [];
+  formExit: FormGroup;
+  id: string ;
+  materialExitDetail: FormArray;
+  mode: string = 'Agregar '; 
+  public collaborator: Collaborator[];
 
 
  
-  // constructor(
-  //   private formBuilder: FormBuilder,
-  //   private aRouter: ActivatedRoute,
-  //   private router:Router,
-  //   private providerService: ProviderService,
-  //   private entryService:EntriesService,
-  //    private validatorsService:ValidatorsService) { 
-  //   this.formEntry = this.formBuilder.group({
-  //     date: ['', Validators.required],
-  //     entryNumber: ['', Validators.required],
-  //     origin: ['', Validators.required],
-  //     providerName: ['', Validators.required],
-  //     providerNit: ['', Validators.required],
-  //     materialEntryDetail: this.formBuilder.array([])
-  //       });
-  //       this.materialEntryDetail = this.formEntry.get('materialEntryDetail') as FormArray;
-  //       this.id = this.aRouter.snapshot.paramMap.get('id')?? '';
-  // }
+  constructor(
+    private formBuilder: FormBuilder,
+    private aRouter: ActivatedRoute,
+    private router:Router,
+    private collaboratorService: CollaboratorService,
+    private exitService:ExitService,
+     private validatorsService:ValidatorsService) { 
+    this.formExit = this.formBuilder.group({
+      date: ['', Validators.required],
+      exitNumber: ['', Validators.required],
+      collaboratorCode: ['', Validators.required],
+      collaboratorName: ['', Validators.required],
+      collaboratorDocument: ['', Validators.required],
+      collaboratorOperation: ['', Validators.required],
+      materialExitDetail: this.formBuilder.array([])
+        });
+        this.materialExitDetail = this.formExit.get('materialExitDetail') as FormArray;
+        this.id = this.aRouter.snapshot.paramMap.get('id')?? '';
+  }
 
-  // ngOnInit(): void {
-  //   this.getListProvider()
-  //   if (this.id != '') {
-  //     // Es editar
-  //    this.mode = 'Editar ';
-  //     this.getEntry(this.id);
-  //   }
-  // }
+  ngOnInit(): void {
+    this.getListCollaborator()
+    if (this.id != '') {
+      // Es editar
+     this.mode = 'Editar ';
+      this.getExit(this.id);
+    }
+  }
 
-  // getListProvider(){
-  //   this.providerService.getProviders()
-  //   .subscribe((data:any) =>{      
-  //     this.provider = data.providers;
-  // });
-  // }
+  getListCollaborator(){
+    this.collaboratorService.getCollaborators()
+    .subscribe((data:any) =>{      
+      this.collaborator = data.collaborator;
+      
+  });
+  }
 
-  // isValidField(field: string) {
-  //   return this.validatorsService.isValidField(this.formEntry, field);
-  // }
+  isValidField(field: string) {
+    return this.validatorsService.isValidField(this.formExit, field);
+  }
 
-  // onMaterialsChange(materials: any[]) {
-  //   this.materials = materials;
-  // }
+  onMaterialsChange(materials: any[]) {
+    this.materials = materials;
+  }
 
-  // onProviderSelect() {
-  //   const selectedProvider = this.provider.find(provider => provider.name === this.formEntry.value.providerName);
-  //   if (selectedProvider) {
-  //     this.formEntry.patchValue({
-  //       providerNit: selectedProvider.nit
-  //     });
-  //   }
-  // }
+  onCollaboratorSelect() {
+    const selectedCollaborator = this.collaborator.find(collaborator => collaborator.code === this.formExit.value.collaboratorCode);
+    if (selectedCollaborator) {
+      this.formExit.patchValue({
+        collaboratorName: selectedCollaborator.name,
+        collaboratorDocument: selectedCollaborator.document,
+        collaboratorOperation: selectedCollaborator.operation,
+      });
+    }
+  }
 
 
 
  
 
-  // getEntry(id: string) {
-  //   this.entryService.getEntryById(id)
-  //   .subscribe((data: any) => {
-  //     const entry = data.entry;
-  //     this.materials = entry.materialEntryDetail;
-  //     this.formEntry.setValue({
-  //       date: entry.date,
-  //       entryNumber: entry.entryNumber,
-  //       origin: entry.origin,
-  //       providerName: entry.providerName,
-  //       providerNit: entry.providerNit,
-  //       materialEntryDetail: []
-  //     });
-  //     entry.materialEntryDetail.forEach((material: any) => {
-  //       this.materialEntryDetail.push(
-  //         this.formBuilder.group({
-  //           name: [material.name, Validators.required],
-  //           quantity: [material.quantity, [Validators.required, Validators.min(1)]],
-  //           serie: [material.serie],
-  //           observaciones: [material.observaciones]
-  //         })
-  //       );
-  //     });
-  //   });
-  // }
+  getExit(id: string) {
+    this.exitService.getExitById(id)
+    .subscribe((data: any) => {
+      const exit = data.exit;
+      this.materials = exit.materialExitDetail;
+      
+      this.formExit.setValue({
+        date: exit.date,
+        exitNumber: exit.exitNumber,
+        collaboratorCode: exit.collaboratorCode,
+        collaboratorName: exit.collaboratorName,
+        collaboratorDocument: exit.collaboratorDocument,
+        collaboratorOperation: exit.collaboratorOperation,
+        materialExitDetail: []
+      });
+      exit.materialExitDetail.forEach((material: any) => {
+        this.materialExitDetail.push(
+          this.formBuilder.group({
+            name: [material.name, Validators.required],
+            quantity: [material.quantity, [Validators.required, Validators.min(1)]],
+            serie: [material.serie],
+            observaciones: [material.observaciones]
+          })
+        );
+      });
+    });
+  }
     
-  // addEntry() {
-  //   if (this.formEntry.valid) {
-  //     const newEntry = {
-  //       date: this.formEntry.value.date,
-  //       entryNumber: this.formEntry.value.entryNumber,
-  //       origin: this.formEntry.value.origin,
-  //       providerName: this.formEntry.value.providerName,
-  //       providerNit: this.formEntry.value.providerNit,
-  //       materialEntryDetail: this.materials
-  //     };
-  //     this.entryService.saveEntry(newEntry)
-  //     .subscribe({
-  //       next: () => {
-  //         this.showNotification(
-  //           '¡Éxito!',
-  //           'Proveedor Agregado con éxito:',
-  //           'success'
-  //         );
-  //         this.router.navigate(['dashboard/list-entries']);
-  //       },
-  //       error: (error) => {
-  //         this.handleError(error);
-  //       }
-  //     });
-  //   }
-  // }
+  addExit() {
+    if (this.formExit.valid) {
+      const newExit:Exit = {
+        date: this.formExit.value.date,
+        exitNumber: this.formExit.value.exitNumber,
+        collaboratorCode: this.formExit.value.collaboratorCode,
+        collaboratorName: this.formExit.value.collaboratorName,
+        collaboratorDocument: this.formExit.value.collaboratorDocument,
+        collaboratorOperation: this.formExit.value.collaboratorOperation,
+        materialExitDetail: this.materials,
+        warehouse: ''
+      };
 
-  // handleError(error: any) {
-  //   if (error.status == 0) {
-  //     // Error de conexión
-  //     this.showNotification('¡Error!', 'Hubo un error de conexión con el servidor.', 'error');
-  //   } else if (error.error.errors) {
-  //     // Errores de validación del formulario
-  //     const errores = error.error.errors;
-  //     errores.forEach((error: { msg: any; }) => {
-  //       this.showNotification('¡Error!', error.msg, 'error');
-  //     });
-  //   } else if (error.error.msg === 'El Usuario ya existe, ingrese uno diferente') {
-  //     // Usuario ya existe
-  //     this.showNotification('¡Error!', 'El usuario ya existe en la base de datos. Ingrese uno diferente.', 'error');
-  //   } else {
-  //     // Otro tipo de error
-  //     this.showNotification('¡Error!', error.error.msg, 'error');
-  //   }
-  // }
+      if (this.id != '') {
+        //editar
+        newExit.id = this.id;
+        this.exitService.updateExit(this.id, newExit)
+        .subscribe({
+          next: () => {
+            this.showNotification(
+              '¡Éxito!',
+              'Entrada Actualizada con éxito:',
+              'success'
+            );
+            this.router.navigate(['dashboard/list-entries']);
+          },
+          error: (error) => {
+            this.handleError(error);
+          }
+        });
+
+      } else {
+        this.exitService.saveExit(newExit)
+      .subscribe({
+        next: () => {
+          this.showNotification(
+            '¡Éxito!',
+            'Entrada Agregada con éxito:',
+            'success'
+          );
+          this.router.navigate(['dashboard/list-entries']);
+        },
+        error: (error) => {
+          this.handleError(error);
+        }
+      });
+      }
+      
+    }
+  }
+
+  handleError(error: any) {
+    if (error.status == 0) {
+      // Error de conexión
+      this.showNotification('¡Error!', 'Hubo un error de conexión con el servidor.', 'error');
+    } else if (error.error.errors) {
+      // Errores de validación del formulario
+      const errores = error.error.errors;
+      errores.forEach((error: { msg: any; }) => {
+        this.showNotification('¡Error!', error.msg, 'error');
+      });
+    } else if (error.error.msg === 'El Entrada ya existe, ingrese uno diferente') {
+      // Usuario ya existe
+      this.showNotification('¡Error!', 'El Entrada ya existe en la base de datos. Ingrese uno diferente.', 'error');
+    } else {
+      // Otro tipo de error
+      this.showNotification('¡Error!', error.error.msg, 'error');
+    }
+  }
   
-  // showNotification(title: string, message: string, icon: string) {
-  //   Swal.fire({
-  //     icon: icon as SweetAlertIcon, // Convertimos el parámetro "icon" a un tipo SweetAlertIcon
-  //     title: title,
-  //     text: message,
-  //   });
-  // }
+  showNotification(title: string, message: string, icon: string) {
+    Swal.fire({
+      icon: icon as SweetAlertIcon, // Convertimos el parámetro "icon" a un tipo SweetAlertIcon
+      title: title,
+      text: message,
+    });
+  }
+
 
 }

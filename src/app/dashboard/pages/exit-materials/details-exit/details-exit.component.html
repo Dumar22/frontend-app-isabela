@@ -1,0 +1,42 @@
+<div class="container my-4" *ngIf="exit">
+    <div class="card shadow-sm">
+      <div class="card-body" >
+        <h2 class="card-title mb-4">Detalles de la salida {{ exit.exitNumber }}</h2>
+        <p><strong>Fecha:</strong> {{ exit.date }}</p>
+        <p><strong>Código:</strong> {{ exit.collaboratorCode }}</p>
+        <p><strong>Nombre:</strong> {{ exit.collaboratorName }}</p>
+        <p><strong>Documento:</strong> {{ exit.collaboratorDocument }}</p>
+        <p><strong>Operación:</strong> {{ exit.collaboratorOperation }}</p>
+        <table class="table table-bordered table-striped mt-4">
+          <thead class="bg-light">
+            <tr>
+              <th scope="col">Nombre</th>
+              <th scope="col">Código</th>
+              <th scope="col">Unidad</th>
+              <th scope="col">Cantidad</th>
+              <th scope="col">Devolución</th>
+              <th scope="col">Valor unitario</th>
+              <th scope="col">Serial</th>
+              <th scope="col">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let material of exit.materialExitDetail">
+              <td>{{ material.name }}</td>
+              <td>{{ material.code }}</td>
+              <td>{{ material.unity }}</td>
+              <td>{{ material.quantity }}</td>
+              <td>{{ material.restore }}</td>
+              <td>{{ material.value }}</td>
+              <td>{{ material.serial }}</td>
+              <td>{{ material.total }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card-footer">
+        <button type="button" class="btn btn-primary mr-2" (click)="editExit(exit)">Editar</button>
+        <button type="button" class="btn btn-secondary" (click)="prev()">Volver</button>
+      </div>
+    </div>
+  </div>

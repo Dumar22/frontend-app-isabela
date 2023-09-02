@@ -17,7 +17,7 @@ import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
-
+import { NgxFileDropModule } from 'ngx-file-drop';
 
 
 
@@ -34,12 +34,14 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     MdbPopoverModule,
     MdbRadioModule,
     MdbRangeModule,
+    
     MdbRippleModule,
     MdbScrollspyModule,
     MdbTabsModule,
     MdbTooltipModule,
     MdbValidationModule,
-    SweetAlert2Module
+    SweetAlert2Module,
+    NgxFileDropModule,
   ],
   exports: [
     MdbAccordionModule,
@@ -57,7 +59,8 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
     MdbTabsModule,
     MdbTooltipModule,
     MdbValidationModule,
-    SweetAlert2Module
+    SweetAlert2Module,
+    NgxFileDropModule,
   ]
 })
 export class UiModulesModule { }

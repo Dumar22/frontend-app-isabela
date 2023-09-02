@@ -17,22 +17,12 @@ export interface Material{
     unity: string,
     state: boolean,
     quantity: number,
+    restore:number,
     serial: number,
     value: number,       
     total: number,       
     obs: string,       
   }
   
-  export class InvoiceClass {
-    constructor(
-    public id:string,
-     public date: string,
-     public invoiceNumber: string,
-     public origin:string,
-     public providerName: string,
-     public providerNit: string,
-     public materials: Material[],   
-   
-    ) {}
-  }
+ 
   

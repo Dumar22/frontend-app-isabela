@@ -40,15 +40,14 @@ export class ListexitMaterialsComponent {
       this.loading = true;
       this.exitService.getExit()
       .subscribe((data:any) =>{
-        this.exit = data.exitAuth;
-        console.log(data);        
-        this.exitTemp = data;
+        this.exit = data.exitAuth;              
+        this.exitTemp = data.exitAuth;
         this.loading = false;
       } );
      }
 
 
-     //Buscar
+    // Buscar
  search (term: string ) {
 
   if ( term.length === 0 ) {
@@ -78,7 +77,10 @@ export class ListexitMaterialsComponent {
 
     });
   }
-
+  
+  detailExit(entry: Exit){      
+    this.router.navigate(['dashboard/details-exit', entry.id]);
+    }
 
   deleteExit(exit: Exit) {
 
@@ -114,11 +116,11 @@ export class ListexitMaterialsComponent {
   }
 
 addExit(){
-    this.router.navigate(['dashboard/add-invoice']);
+    this.router.navigate(['dashboard/add-exit-material']);
   }
   
 editExit(invoice: Invoice) {
-  this.router.navigate(['dashboard/edit-invoice', invoice.id]);
+  this.router.navigate(['dashboard/edit-exit-material/', invoice.id]);
 }
 
 

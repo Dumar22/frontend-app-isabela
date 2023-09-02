@@ -59,12 +59,15 @@
             <p class="fw-bold mb-1">{{factura.date}}</p>
           </td>
           <td>
-            <p class="fw-normal mb-1">{{factura.invoiceNumber}}</p>
+            <p class="fw-normal mb-1">{{factura.exitNumber}}</p>
           </td>
           <!-- <td>
             <span class="badge badge-success ">{{factura.providerName}}</span>
           </td> -->
-          <td>Ver detalles</td>
+          <td><button type="button" class="btn btn-secondary btn-sm btn-rounded"
+            (click)="detailExit(factura)">
+            Detalles
+          </button></td>
           <td> <button class="btn btn-secondary btn-sm btn-rounded"
             (click)="downloadExit(factura)">
             Descargar PDF

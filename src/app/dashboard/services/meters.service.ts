@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { WarehousesService } from './warehouses.service';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpEventType } from '@angular/common/http';
 import { Meter } from '../interfaces/metersInterface';
 
 @Injectable({
@@ -36,4 +36,27 @@ export class MetersService {
   deleteMeter(meter: Meter): Observable<Meter>{
     return this.http.delete<Meter>(`${this.baseUrl}/meter/${meter.id}`,this.createHeaders.createHeaders());
   }
+
+  loadMeters(file: File): Observable<number> {
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    const headers = this.createHeaders.createHeaders();
+    return this.http.post(`${this.baseUrl}/meters/upload`, formData, {
+      headers: headers.headers,
+      reportProgress: true,
+      observe: 'events' // Agrega esta línea para especificar el tipo de observación
+    }).pipe(
+      map((event: HttpEvent<any>) => this.calculateUploadProgress(event))
+    );
+  }
+  
+  private calculateUploadProgress(event: HttpEvent<any>): number {
+    if (event.type === HttpEventType.UploadProgress) {
+      const progress = Math.round((100 * event.loaded) / event.total);
+      return progress;
+    }
+    return 0;
+  }
+
+
 }

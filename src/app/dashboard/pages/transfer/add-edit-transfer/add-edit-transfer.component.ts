@@ -1,28 +1,29 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ValidatorsService } from 'src/app/dashboard/services/Validate.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProviderService } from 'src/app/dashboard/services/provider.service';
-import { Material } from 'src/app/dashboard/interfaces/entriesInterfaces';
-import { Provider } from 'src/app/dashboard/interfaces/providerInterface';
-import { EntriesService } from 'src/app/dashboard/services/entries.service';
+import { TransferServiceService } from 'src/app/dashboard/services/transfer-service.service';
+import { CollaboratorService } from 'src/app/dashboard/services/list-collaborator.service';
+import { Collaborator } from 'src/app/dashboard/interfaces/collaboratorInterface';
+import { Material, Transfers } from 'src/app/dashboard/interfaces/transferInterface';
+import { MaterialDetailsComponent } from '../../material-details/material-details.component';
 
 @Component({
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,ReactiveFormsModule, MaterialDetailsComponent],
   templateUrl: './add-edit-transfer.component.html',
   styleUrls: ['./add-edit-transfer.component.css']
 })
 export class AddEditTransferComponent {
 
-  materials: Material[] = [];
-  formEntry: FormGroup;
+  materials:Material [] = [];
+  formTransfer: FormGroup;
   id: string ;
-  materialEntryDetail: FormArray;
+  materialTransferDetail: FormArray;
   mode: string = 'Agregar '; 
-  public provider: Provider[];
+  public collaborator: Collaborator[];
 
 
  
@@ -30,50 +31,62 @@ export class AddEditTransferComponent {
     private formBuilder: FormBuilder,
     private aRouter: ActivatedRoute,
     private router:Router,
-    private providerService: ProviderService,
-    private entryService:EntriesService,
+    private collaboratorService: CollaboratorService,
+    private transferService:TransferServiceService,
      private validatorsService:ValidatorsService) { 
-    this.formEntry = this.formBuilder.group({
+    this.formTransfer = this.formBuilder.group({
       date: ['', Validators.required],
-      entryNumber: ['', Validators.required],
+      transferNumber: ['', Validators.required],
       origin: ['', Validators.required],
-      providerName: ['', Validators.required],
-      providerNit: ['', Validators.required],
-      materialEntryDetail: this.formBuilder.array([])
+      destination: ['', Validators.required],
+      autorization: ['', Validators.required],
+      delivery: ['', Validators.required],
+      documentdelivery: ['', Validators.required],
+      receive: ['', Validators.required],
+      documentreceive: ['', Validators.required],
+      materialTransferDetail: this.formBuilder.array([])
         });
-        this.materialEntryDetail = this.formEntry.get('materialEntryDetail') as FormArray;
+        this.materialTransferDetail = this.formTransfer.get('materialTransferDetail') as FormArray;
         this.id = this.aRouter.snapshot.paramMap.get('id')?? '';
   }
 
   ngOnInit(): void {
-    this.getListProvider()
+    this.getListCollaborator()
     if (this.id != '') {
       // Es editar
      this.mode = 'Editar ';
-      this.getEntry(this.id);
+      this.getTransfer(this.id);
     }
   }
 
-  getListProvider(){
-    this.providerService.getProviders()
+  getListCollaborator(){
+    this.collaboratorService.getCollaborators()
     .subscribe((data:any) =>{      
-      this.provider = data.providers;
+      this.collaborator = data.collaborator;
+      
   });
   }
 
   isValidField(field: string) {
-    return this.validatorsService.isValidField(this.formEntry, field);
+    return this.validatorsService.isValidField(this.formTransfer, field);
   }
 
   onMaterialsChange(materials: any[]) {
     this.materials = materials;
   }
 
-  onProviderSelect() {
-    const selectedProvider = this.provider.find(provider => provider.name === this.formEntry.value.providerName);
-    if (selectedProvider) {
-      this.formEntry.patchValue({
-        providerNit: selectedProvider.nit
+  onCollaboratorSelect() {
+    const selectedCollaborator = this.collaborator.find(collaborator => collaborator.name === this.formTransfer.value.delivery);
+    if (selectedCollaborator) {
+      this.formTransfer.patchValue({
+        documentdelivery: selectedCollaborator.document,       
+      });
+    }
+    const selectedCollaborator2 = this.collaborator.find(collaborator => collaborator.name === this.formTransfer.value.receive);
+    if (selectedCollaborator2) {
+      this.formTransfer.patchValue({        
+        documentreceive: selectedCollaborator2.document,
+        
       });
     }
   }
@@ -82,21 +95,27 @@ export class AddEditTransferComponent {
 
  
 
-  getEntry(id: string) {
-    this.entryService.getEntryById(id)
+  getTransfer(id: string) {
+    this.transferService.getTransfersById(id)
     .subscribe((data: any) => {
-      const entry = data.entry;
-      this.materials = entry.materialEntryDetail;
-      this.formEntry.setValue({
-        date: entry.date,
-        entryNumber: entry.entryNumber,
-        origin: entry.origin,
-        providerName: entry.providerName,
-        providerNit: entry.providerNit,
-        materialEntryDetail: []
+      const exit = data.transfer;
+      this.materials = exit.materialTransferDetail;
+      console.log(exit);
+      
+      this.formTransfer.setValue({
+        date: exit.date,
+        transferNumber: exit.transferNumber,
+        origin: exit.origin,
+        destination: exit.destination,
+        autorization: exit.autorization,
+        delivery: exit.delivery,
+        documentdelivery: exit.documentdelivery,
+        receive: exit.receive,
+        documentreceive: exit.documentreceive,
+        materialTransferDetail: []
       });
-      entry.materialEntryDetail.forEach((material: any) => {
-        this.materialEntryDetail.push(
+      exit.materialTransferDetail.forEach((material: any) => {
+        this.materialTransferDetail.push(
           this.formBuilder.group({
             name: [material.name, Validators.required],
             quantity: [material.quantity, [Validators.required, Validators.min(1)]],
@@ -108,30 +127,57 @@ export class AddEditTransferComponent {
     });
   }
     
-  addEntry() {
-    if (this.formEntry.valid) {
-      const newEntry = {
-        date: this.formEntry.value.date,
-        entryNumber: this.formEntry.value.entryNumber,
-        origin: this.formEntry.value.origin,
-        providerName: this.formEntry.value.providerName,
-        providerNit: this.formEntry.value.providerNit,
-        materialEntryDetail: this.materials
+  addTransfer() {
+    if (this.formTransfer.valid) {
+      const newExit:Transfers = {
+        date: this.formTransfer.value.date,
+        transferNumber: this.formTransfer.value.transferNumber,
+        origin: this.formTransfer.value.origin,
+        destination: this.formTransfer.value.destination,
+        autorization: this.formTransfer.value.autorization,
+        delivery: this.formTransfer.value.delivery,
+        documentdelivery: this.formTransfer.value.documentdelivery,
+        receive: this.formTransfer.value.receive,
+        documentreceive: this.formTransfer.value.documentreceive,
+        materialTransferDetail: this.materials,
+        
       };
-      this.entryService.saveEntry(newEntry)
+
+      if (this.id != '') {
+        //editar
+        newExit.id = this.id;
+        this.transferService.updateTransfers(this.id, newExit)
+        .subscribe({
+          next: () => {
+            this.showNotification(
+              '¡Éxito!',
+              'Traslado Actualizado con éxito:',
+              'success'
+            );
+            this.router.navigate(['dashboard/list-trasfers']);
+          },
+          error: (error) => {
+            this.handleError(error);
+          }
+        });
+
+      } else {
+        this.transferService.saveTransfers(newExit)
       .subscribe({
         next: () => {
           this.showNotification(
             '¡Éxito!',
-            'Proveedor Agregado con éxito:',
+            'Traslado Agregado con éxito:',
             'success'
           );
-          this.router.navigate(['dashboard/list-entries']);
+          this.router.navigate(['dashboard/list-trasfers']);
         },
         error: (error) => {
           this.handleError(error);
         }
       });
+      }
+      
     }
   }
 
@@ -145,9 +191,9 @@ export class AddEditTransferComponent {
       errores.forEach((error: { msg: any; }) => {
         this.showNotification('¡Error!', error.msg, 'error');
       });
-    } else if (error.error.msg === 'El Usuario ya existe, ingrese uno diferente') {
+    } else if (error.error.msg === 'El Entrada ya existe, ingrese uno diferente') {
       // Usuario ya existe
-      this.showNotification('¡Error!', 'El usuario ya existe en la base de datos. Ingrese uno diferente.', 'error');
+      this.showNotification('¡Error!', 'El Entrada ya existe en la base de datos. Ingrese uno diferente.', 'error');
     } else {
       // Otro tipo de error
       this.showNotification('¡Error!', error.error.msg, 'error');
@@ -161,6 +207,7 @@ export class AddEditTransferComponent {
       text: message,
     });
   }
+
 
 
 }

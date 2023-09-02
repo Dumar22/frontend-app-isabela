@@ -26,8 +26,11 @@ export class EntriesService {
     return this.http.get<Entries>(`${this.baseUrl}/entry/${id}`,this.createHeaders.createHeaders())
   }
   downloadEntryPDF(id: string) {
+
+    const headers = this.createHeaders.createHeaders();
     return this.http.get(`${this.baseUrl}/dowload-entry/${id}`, {
-      responseType: 'blob' 
+      headers: headers.headers,
+       responseType: 'blob' 
     });
   }
 

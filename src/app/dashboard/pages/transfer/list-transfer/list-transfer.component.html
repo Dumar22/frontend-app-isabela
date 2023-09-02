@@ -7,7 +7,7 @@
   
                   <input type="text"
                           class="form-control"
-                          placeholder="Buscar usuario..."
+                          placeholder="Buscar..."
                           (keyup)="search( txtTermino.value )"
                           #txtTermino/>
   
@@ -17,7 +17,7 @@
     </div>
   
   <div class="bg-info.bg-gradient d-flex">
-    <button type="button" class="btn btn-primary " (click)="addInvoice()"  >Nueva salida</button>
+    <button type="button" class="btn btn-primary " (click)="addTransfer()"  >Nuevo Traslado</button>
   
   </div>
    </div>
@@ -51,7 +51,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr  *ngFor="let factura of invoice; let i = index">
+        <tr  *ngFor="let factura of transfer; let i = index">
           <td>
             <p class="fw-normal mb-1 text-primary">{{i+1}}.</p>
           </td>
@@ -59,23 +59,23 @@
             <p class="fw-bold mb-1">{{factura.date}}</p>
           </td>
           <td>
-            <p class="fw-normal mb-1">{{factura.invoiceNumber}}</p>
+            <p class="fw-normal mb-1">{{factura.transferNumber}}</p>
           </td>
           <!-- <td>
             <span class="badge badge-success ">{{factura.providerName}}</span>
           </td> -->
           <td>Ver detalles</td>
           <td> <button class="btn btn-secondary btn-sm btn-rounded"
-            (click)="downloadInvoice(factura)">
+            (click)="downloadTransfer(factura)">
             Descargar PDF
           </button></td>
           <td>
-            <button type="button" class="btn btn-secondary btn-sm btn-rounded" (click)="editInvoice(factura)">
+            <button type="button" class="btn btn-secondary btn-sm btn-rounded" (click)="editTransfer(factura)">
               Editar
             </button>
           </td>
           <td>
-            <button type="button" (click)="deleteInvoice(factura)" class="btn btn-secondary btn-sm btn-rounded text-danger">
+            <button type="button" (click)="deleteTransfer(factura)" class="btn btn-secondary btn-sm btn-rounded text-danger">
               Eliminar
             </button>
           </td>
