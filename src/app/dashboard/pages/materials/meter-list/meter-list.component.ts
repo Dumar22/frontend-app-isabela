@@ -5,10 +5,11 @@ import { MetersService } from 'src/app/dashboard/services/meters.service';
 import { SearchService } from 'src/app/dashboard/services/search.service';
 import { Router } from '@angular/router';
 import { Meter } from 'src/app/dashboard/interfaces/metersInterface';
+import { UiModulesModule } from 'src/app/dashboard/components/ui-modules/ui-modules.module';
 
 @Component({
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, UiModulesModule],
   templateUrl: './meter-list.component.html',
   styleUrls: ['./meter-list.component.css']
 })
@@ -19,7 +20,11 @@ export class MeterListComponent {
   public metersTemp: Meter[] = [];
   public total: number; 
   public loading: boolean = true;
-  limit = 1; // Establecer el límite de unidades para marcar en amarillo
+  page: number = 1;
+  count: number = 0;
+  tableSize: number = 7;
+  tableSizes: any = [3, 6, 9, 12];
+  
   constructor(private metersService: MetersService,
     private searchService: SearchService,
     private router: Router) { }
@@ -42,6 +47,16 @@ export class MeterListComponent {
     } );
    }
 
+   onTableDataChange(event: any) {
+    this.page = event;
+    this.getListMeters();
+  }
+  onTableSizeChange(event: any): void {
+    this.tableSize = event.target.value;
+    this.page = 1;
+    this.getListMeters();
+  }
+
    //Buscar
  search (term: string ) {
 
@@ -59,7 +74,7 @@ export class MeterListComponent {
 
 
     Swal.fire({
-      title: '¿Borrar medidor?',
+      title: '¿Borrar Medidor?',
       text: `Esta a punto de borrar a ${ meters.name }`,
       icon: 'question',
       showCancelButton: true,

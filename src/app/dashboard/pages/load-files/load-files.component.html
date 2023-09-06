@@ -3,7 +3,7 @@
    
     <form (ngSubmit)="send()" [formGroup]="form">
         <div class="form-group col-md-6 mb-3">
-          <label class="mb-4" >Archivo</label>
+          <label class="mb-4" ></label>
           <input type="file" id="file" formControlName="file" (change)="onSelectedFile($event)">
           <div  class="progress" style="height: 20px">
             <div class="progress-bar" role="progressbar" [style.width.%]="progress" [attr.aria-valuenow]="progress"
@@ -23,8 +23,10 @@
                   formControlName="type">
             <option selected value="">Seleccione un tipo</option>
             <option value="materials">Materiales</option>
+            <option value="matriculas">Matriculas</option>
             <option value="meters">Medidores</option>
-            <option value="provedores">Proveedores</option>
+            <option value="collaborators">Moviles</option>
+            <option value="providers">Proveedores</option>
             <!-- Opciones del menú desplegable -->
           </select>
           <div *ngIf="form.get('type').invalid && form.get('type').touched"

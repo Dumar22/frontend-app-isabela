@@ -25,11 +25,11 @@ export class TransferServiceService {
   getTransfersById(id:string):Observable<Transfers>{
     return this.http.get<Transfers>(`${this.baseUrl}/transfer/${id}`,this.createHeaders.createHeaders())
   }
-  downloadTransfersPDF(id: string) {
-    return this.http.get(`${this.baseUrl}/dowload-transfer/${id}`, {
-      responseType: 'blob' 
-    });
-  }
+  // downloadTransfersPDF(id: string) {
+  //   return this.http.get(`${this.baseUrl}/dowload-transfer/${id}`, {
+  //     responseType: 'blob' 
+  //   });
+  // }
 
   saveTransfers( transfer: Transfers): Observable<Transfers>{
    return this.http.post<Transfers>(`${this.baseUrl}/transfer`, transfer,this.createHeaders.createHeaders())
@@ -41,5 +41,14 @@ export class TransferServiceService {
 
   deleteTransfers(transfer: Transfers): Observable<Transfers>{
     return this.http.delete<Transfers>(`${this.baseUrl}/transfer/${transfer.id}`,this.createHeaders.createHeaders());
+  }
+
+  downloadTransfersPDF(id: string) {
+
+    const headers = this.createHeaders.createHeaders();
+    return this.http.get(`${this.baseUrl}/dowload-transfer/${id}`, {
+      headers: headers.headers,
+       responseType: 'blob' 
+    });
   }
 }

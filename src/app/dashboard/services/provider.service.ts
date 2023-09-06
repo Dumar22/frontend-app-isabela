@@ -1,5 +1,5 @@
-import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { Observable, map} from 'rxjs';
+import { HttpClient, HttpEvent, HttpEventType } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Provider } from '../interfaces/providerInterface';
@@ -22,6 +22,10 @@ export class ProviderService {
     return this.http.get<Provider[]>(`${this.baseUrl}/providers`, this.createHeaders.createHeaders())
 
     }
+  getProvidersL(currentPage: number, itemsPerPage: number):Observable<Provider[]> {
+    return this.http.get<Provider[]>(`${this.baseUrl}/providers`, this.createHeaders.createHeaders())
+
+    }
 
 
    getProviderById(id:string):Observable<Provider>{
@@ -40,6 +44,26 @@ export class ProviderService {
      return this.http.delete<Provider>(`${this.baseUrl}/provider/${provider.id}`,  this.createHeaders.createHeaders());
    }
 
+   loadingProviders(file: File): Observable<number> {
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    const headers = this.createHeaders.createHeaders();
+    return this.http.post(`${this.baseUrl}/providers/upload`, formData, {
+      headers: headers.headers,
+      reportProgress: true,
+      observe: 'events' // Agrega esta línea para especificar el tipo de observación
+    }).pipe(
+      map((event: HttpEvent<any>) => this.calculateUploadProgress(event))
+    );
+  }
 
+
+  private calculateUploadProgress(event: HttpEvent<any>): number {
+    if (event.type === HttpEventType.UploadProgress) {
+      const progress = Math.round((100 * event.loaded) / event.total);
+      return progress;
+    }
+    return 0;
+  }
    
 }

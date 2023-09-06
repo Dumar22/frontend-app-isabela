@@ -5,11 +5,12 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Transfers } from 'src/app/dashboard/interfaces/transferInterface';
 import { TransferServiceService } from 'src/app/dashboard/services/transfer-service.service';
+import { UiModulesModule } from 'src/app/dashboard/components/ui-modules/ui-modules.module';
 
 @Component({
   selector: 'app-list-transfer',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, UiModulesModule],
   templateUrl: './list-transfer.component.html',
   styleUrls: ['./list-transfer.component.css']
 })
@@ -22,6 +23,10 @@ export class ListTransferComponent {
   public factura : Transfers;
   public transferTemp: Transfers[] = [];
   public loading: boolean = true;
+  page: number = 1;
+  count: number = 0;
+  tableSize: number = 7;
+  tableSizes: any = [3, 6, 9, 12];
 
   constructor(private transferService: TransferServiceService,
     private searchService: SearchService,
@@ -39,13 +44,22 @@ export class ListTransferComponent {
       this.loading = true;
       this.transferService.getTransfers()
       .subscribe((data:any) =>{
-        this.transfer = data.transferAuth;
-        //console.log(data);        
+        this.transfer = data.transferAuth;                
+        this.transfer.sort((a, b) => a.date.localeCompare(b.date));
         this.transferTemp = data;
         this.loading = false;
       } );
      }
 
+     onTableDataChange(event: any) {
+      this.page = event;
+      this.getListTransfers();
+    }
+    onTableSizeChange(event: any): void {
+      this.tableSize = event.target.value;
+      this.page = 1;
+      this.getListTransfers();
+    }
 
      //Buscar
  search (term: string ) {
@@ -83,7 +97,7 @@ export class ListTransferComponent {
 
 
     Swal.fire({
-      title: '¿Borrar traslado?',
+      title: '¿Borrar Traslado?',
       text: `Esta a punto de borrar a ${ transfer.transferNumber }`,
       icon: 'question',
       showCancelButton: true,
@@ -108,6 +122,10 @@ export class ListTransferComponent {
 
 
   }
+
+  detailTransfer(transfer: Transfers){      
+    this.router.navigate(['dashboard/details-transfer', transfer.id]);
+    }
 
 addTransfer(){
     this.router.navigate(['dashboard/add-transfer']);

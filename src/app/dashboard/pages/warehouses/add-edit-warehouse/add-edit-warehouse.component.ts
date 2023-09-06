@@ -80,7 +80,7 @@ export class AddEditWarehouseComponent {
       this.wareHousesService.saveWarehouse(warehouse).subscribe(() => {
         this.showNotification(
           '¡Éxito!',
-          'Bodega Agregado con éxito:',
+          'Bodega Agregada con éxito:',
           'success'
         );
         this.router.navigate(['dashboard/list-warehuses']);

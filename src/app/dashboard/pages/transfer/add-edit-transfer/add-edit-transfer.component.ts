@@ -100,7 +100,7 @@ export class AddEditTransferComponent {
     .subscribe((data: any) => {
       const exit = data.transfer;
       this.materials = exit.materialTransferDetail;
-      console.log(exit);
+      //console.log(exit);
       
       this.formTransfer.setValue({
         date: exit.date,
@@ -191,9 +191,9 @@ export class AddEditTransferComponent {
       errores.forEach((error: { msg: any; }) => {
         this.showNotification('¡Error!', error.msg, 'error');
       });
-    } else if (error.error.msg === 'El Entrada ya existe, ingrese uno diferente') {
+    } else if (error.error.msg === 'El Traslado ya existe, ingrese uno diferente') {
       // Usuario ya existe
-      this.showNotification('¡Error!', 'El Entrada ya existe en la base de datos. Ingrese uno diferente.', 'error');
+      this.showNotification('¡Error!', 'El Traslado ya existe en la base de datos. Ingrese uno diferente.', 'error');
     } else {
       // Otro tipo de error
       this.showNotification('¡Error!', error.error.msg, 'error');

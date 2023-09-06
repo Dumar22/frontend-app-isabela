@@ -15,7 +15,7 @@ import { MdbScrollspyModule } from 'mdb-angular-ui-kit/scrollspy';
 import { MdbTabsModule } from 'mdb-angular-ui-kit/tabs';
 import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
-
+import { NgxPaginationModule } from 'ngx-pagination';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { NgxFileDropModule } from 'ngx-file-drop';
 
@@ -34,7 +34,7 @@ import { NgxFileDropModule } from 'ngx-file-drop';
     MdbPopoverModule,
     MdbRadioModule,
     MdbRangeModule,
-    
+    NgxPaginationModule,
     MdbRippleModule,
     MdbScrollspyModule,
     MdbTabsModule,
@@ -61,6 +61,7 @@ import { NgxFileDropModule } from 'ngx-file-drop';
     MdbValidationModule,
     SweetAlert2Module,
     NgxFileDropModule,
+    NgxPaginationModule,
   ]
 })
 export class UiModulesModule { }

@@ -27,23 +27,27 @@ export class SidenavComponent {
       ruta: 'list-exit-materials'
      },
     {
-      texto: 'Salidas con matricula',
-      ruta: 'list-exit-series'
+      texto: 'Salidas con matrícula',
+      ruta: 'list-exit-register'
      },
      {
       texto: 'Traslados',
       ruta: 'list-trasfers'
      },       
      {
-      texto: 'Materiales almacen',
+      texto: 'Materiales almacén',
       ruta: 'list-materials'
      },
      {
-      texto: 'Medidores almacen',
+      texto: 'Medidores almacén',
       ruta: 'list-meters'
      },
+     {
+      texto: 'Matriculas',
+      ruta: 'list-work-register'
+     },
       {
-      texto: 'Moviles',
+      texto: 'Móviles',
       ruta: 'list-collaborators'
      }, 
      {
@@ -54,14 +58,14 @@ export class SidenavComponent {
       texto: 'Cargas ecxel',
       ruta: 'load-file'
      },
-     {
-      texto: 'Bodegas',
-      ruta: 'list-warehuses'
-     },
-     {
-      texto: 'Usuarios',
-      ruta: 'list-users'
-     },
+    //  {
+    //   texto: 'Bodegas',
+    //   ruta: 'list-warehuses'
+    //  },
+    //  {
+    //   texto: 'Usuarios',
+    //   ruta: 'list-users'
+    //  },
 
    ]
 

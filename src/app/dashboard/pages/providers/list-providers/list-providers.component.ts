@@ -5,11 +5,13 @@ import { ProviderService } from '../../../services/provider.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { SearchService } from 'src/app/dashboard/services/search.service';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { UiModulesModule } from 'src/app/dashboard/components/ui-modules/ui-modules.module';
 
 @Component({
   selector: 'list-providers',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,UiModulesModule],
   templateUrl: './list-providers.component.html',
   styleUrls: ['./list-providers.component.css']
 })
@@ -19,6 +21,10 @@ export class ListProvidersComponent {
   public providerTemp: Provider[] = [];
   public loading: boolean = true;  
   public providersCount: number = 0;
+  page: number = 1;
+  count: number = 0;
+  tableSize: number = 7;
+  tableSizes: any = [3, 6, 9, 12];
  
 
   constructor(private providerService: ProviderService,    
@@ -31,14 +37,24 @@ export class ListProvidersComponent {
  
    getListProviders(){
     this.loading = true;
-    this.providerService.getProviders()
-    .subscribe((data:any) =>{
-      this.providersCount = data.total;
-      this.providers = data.providers;
-      this.providerTemp = data.providers;
-      this.loading = false;
+     this.providerService.getProviders()
+  .subscribe((data: any) => {    
+    this.providers = data.providers;
+    this.providers.sort((a, b) => a.name.localeCompare(b.name));
+    this.providerTemp = data.providers;  
+    this.loading = false;
     } );
    }
+
+   onTableDataChange(event: any) {
+    this.page = event;
+    this.getListProviders();
+  }
+  onTableSizeChange(event: any): void {
+    this.tableSize = event.target.value;
+    this.page = 1;
+    this.getListProviders();
+  }
 
    //Buscar
  search (term: string ) {
@@ -59,7 +75,7 @@ export class ListProvidersComponent {
 
 
     Swal.fire({
-      title: '¿Borrar usuario?',
+      title: '¿Borrar proveedor?',
       text: `Esta a punto de borrar a ${ provider.name }`,
       icon: 'question',
       showCancelButton: true,
@@ -72,7 +88,7 @@ export class ListProvidersComponent {
 
             this.getListProviders();
             Swal.fire(
-              'Usuario borrado',
+              'Porveedor borrado',
               `${ provider.name } fue eliminado correctamente`,
               'success'
             );

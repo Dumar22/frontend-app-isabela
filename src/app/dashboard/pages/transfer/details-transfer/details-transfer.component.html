@@ -1,0 +1,44 @@
+<div class="container my-4" *ngIf="traslado">
+    <div class="card shadow-sm">
+      <div class="card-body" >
+        <h2 class="card-title mb-4">Detalles de la entrada {{ traslado.transferNumber }}</h2>
+        <p><strong>Fecha:</strong> {{ traslado.date }}</p>
+        <p><strong>Origen:</strong> {{ traslado.origin }}</p>
+        <p><strong>Destino:</strong> {{ traslado.destination }}</p>
+        <p><strong>Autoriza:</strong> {{ traslado.autorization }}</p>
+        <p><strong>Envía:</strong> {{ traslado.delivery }}</p>
+        <p><strong>Recibe:</strong> {{ traslado.receive }}</p>
+        <h4>Lista de traslado</h4>
+        <hr>
+        
+        <table class="table table-bordered table-striped mt-4">
+          <thead class="bg-light">
+            <tr>
+              <th scope="col">Nombre</th>
+              <th scope="col">Código</th>
+              <th scope="col">Unidad</th>
+              <th scope="col">Cantidad</th>
+              <th scope="col">Valor unitario</th>
+              <th scope="col">Serial</th>
+              <th scope="col">Total</th>
+            </tr>
+          </thead>         
+          <tbody>
+            <tr *ngFor="let material of traslado.materialTransferDetail">
+              <td>{{ material.name }}</td>
+              <td>{{ material.code }}</td>
+              <td>{{ material.unity }}</td>
+              <td>{{ material.quantity }}</td>
+              <td>{{ material.value }}</td>
+              <td>{{ material.serial }}</td>
+              <td>{{ material.total }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card-footer">
+        <button type="button" class="btn btn-primary mr-2" (click)="editTransfer(traslado)">Editar</button>
+        <button type="button" class="btn btn-secondary" (click)="prev()">Volver</button>
+      </div>
+    </div>
+  </div>

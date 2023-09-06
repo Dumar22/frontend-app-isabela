@@ -6,6 +6,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { UiModulesModule } from '../../components/ui-modules/ui-modules.module';
 import { MaterialsService } from '../../services/materials.service';
 import { MetersService } from '../../services/meters.service';
+import { CollaboratorService } from '../../services/list-collaborator.service';
+import { ProviderService } from '../../services/provider.service';
 
 @Component({
   selector: 'app-load-files',
@@ -23,7 +25,9 @@ export class LoadFilesComponent {
 
   constructor(private formBuilder: FormBuilder,
      private loadMaterials: MaterialsService,
-     private loadMeters : MetersService) {
+     private loadCollaborators: CollaboratorService,
+     private loadMeters : MetersService,
+     private loadProviders: ProviderService) {
     this.form = this.formBuilder.group({
       file: ['', Validators.required],
       type: ['', Validators.required]
@@ -57,24 +61,24 @@ export class LoadFilesComponent {
     switch (tipo) {
       case 'materials':
         this.progress = 0; // Reinicializamos el progreso
-        const progressInterval = setInterval(() => {
-          this.handleProgressAndSuccess(progressInterval);
-        }, 3000);
+        const progressTimeout = setTimeout(() => {
+          this.handleProgressAndSuccess(progressTimeout);
+        }, 3);
 
         this.loadMaterials.loadMaterials(archivo).subscribe({
           next: progress => {
             this.progress = progress;
             if (progress === 100) {
-              clearInterval(progressInterval);
+              this.showNotification('¡Éxito!', 'Archivo cargado exitosamente.', 'success');
+              clearTimeout(progressTimeout);
               this.loading = false;
               this.progress = 0; // Reinicializamos el progreso
-              this.showNotification('¡Éxito!', 'Archivo cargado exitosamente.', 'success');
             }
           },
           error: error => {
-            clearInterval(progressInterval);
+            clearTimeout(progressTimeout);
             this.loading = false;
-            this.progress = 0; // Reinicializamos el progreso
+            this.progress = 50; // Reinicializamos el progreso
             this.handleError(error); // Handle errors
           }
         });
@@ -83,16 +87,16 @@ export class LoadFilesComponent {
   
       case 'meters':
         this.progress = 0; // Reinicializamos el progreso
-      const progressIntervalM = setInterval(() => {
-        this.handleProgressAndSuccess(progressIntervalM);
-      }, 3000);
+        const progressTimeoutm = setTimeout(() => {
+          this.handleProgressAndSuccess(progressTimeout);
+        }, 5);
 
         this.loadMeters.loadMeters(archivo).subscribe({
           
           next: progress => {
             this.progress = progress;
             if (progress === 100) {
-              clearInterval(progressIntervalM);
+              clearTimeout(progressTimeoutm);
               this.loading = false;
               this.progress = 0; // Reinicializamos el progreso
               // Archivo cargado exitosamente
@@ -100,7 +104,7 @@ export class LoadFilesComponent {
 
             }
           }, error: error => {
-            clearInterval(progressIntervalM);
+            clearTimeout(progressTimeoutm);
             this.loading = false;
             this.progress = 0; // Reinicializamos el progreso
             this.showNotification('¡Error!', 'Hubo un error al cargar el archivo.', 'error');
@@ -111,6 +115,59 @@ export class LoadFilesComponent {
         console.log('medi',archivo);
         break;
   
+        case 'collaborators':
+        this.progress = 0; // Reinicializamos el progreso
+        const progressTimeoutc = setTimeout(() => {
+          this.handleProgressAndSuccess(progressTimeout);
+        }, 3);
+
+        this.loadCollaborators.loadingCollaborators(archivo).subscribe({
+          next: progress => {
+            this.progress = progress;
+            if (progress === 100) {
+              this.showNotification('¡Éxito!', 'Archivo cargado exitosamente.', 'success');
+              clearTimeout(progressTimeoutc);
+              this.loading = false;
+              this.progress = 0; // Reinicializamos el progreso
+            }
+          },
+          error: error => {
+            clearTimeout(progressTimeoutc);
+            this.loading = false;
+            this.progress = 50; // Reinicializamos el progreso
+            this.handleError(error); // Handle errors
+          }
+        });
+        console.log('mat',archivo);
+        break;
+  
+
+        case 'providers':
+          this.progress = 0; // Reinicializamos el progreso
+          const progressTimeoutp = setTimeout(() => {
+            this.handleProgressAndSuccess(progressTimeout);
+          }, 3);
+  
+          this.loadProviders.loadingProviders(archivo).subscribe({
+            next: progress => {
+              this.progress = progress;
+              if (progress === 100) {
+                this.showNotification('¡Éxito!', 'Archivo cargado exitosamente.', 'success');
+                clearTimeout(progressTimeoutp);
+                this.loading = false;
+                this.progress = 0; // Reinicializamos el progreso
+              }
+            },
+            error: error => {
+              clearTimeout(progressTimeoutp);
+              this.loading = false;
+              this.progress = 50; // Reinicializamos el progreso
+              this.handleError(error); // Handle errors
+            }
+          });
+          console.log('mat',archivo);
+          break;
+    
       default:
         this.loading = false;
         this.progress = 0; // Reinicializamos el progreso
@@ -119,14 +176,18 @@ export class LoadFilesComponent {
     }
   }
   
-  handleProgressAndSuccess(progressInterval: any): void {
-    this.progress += 25; // Incrementa el progreso gradualmente
-  
+  handleProgressAndSuccess(progressTimeout: any): void {
+    this.progress += 3; // Incrementa el progreso gradualmente
+
     if (this.progress >= 100) {
-      clearInterval(progressInterval); // Detiene el temporizador
+      clearTimeout(progressTimeout); // Detiene el temporizador
       this.loading = false;
       this.progress = 0; // Reinicializamos el progreso
       this.showNotification('¡Éxito!', 'Archivo cargado exitosamente.', 'success');
+    } else {
+      const nextTimeout = setTimeout(() => {
+        this.handleProgressAndSuccess(progressTimeout);
+      }, 3);
     }
   }
   

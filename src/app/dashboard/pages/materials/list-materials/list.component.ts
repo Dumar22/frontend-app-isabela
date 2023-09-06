@@ -5,13 +5,14 @@ import { Material } from 'src/app/dashboard/interfaces/materialsInterface';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { SearchService } from 'src/app/dashboard/services/search.service';
+import { UiModulesModule } from 'src/app/dashboard/components/ui-modules/ui-modules.module';
 
 
 
 @Component({
   selector: 'list-materials',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, UiModulesModule],
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css']
 })
@@ -22,6 +23,11 @@ export class ListComponent implements OnInit {
   public total: number; 
   public loading: boolean = true;
   limit = 20; // Establecer el límite de unidades para marcar en amarillo
+  page: number = 1;
+  count: number = 0;
+  tableSize: number = 7;
+  tableSizes: any = [3, 6, 9, 12];
+
   constructor(private materialsService: MaterialsService,
     private searchService: SearchService,
     private router: Router) { }
@@ -39,10 +45,22 @@ export class ListComponent implements OnInit {
     .subscribe((data: any) =>{
       this.total = data.total;
       this.materials = data.materials;
+      this.materials.sort((a, b) => a.name.localeCompare(b.name));
       this.materialsTemp = data.materials;
       this.loading = false;
     } );
    }
+
+
+   onTableDataChange(event: any) {
+    this.page = event;
+    this.getListMaterials();
+  }
+  onTableSizeChange(event: any): void {
+    this.tableSize = event.target.value;
+    this.page = 1;
+    this.getListMaterials();
+  }
 
    //Buscar
  search (term: string ) {
@@ -61,7 +79,7 @@ export class ListComponent implements OnInit {
 
 
     Swal.fire({
-      title: '¿Borrar material?',
+      title: '¿Borrar Material?',
       text: `Esta a punto de borrar a ${ material.name }`,
       icon: 'question',
       showCancelButton: true,

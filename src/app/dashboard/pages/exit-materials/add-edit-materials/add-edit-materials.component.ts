@@ -94,7 +94,7 @@ export class AddEditMaterialsComponent {
       this.materials = exit.materialExitDetail;
       
       this.formExit.setValue({
-        date: exit.date,
+        date: exit.date,        
         exitNumber: exit.exitNumber,
         collaboratorCode: exit.collaboratorCode,
         collaboratorName: exit.collaboratorName,

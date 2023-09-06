@@ -7,7 +7,7 @@
   
                   <input type="text"
                           class="form-control"
-                          placeholder="Buscar usuario..."
+                          placeholder="Buscar salida..."
                           (keyup)="search( txtTermino.value )"
                           #txtTermino/>
   
@@ -33,13 +33,13 @@
   
       </div>
   </div>
-  <div class="d-flex col-sm-12 col-md-12 col-lg-12 mt-5 mx-auto rounded row-cols-2 m-auto justify-content-center text-center" >
+  <div >
   
     <table
-    class="table align-middle mb-0 bg-white"
+    class="table"
   
     >
-      <thead class="bg-light">
+      <thead >
         <tr>
         <th>#</th>
         <th>Fecha</th>
@@ -51,7 +51,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr  *ngFor="let factura of invoice; let i = index">
+        <tr  *ngFor="let factura of invoice | paginate
+        : {
+            itemsPerPage: tableSize,
+            currentPage: page,
+            totalItems: count
+          }; let i = index">
           <td>
             <p class="fw-normal mb-1 text-primary">{{i+1}}.</p>
           </td>
@@ -59,12 +64,15 @@
             <p class="fw-bold mb-1">{{factura.date}}</p>
           </td>
           <td>
-            <p class="fw-normal mb-1">{{factura.invoiceNumber}}</p>
+            <p class="fw-normal mb-1">{{factura.exitNumber}}</p>
           </td>
           <!-- <td>
             <span class="badge badge-success ">{{factura.providerName}}</span>
           </td> -->
-          <td>Ver detalles</td>
+          <td><button type="button" class="btn btn-secondary btn-sm btn-rounded"
+            (click)="detailExit(factura)">
+            Ver Detalles
+          </button></td>
           <td> <button class="btn btn-secondary btn-sm btn-rounded"
             (click)="downloadInvoice(factura)">
             Descargar PDF
@@ -83,7 +91,14 @@
   
       </tbody>
     </table>
-  
+    <div class="d-flex justify-content-center">
+      <pagination-controls
+        previousLabel="Anterior"
+        nextLabel="Siguiente"
+        (pageChange)="onTableDataChange($event)"
+      >
+      </pagination-controls>
+    </div>
   
   </div>
   <div>

@@ -16,7 +16,7 @@
     </div>
   </div>
 
-  <div class="bg-info.bg-gradient d-flex justify-content-between ">  
+  <div class="bg-info.bg-gradient d-flex ">  
    <button type="button"
     class="btn btn-primary"
      (click)="addProvider()"> Nuevo Proveedor</button>     
@@ -45,7 +45,13 @@
        </tr>
      </thead>
      <tbody>
-       <tr *ngFor="let item of providers; let i = index">
+       <tr *ngFor="let item of providers | paginate
+       : {
+           itemsPerPage: tableSize,
+           currentPage: page,
+           totalItems: count
+         };
+   let i = index">
          <th scope="row">{{i + 1}}</th>
          <td>{{item.name}}</td>
          <td>{{item.nit}}</td>
@@ -63,6 +69,15 @@
        </tr>
      </tbody>
    </table>
+   <div class="d-flex justify-content-center">
+    <pagination-controls
+      previousLabel="Anterior"
+      nextLabel="Siguiente"
+      (pageChange)="onTableDataChange($event)"
+    >
+    </pagination-controls>
+  </div>
  </div>
+ 
 
  </div>

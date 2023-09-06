@@ -5,11 +5,12 @@ import { CollaboratorService } from '../../../services/list-collaborator.service
 import { SearchService } from 'src/app/dashboard/services/search.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { UiModulesModule } from 'src/app/dashboard/components/ui-modules/ui-modules.module';
 
 @Component({
   selector: 'list-collaborators',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, UiModulesModule],
   templateUrl: './list-collaborators.component.html',
   styleUrls: ['./list-collaborators.component.css']
 })
@@ -20,6 +21,10 @@ export class ListCollaboratorsComponent implements OnInit {
   public collaboratorTemp: CollaboratorClass[] = [];
   public desde: number = 0;
   public loading: boolean = true;
+   page: number = 1;
+  count: number = 0;
+  tableSize: number = 7;
+  tableSizes: any = [3, 6, 9, 12];
 
 
   constructor(private collaboratorService: CollaboratorService,
@@ -36,10 +41,22 @@ export class ListCollaboratorsComponent implements OnInit {
     .subscribe( ({ total, collaborator }) => {
       this.total = total;
       this.collaborators = collaborator;
+      this.collaborators.sort((a, b) => a.name.localeCompare(b.name));
       this.collaboratorTemp = collaborator;
       this.loading = false;
     } );
    }
+
+   onTableDataChange(event: any) {
+    this.page = event;
+    this.getListCollaborators();
+  }
+  onTableSizeChange(event: any): void {
+    this.tableSize = event.target.value;
+    this.page = 1;
+    this.getListCollaborators();
+  }
+
 
    //Buscar
  search (term: string ) {

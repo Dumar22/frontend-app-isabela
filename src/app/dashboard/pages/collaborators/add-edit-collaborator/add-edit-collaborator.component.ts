@@ -130,9 +130,9 @@ export class AddEditCollaboratorComponent {
       errores.forEach((error: { msg: any; }) => {
         this.showNotification('¡Error!', error.msg, 'error');
       });
-    } else if (error.error.msg === 'El Usuario ya existe, ingrese uno diferente') {
+    } else if (error.error.msg === 'El Movil ya existe, ingrese uno diferente') {
       // Usuario ya existe
-      this.showNotification('¡Error!', 'El usuario ya existe en la base de datos. Ingrese uno diferente.', 'error');
+      this.showNotification('¡Error!', 'El Movil ya existe en la base de datos. Ingrese uno diferente.', 'error');
     } else {
       // Otro tipo de error
       this.showNotification('¡Error!', error.error.msg, 'error');

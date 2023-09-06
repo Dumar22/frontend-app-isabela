@@ -78,7 +78,7 @@ export class ListEntriesComponent {
   }
   
   detailsEntry(entry: Entries){      
-  this.router.navigate(['dashboard/details-exit', entry.id]);
+  this.router.navigate(['dashboard/details-entries', entry.id]);
   }
 
   deleteEntry(entry: Entries) {   

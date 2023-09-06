@@ -61,7 +61,7 @@ export class ListWarehousesComponent implements OnInit {
       text: `Esta a punto de borrar a ${ warehouse.name }`,
       icon: 'question',
       showCancelButton: true,
-      confirmButtonText: 'Si, borrarlo'
+      confirmButtonText: 'Si, borrarla'
     }).then((result) => {
       if (result.value) {
 
@@ -70,8 +70,8 @@ export class ListWarehousesComponent implements OnInit {
 
             this.getListWarehouses();
             Swal.fire(
-              'Bodega borrado',
-              `${ warehouse.name } fue eliminado correctamente`,
+              'Bodega borrada',
+              `${ warehouse.name } fue eliminada correctamente`,
               'success'
             );
 

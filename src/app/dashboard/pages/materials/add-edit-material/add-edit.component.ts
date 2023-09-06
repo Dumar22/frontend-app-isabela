@@ -128,7 +128,7 @@ export class AddEditComponent implements OnInit {
         next: () => {
           this.showNotification(
             '¡Éxito!',
-            'Proveedor Agregado con éxito:',
+            'Material Agregado con éxito:',
             'success'
           );
         this.router.navigate(['dashboard/list-materials']);
@@ -150,9 +150,9 @@ export class AddEditComponent implements OnInit {
       errores.forEach((error: { msg: any; }) => {
         this.showNotification('¡Error!', error.msg, 'error');
       });
-    } else if (error.error.msg === 'El Usuario ya existe, ingrese uno diferente') {
+    } else if (error.error.msg === 'El Material ya existe, ingrese uno diferente') {
       // Usuario ya existe
-      this.showNotification('¡Error!', 'El usuario ya existe en la base de datos. Ingrese uno diferente.', 'error');
+      this.showNotification('¡Error!', 'El Material ya existe en la base de datos. Ingrese uno diferente.', 'error');
     } else {
       // Otro tipo de error
       this.showNotification('¡Error!', error.error.msg, 'error');

@@ -25,6 +25,10 @@ import { AddEditExitSerialsComponent } from './pages/exit-series/add-edit-exit-s
 import { AddEditMaterialsComponent } from './pages/exit-materials/add-edit-materials/add-edit-materials.component';
 import { LoadFilesComponent } from './pages/load-files/load-files.component';
 import { DetailsExitComponent } from './pages/exit-materials/details-exit/details-exit.component';
+import { ListWorkRegisterComponent } from './pages/work-register/list-work-register/list-work-register.component';
+import { AddEditWorkRegisterComponent } from './pages/work-register/add-edit-work-register/add-edit-work-register.component';
+import { DetailsTransferComponent } from './pages/transfer/details-transfer/details-transfer.component';
+import { DetailExitSeriesComponent } from './pages/exit-series/detail-exit-series/detail-exit-series.component';
 
 
 export const routes: Routes = [
@@ -46,6 +50,9 @@ export const routes: Routes = [
   {path: 'list-providers',component:ListProvidersComponent},
   {path: 'addprovider',component:AddEditprovidersComponent},
   {path: 'editprovider/:id',component:AddEditprovidersComponent},
+  {path: 'list-work-register',component:ListWorkRegisterComponent},
+  {path: 'add-work-register',component:AddEditWorkRegisterComponent},
+  {path: 'edit-work-register/:id',component:AddEditWorkRegisterComponent},
   {path: 'list-collaborators',component:ListCollaboratorsComponent},
   {path: 'addcollaborators',component:AddEditCollaboratorComponent},
   {path: 'editcollaborator/:id',component:AddEditCollaboratorComponent},
@@ -57,9 +64,11 @@ export const routes: Routes = [
   {path: 'list-trasfers',component:ListTransferComponent},
   {path: 'add-transfer',component:AddEditTransferComponent},
   {path: 'edit-transfer/:id',component:AddEditTransferComponent},
-  {path: 'list-exit-series',component:ListexitSerieComponent},
-  {path: 'add-exit-series',component:AddEditExitSerialsComponent},
-  {path: 'edit-exit-series/:id',component:AddEditExitSerialsComponent},
+  {path: 'details-exit-register/:id',component:DetailExitSeriesComponent},
+  {path: 'list-exit-register',component:ListexitSerieComponent},
+  {path: 'details-transfer/:id',component:DetailsTransferComponent},
+  {path: 'add-exit-register',component:AddEditExitSerialsComponent},
+  {path: 'edit-exit-register/:id',component:AddEditExitSerialsComponent},
   {path: 'list-exit-materials',component:ListexitMaterialsComponent},
   {path: 'add-exit-material',component:AddEditMaterialsComponent},
   {path: 'edit-exit-material/:id',component:AddEditMaterialsComponent},

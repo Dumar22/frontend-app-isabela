@@ -1,16 +1,17 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Invoice } from 'src/app/dashboard/interfaces/invoiceInterface';
 
 import { SearchService } from 'src/app/dashboard/services/search.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { IvnvoiceServiceService } from 'src/app/dashboard/services/ivnvoice-service.service';
+import { ExitReg } from 'src/app/dashboard/interfaces/exitRegisterInterface';
+import { ExitRegisterService } from 'src/app/dashboard/services/exit-register.service';
+import { UiModulesModule } from 'src/app/dashboard/components/ui-modules/ui-modules.module';
 
 @Component({
   selector: 'app-listexit-serie',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, UiModulesModule],
   templateUrl: './listexit-serie.component.html',
   styleUrls: ['./listexit-serie.component.css']
 })
@@ -19,11 +20,15 @@ export class ListexitSerieComponent {
   route: [] = [];
 
   public invoice: any[] = [];
-  public factura : Invoice;
-  public invoicesTemp: Invoice[] = [];
+  public factura : ExitReg;
+  public invoicesTemp: ExitReg[] = [];
   public loading: boolean = true;
+  page: number = 1;
+  count: number = 0;
+  tableSize: number = 7;
+  tableSizes: any = [3, 6, 9, 12];
 
-  constructor(private invoiceService: IvnvoiceServiceService,
+  constructor(private exitService: ExitRegisterService,
     private searchService: SearchService,
     private router: Router) { }
 
@@ -37,15 +42,24 @@ export class ListexitSerieComponent {
      getListInvoices(){
   
       this.loading = true;
-      this.invoiceService.getInvoices()
+      this.exitService.getExit()
       .subscribe((data:any) =>{
-        this.invoice = data.invoiceAuth;
-        //console.log(data);        
-        this.invoicesTemp = data;
+        this.invoice = data.exitAuth;
+        this.invoice.sort((a, b) => a.date.localeCompare(b.date)); 
+        this.invoicesTemp = data.exitAuth;
         this.loading = false;
       } );
      }
 
+     onTableDataChange(event: any) {
+      this.page = event;
+      this.getListInvoices();
+    }
+    onTableSizeChange(event: any): void {
+      this.tableSize = event.target.value;
+      this.page = 1;
+      this.getListInvoices();
+    }
 
      //Buscar
  search (term: string ) {
@@ -60,17 +74,17 @@ export class ListexitSerieComponent {
         });
   }
 
-  downloadInvoice(invoice: Invoice) {
-    console.log('dowload',invoice.id);
+  downloadInvoice(exit: ExitReg) {
+    console.log('dowload',exit.id);
     
-    this.invoiceService.downloadInvoicePDF(invoice.id)
+    this.exitService.downloadExitPDF(exit.id)
     .subscribe(response => {
       
       const url = window.URL.createObjectURL(response);
       
       const link = document.createElement('a');
       link.href = url;
-      link.download = `factura-${invoice.invoiceNumber}.pdf`;
+      link.download = `factura-${exit.exitNumber}.pdf`;
       link.click();
 
       window.URL.revokeObjectURL(url);
@@ -79,28 +93,24 @@ export class ListexitSerieComponent {
   }
 
 
-  deleteInvoice(invoice: Invoice) {
-
-    // if ( user.id === this.userService.id ) {
-    //   return Swal.fire('Error', 'No puede borrarse a si mismo', 'error');
-    // }
+  deleteInvoice(exit: ExitReg) {
 
     Swal.fire({
-      title: '¿Borrar entrada?',
-      text: `Esta a punto de borrar a ${ invoice.invoiceNumber }`,
+      title: '¿Borrar salida?',
+      text: `Esta a punto de borrar a ${ exit.exitNumber }`,
       icon: 'question',
       showCancelButton: true,
       confirmButtonText: 'Si, borrar'
     }).then((result) => {
       if (result.value) {
 
-        this.invoiceService.deleteInvoice( invoice )
+        this.exitService.deleteExit( exit )
           .subscribe( resp => {
 
             this.getListInvoices();
             Swal.fire(
-              'Usuario borrado',
-              `${ invoice.invoiceNumber } fue eliminado correctamente`,
+              'Salida borrada',
+              `${ exit.exitNumber } fue eliminado correctamente`,
               'success'
             );
 
@@ -112,12 +122,16 @@ export class ListexitSerieComponent {
 
   }
 
+  detailExit(exit:  ExitReg){      
+    this.router.navigate(['dashboard/details-exit-register', exit.id]);
+    }
+
 addInvoice(){
-    this.router.navigate(['dashboard/add-invoice']);
+    this.router.navigate(['dashboard/add-exit-register']);
   }
   
-editInvoice(invoice: Invoice) {
-  this.router.navigate(['dashboard/edit-invoice', invoice.id]);
+editInvoice(invoice: ExitReg) {
+  this.router.navigate(['dashboard/edit-exit-register', invoice.id]);
 }
 
 
