@@ -24,7 +24,7 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 export class AddEditComponent implements OnInit {
   form: FormGroup;
   id: string ;
-  public warehouse : string ;
+  public warehouses : string ;
   operation: string = 'Agregar ';
 
   options = [
@@ -44,8 +44,7 @@ export class AddEditComponent implements OnInit {
       code: ['', Validators.required],
       unity: ['', Validators.required],      
       quantity: ['', Validators.required],
-      value: ['', Validators.required],     
-      warehouse: [this.warehouse],
+      price: ['', Validators.required],     
       available: [false],
     });
     this.id = this.aRouter.snapshot.paramMap.get('id')?? '';
@@ -68,7 +67,7 @@ export class AddEditComponent implements OnInit {
 
   ngOnInit(): void {
     const user = this.authService.currentUser
-    this.warehouse = user().warehouse;
+    this.warehouses = user().warehouses[0];
 
     if (this.id != '') {
       // Es editar
@@ -78,15 +77,14 @@ export class AddEditComponent implements OnInit {
   }
 
   getMaterial(id: string) {
-    this.materialService.getMatrialById(id)
+    this.materialService.getMaterialById(id)
     .subscribe((data: Material) => {
       this.form.setValue({
         name: data.name,
         code: data.code,
         unity: data.unity,        
         quantity: data.quantity,
-        value: data.value,
-        warehouse: this.warehouse,
+        price: data.price,
         available: data.available,        
       });
     });
@@ -99,15 +97,16 @@ export class AddEditComponent implements OnInit {
       code: this.form.value.code,
       unity: this.form.value.unity,     
       quantity: this.form.value.quantity,
-      value: this.form.value.value,      
-      warehouse: this.warehouse,
+      price: this.form.value.price,    
       available: this.form.value.available,
-    };
+    }; 
+        
 
     if (this.id !== '') {
       // Es editar
       material.id = this.id;
-      this.materialService.updateMaterial(this.id, material)
+      const {id, ...rest } = material
+      this.materialService.updateMaterial(this.id, rest)
       .subscribe({
         next: () => {
           this.showNotification(
@@ -118,7 +117,9 @@ export class AddEditComponent implements OnInit {
         this.router.navigate(['dashboard/list-materials']);
       },
       error: (error) => {
-        this.handleError(error);
+        this.handleError(error );
+        //console.log(error);
+        
       }
     });
     } else {
@@ -140,24 +141,34 @@ export class AddEditComponent implements OnInit {
     }
   }
 
-  handleError(error: any) {
-    if (error.status == 0) {
-      // Error de conexión
-      this.showNotification('¡Error!', 'Hubo un error de conexión con el servidor.', 'error');
-    } else if (error.error.errors) {
-      // Errores de validación del formulario
-      const errores = error.error.errors;
-      errores.forEach((error: { msg: any; }) => {
-        this.showNotification('¡Error!', error.msg, 'error');
-      });
-    } else if (error.error.msg === 'El Material ya existe, ingrese uno diferente') {
-      // Usuario ya existe
-      this.showNotification('¡Error!', 'El Material ya existe en la base de datos. Ingrese uno diferente.', 'error');
+  handleError(error: any) {    
+    // console.log(error);
+
+    if (error.status === 0) {
+        // Error de conexión
+        this.showNotification('¡Error!', 'Hubo un error de conexión con el servidor.', 'error');
+    } else if (error.status === 500) {
+        // Error de conexión     
+        this.showNotification('¡Error!', 'Internal Server Error.', 'error');
+    } else if (error && error.error && error.error.message) {      
+        // Errores de validación del formulario
+        const errores = error.error.message;   
+
+        if (Array.isArray(errores)) {
+            let mensajeError = '';
+            errores.forEach((error: { message: any; }, index: number) => {      
+                mensajeError += `${index + 1}. ${error}\n`;
+            });
+            this.showNotification('¡Error!', mensajeError, 'error');
+        } else {         
+            // Si el mensaje de error no es un array, podrías manejarlo de otra manera.
+            this.showNotification('¡Error!', errores, 'error');
+        }
     } else {
-      // Otro tipo de error
-      this.showNotification('¡Error!', error.error.msg, 'error');
+        // Manejar otros casos de error aquí
+        this.showNotification('¡Error!', 'Error inesperado. Por favor, inténtalo de nuevo.', 'error');
     }
-  }
+}
   
 
   showNotification(title: string, message: string, icon: string) {

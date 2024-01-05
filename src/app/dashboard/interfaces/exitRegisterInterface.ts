@@ -21,7 +21,7 @@ export interface Material{
     quantity: number,
     restore:number,
     serial: number,
-    value: number,       
+    price: number,       
     total: number,       
     obs: string,       
   }

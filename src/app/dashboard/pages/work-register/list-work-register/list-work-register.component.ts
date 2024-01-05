@@ -39,10 +39,11 @@ export class ListWorkRegisterComponent {
     this.loading = true;
     this.workRegisterService.getWorkRegister()
     .subscribe((data: any) =>{
+           
       this.total = data.total;        
-      this.workRegister = data.workInstall;
+      this.workRegister = data;
       this.workRegister.sort((a, b) => a.name.localeCompare(b.name));
-      this.workRegisterTemp = data.workInstall;
+      this.workRegisterTemp = data;
       this.loading = false;
     } );
    }
@@ -63,7 +64,7 @@ export class ListWorkRegisterComponent {
     this.workRegister = this.workRegisterTemp;
     return ;
   }
-   this.searchService.search('materials', term )
+   this.searchService.search('workinstall', term )
         .subscribe( resp => {
           this.workRegister = resp ;
         });
@@ -73,11 +74,11 @@ export class ListWorkRegisterComponent {
 
 
     Swal.fire({
-      title: '¿Borrar Matrícula?',
-      text: `Esta a punto de borrarla matrícula ${ workRegister.registration }`,
+      title: '¿Borrar Contrato?',
+      text: `Esta a punto de borrar el contarto ${ workRegister.registration }`,
       icon: 'question',
       showCancelButton: true,
-      confirmButtonText: 'Si, borrarla'
+      confirmButtonText: 'Si, borrar'
     }).then((result) => {
       if (result.value) {
 

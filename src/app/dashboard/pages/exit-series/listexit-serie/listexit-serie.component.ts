@@ -68,7 +68,7 @@ export class ListexitSerieComponent {
     this.invoice = this.invoicesTemp;
     return ;
   }
-   this.searchService.search('invoices', term )
+   this.searchService.search('exitregister', term )
         .subscribe( resp => {
           this.invoice = resp;
         });

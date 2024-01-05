@@ -1,7 +1,7 @@
 import { Observable, map} from 'rxjs';
 import { HttpClient, HttpEvent, HttpEventType } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.prod';
 import { Provider } from '../interfaces/providerInterface';
 import { WarehousesService } from './warehouses.service';
 
@@ -29,19 +29,19 @@ export class ProviderService {
 
 
    getProviderById(id:string):Observable<Provider>{
-     return this.http.get<Provider>(`${this.baseUrl}/provider/${id}`, this.createHeaders.createHeaders())
+     return this.http.get<Provider>(`${this.baseUrl}/providers/${id}`, this.createHeaders.createHeaders())
    }
 
    saveProvider( provider: Provider): Observable<Provider>{
-    return this.http.post<Provider>(`${this.baseUrl}/provider`, provider,  this.createHeaders.createHeaders())
+    return this.http.post<Provider>(`${this.baseUrl}/providers`, provider,  this.createHeaders.createHeaders())
    }
 
    updateProvider(id:string, provider:Provider): Observable<void>{
-     return this.http.put<void>(`${this.baseUrl}/provider/${provider.id}`, provider,  this.createHeaders.createHeaders())
+     return this.http.patch<void>(`${this.baseUrl}/providers/${id}`, provider,  this.createHeaders.createHeaders())
    }
 
    deleteProvider(provider: Provider): Observable<Provider>{
-     return this.http.delete<Provider>(`${this.baseUrl}/provider/${provider.id}`,  this.createHeaders.createHeaders());
+     return this.http.delete<Provider>(`${this.baseUrl}/providers/${provider.id}`,  this.createHeaders.createHeaders());
    }
 
    loadingProviders(file: File): Observable<number> {

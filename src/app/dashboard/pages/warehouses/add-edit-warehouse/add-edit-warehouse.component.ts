@@ -67,28 +67,69 @@ export class AddEditWarehouseComponent {
     if (this.id !== '') {
       // Es editar
       warehouse.id = this.id;
-       this.wareHousesService.updateWarehouse(this.id, warehouse).subscribe(() => {
+      const {id, ...rest } = warehouse
+       this.wareHousesService.updateWarehouse(this.id, rest)
+       .subscribe({
+
+        next: () => {
         this.showNotification(
           '¡Éxito!',
           'Bodega actualizada con éxito:',
           'success'
         );
         this.router.navigate(['dashboard/list-warehuses']);
+      },
+      error: (error) => {
+        this.handleError(error);
+      }
       });
     } else {
       // Es agregagar
-      this.wareHousesService.saveWarehouse(warehouse).subscribe(() => {
+      const {id, ...rest } = warehouse
+      this.wareHousesService.saveWarehouse(rest)
+      .subscribe({
+        next: () => {
         this.showNotification(
           '¡Éxito!',
           'Bodega Agregada con éxito:',
           'success'
         );
         this.router.navigate(['dashboard/list-warehuses']);
+      },
+      error: (error) => {
+        //console.log(error);
+        
+        this.handleError(error);
+      }
       });
     }
   }
 
-
+  handleError(error: any) {
+       
+    if (error.status === 0) {
+      // Error de conexión
+      this.showNotification('¡Error!', 'Hubo un error de conexión con el servidor.', 'error');
+    } else if (error.status === 500) {
+      // Error de conexión     
+      this.showNotification('¡Error!', 'Internal Server Error.', 'error');
+    }
+    
+    else if (error) {
+      // Errores de validación del formulario
+      const errores = error.error.message;   
+         
+                     
+      let mensajeError = '';
+      errores.forEach((error: { message: any; }, index: number) => {      
+         mensajeError += `${index + 1}. ${error}\n`;
+      });
+      this.showNotification('¡Error!', mensajeError, 'error');
+      
+    } 
+      
+   
+  }
 
   showNotification(title: string, message: string, icon: string) {
     Swal.fire({

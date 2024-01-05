@@ -2,16 +2,16 @@
 
 export interface LoginResponse{
     message:   string;
-    userexist: Userlog;
+    user: Userlog;
     token:     string;
 }
 
 export interface Userlog {
     id:        string;
-    name:      string;
+    fullName:  string;
     user:      string;
-    rol:       string; 
-    warehouse: string;   
-    status:    boolean;
+    rol:       string[]; 
+    warehouses: string[];   
+    isActive?:    boolean;
   
 }

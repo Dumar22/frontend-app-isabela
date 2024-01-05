@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { MaterialsService } from '../../services/materials.service';
-import { Material } from '../../interfaces/entriesInterfaces';
+import { Material } from '../../interfaces/materialsInterface';
+
 
 @Component({
   selector: 'material-details',
@@ -41,13 +42,15 @@ export class MaterialDetailsComponent {
  
   getListMaterials(){
     this.materialService.getMaterials()
-    .subscribe((data:any) =>{      
-      this.material = data.materials;
+    .subscribe((data:Material[]) =>{                
+      this.material = data;
+      
   });
   }
 
   onMaterialSelect() {
     const selectedMaterial = this.material.find(material => material.code === this.materialForm.value.code);
+    
     if (selectedMaterial) {
         this.materialForm.patchValue({
             name: selectedMaterial.name
@@ -66,19 +69,22 @@ onMaterialSelectCode() {
 
   addMaterial() {
     const selectedMaterial = this.material.find(material => material.name === this.materialForm.value.name);
-
+   
     if (selectedMaterial) {
         const newMaterial = {
+            id: selectedMaterial.id,
             code: selectedMaterial.code,
             name: this.materialForm.value.name,
             quantity: this.materialForm.value.quantity,
             serial: this.materialForm.value.serial,
             observaciones: this.materialForm.value.observaciones,
             unity: selectedMaterial.unity, // Ajusta esta línea según la propiedad correspondiente en tu objeto de material
-            value: selectedMaterial.value, // Ajusta esta línea según la propiedad correspondiente en tu objeto de material
+            price: selectedMaterial.price, // Ajusta esta línea según la propiedad correspondiente en tu objeto de material
         };
 
         this.materials.push(newMaterial);
+        
+        
         this.materialsChange.emit(this.materials);
         this.materialForm.reset();
     }

@@ -5,7 +5,7 @@ import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } fr
 import { ValidatorsService } from 'src/app/dashboard/services/Validate.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TransferServiceService } from 'src/app/dashboard/services/transfer-service.service';
-import { CollaboratorService } from 'src/app/dashboard/services/list-collaborator.service';
+import { CollaboratorService } from 'src/app/dashboard/services/collaborator.service';
 import { Collaborator } from 'src/app/dashboard/interfaces/collaboratorInterface';
 import { Material, Transfers } from 'src/app/dashboard/interfaces/transferInterface';
 import { MaterialDetailsComponent } from '../../material-details/material-details.component';
@@ -19,14 +19,25 @@ import { MaterialDetailsComponent } from '../../material-details/material-detail
 export class AddEditTransferComponent {
 
   materials:Material [] = [];
-  formTransfer: FormGroup;
   id: string ;
-  materialTransferDetail: FormArray;
+  createDetailTransferDto: FormArray;
   mode: string = 'Agregar '; 
   public collaborator: Collaborator[];
 
+   public formTransfer = this.formBuilder.group({
+    date: ['', Validators.required],
+    transferNumber: ['', Validators.required],
+    origin: ['', Validators.required],
+    destination: ['', Validators.required],
+    autorization: ['', Validators.required],
+    delivery: ['', Validators.required],
+    documentdelivery: ['', Validators.required],
+    receive: ['', Validators.required],
+    documentreceive: ['', Validators.required],
+    createDetailTransferDto: this.formBuilder.array([])
+      });
 
- 
+    
   constructor(
     private formBuilder: FormBuilder,
     private aRouter: ActivatedRoute,
@@ -34,19 +45,7 @@ export class AddEditTransferComponent {
     private collaboratorService: CollaboratorService,
     private transferService:TransferServiceService,
      private validatorsService:ValidatorsService) { 
-    this.formTransfer = this.formBuilder.group({
-      date: ['', Validators.required],
-      transferNumber: ['', Validators.required],
-      origin: ['', Validators.required],
-      destination: ['', Validators.required],
-      autorization: ['', Validators.required],
-      delivery: ['', Validators.required],
-      documentdelivery: ['', Validators.required],
-      receive: ['', Validators.required],
-      documentreceive: ['', Validators.required],
-      materialTransferDetail: this.formBuilder.array([])
-        });
-        this.materialTransferDetail = this.formTransfer.get('materialTransferDetail') as FormArray;
+      this.createDetailTransferDto = this.formTransfer.get('createDetailTransferDto') as FormArray;
         this.id = this.aRouter.snapshot.paramMap.get('id')?? '';
   }
 
@@ -55,14 +54,14 @@ export class AddEditTransferComponent {
     if (this.id != '') {
       // Es editar
      this.mode = 'Editar ';
-      this.getTransfer(this.id);
+      this.getTransfer();
     }
   }
 
   getListCollaborator(){
     this.collaboratorService.getCollaborators()
     .subscribe((data:any) =>{      
-      this.collaborator = data.collaborator;
+      this.collaborator = data;
       
   });
   }
@@ -71,7 +70,7 @@ export class AddEditTransferComponent {
     return this.validatorsService.isValidField(this.formTransfer, field);
   }
 
-  onMaterialsChange(materials: any[]) {
+  onMaterialsChange(materials: Material[]) {
     this.materials = materials;
   }
 
@@ -79,74 +78,74 @@ export class AddEditTransferComponent {
     const selectedCollaborator = this.collaborator.find(collaborator => collaborator.name === this.formTransfer.value.delivery);
     if (selectedCollaborator) {
       this.formTransfer.patchValue({
-        documentdelivery: selectedCollaborator.document,       
+        documentdelivery: selectedCollaborator.document.toString(),       
       });
     }
     const selectedCollaborator2 = this.collaborator.find(collaborator => collaborator.name === this.formTransfer.value.receive);
     if (selectedCollaborator2) {
       this.formTransfer.patchValue({        
-        documentreceive: selectedCollaborator2.document,
+        documentreceive: selectedCollaborator2.document.toString(),
         
       });
-    }
-  }
+    } } 
 
-
-
- 
-
-  getTransfer(id: string) {
-    this.transferService.getTransfersById(id)
-    .subscribe((data: any) => {
-      const exit = data.transfer;
-      this.materials = exit.materialTransferDetail;
-      //console.log(exit);
+  getTransfer() {
+    this.transferService.getTransfersById(this.id)
+    .subscribe((data: Transfers) => {
+      const transfer = data;
+     
+      this.materials = transfer.details;
       
-      this.formTransfer.setValue({
-        date: exit.date,
-        transferNumber: exit.transferNumber,
-        origin: exit.origin,
-        destination: exit.destination,
-        autorization: exit.autorization,
-        delivery: exit.delivery,
-        documentdelivery: exit.documentdelivery,
-        receive: exit.receive,
-        documentreceive: exit.documentreceive,
-        materialTransferDetail: []
+      this.formTransfer.patchValue({
+        date: transfer.date,
+        transferNumber: transfer.transferNumber,
+        origin: transfer.origin,
+        destination: transfer.destination,
+        autorization: transfer.autorization,
+        delivery: transfer.delivery,
+        documentdelivery: transfer.documentdelivery,
+        receive: transfer.receive,
+        documentreceive: transfer.documentreceive,
+        
       });
-      exit.materialTransferDetail.forEach((material: any) => {
-        this.materialTransferDetail.push(
+      transfer.details.forEach((material: Material) => {        
+        this.createDetailTransferDto.push(
           this.formBuilder.group({
             name: [material.name, Validators.required],
             quantity: [material.quantity, [Validators.required, Validators.min(1)]],
-            serie: [material.serie],
-            observaciones: [material.observaciones]
+            serie: [material.serial],
+            observation: [material.observation]
           })
         );
       });
     });
   }
     
-  addTransfer() {
+  addTransfer() {     
+        
     if (this.formTransfer.valid) {
-      const newExit:Transfers = {
+      const newExit: Transfers = {
         date: this.formTransfer.value.date,
         transferNumber: this.formTransfer.value.transferNumber,
-        origin: this.formTransfer.value.origin,
-        destination: this.formTransfer.value.destination,
-        autorization: this.formTransfer.value.autorization,
+        origin: this.formTransfer.value.origin.toUpperCase(),
+        destination: this.formTransfer.value.destination.toUpperCase(),
+        autorization: this.formTransfer.value.autorization.toUpperCase(),
         delivery: this.formTransfer.value.delivery,
-        documentdelivery: this.formTransfer.value.documentdelivery,
+        documentdelivery: this.formTransfer.value.documentdelivery.toString(),
         receive: this.formTransfer.value.receive,
-        documentreceive: this.formTransfer.value.documentreceive,
-        materialTransferDetail: this.materials,
-        
+        documentreceive: this.formTransfer.value.documentreceive.toString(),
+        createDetailTransferDto: this.materials
       };
-
+      
+      
       if (this.id != '') {
+
         //editar
-        newExit.id = this.id;
-        this.transferService.updateTransfers(this.id, newExit)
+        const editedTransfer = {...this.formTransfer.value};
+        
+        const {id ,...rest} = newExit
+        
+        this.transferService.updateTransfers(this.id, rest)
         .subscribe({
           next: () => {
             this.showNotification(
@@ -162,6 +161,7 @@ export class AddEditTransferComponent {
         });
 
       } else {
+        
         this.transferService.saveTransfers(newExit)
       .subscribe({
         next: () => {
@@ -181,24 +181,34 @@ export class AddEditTransferComponent {
     }
   }
 
-  handleError(error: any) {
-    if (error.status == 0) {
-      // Error de conexión
-      this.showNotification('¡Error!', 'Hubo un error de conexión con el servidor.', 'error');
-    } else if (error.error.errors) {
-      // Errores de validación del formulario
-      const errores = error.error.errors;
-      errores.forEach((error: { msg: any; }) => {
-        this.showNotification('¡Error!', error.msg, 'error');
-      });
-    } else if (error.error.msg === 'El Traslado ya existe, ingrese uno diferente') {
-      // Usuario ya existe
-      this.showNotification('¡Error!', 'El Traslado ya existe en la base de datos. Ingrese uno diferente.', 'error');
+  handleError(error: any) {    
+    // console.log(error);
+
+    if (error.status === 0) {
+        // Error de conexión
+        this.showNotification('¡Error!', 'Hubo un error de conexión con el servidor.', 'error');
+    } else if (error.status === 500) {
+        // Error de conexión     
+        this.showNotification('¡Error!', 'Internal Server Error.', 'error');
+    } else if (error && error.error && error.error.message) {      
+        // Errores de validación del formulario
+        const errores = error.error.message;   
+
+        if (Array.isArray(errores)) {
+            let mensajeError = '';
+            errores.forEach((error: { message: any; }, index: number) => {      
+                mensajeError += `${index + 1}. ${error}\n`;
+            });
+            this.showNotification('¡Error!', mensajeError, 'error');
+        } else {         
+            // Si el mensaje de error no es un array, podrías manejarlo de otra manera.
+            this.showNotification('¡Error!', errores, 'error');
+        }
     } else {
-      // Otro tipo de error
-      this.showNotification('¡Error!', error.error.msg, 'error');
+        // Manejar otros casos de error aquí
+        this.showNotification('¡Error!', 'Error inesperado. Por favor, inténtalo de nuevo.', 'error');
     }
-  }
+}
   
   showNotification(title: string, message: string, icon: string) {
     Swal.fire({

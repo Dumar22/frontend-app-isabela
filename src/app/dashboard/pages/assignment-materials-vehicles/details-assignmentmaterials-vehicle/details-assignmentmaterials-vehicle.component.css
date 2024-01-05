@@ -1,0 +1,11 @@
+:host {
+  display: block;
+}
+
+
+.space{
+  display: flex; 
+  justify-content: space-between;
+  width: 70%;
+  text-align: center;
+}

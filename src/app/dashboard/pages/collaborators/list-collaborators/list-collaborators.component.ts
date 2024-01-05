@@ -1,7 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Collaborator, CollaboratorClass } from 'src/app/dashboard/interfaces/collaboratorInterface';
-import { CollaboratorService } from '../../../services/list-collaborator.service';
+import { CollaboratorService } from '../../../services/collaborator.service';
 import { SearchService } from 'src/app/dashboard/services/search.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
@@ -36,13 +36,13 @@ export class ListCollaboratorsComponent implements OnInit {
    };
 
    getListCollaborators(){
+
     this.loading = true;
-    this.collaboratorService.loadCollaborators(this.desde)
-    .subscribe( ({ total, collaborator }) => {
-      this.total = total;
-      this.collaborators = collaborator;
-      this.collaborators.sort((a, b) => a.name.localeCompare(b.name));
-      this.collaboratorTemp = collaborator;
+    this.collaboratorService.getCollaborators()
+    .subscribe((data: any) =>{
+      this.total = data;
+      this.collaborators = data;     
+      this.collaboratorTemp = data;
       this.loading = false;
     } );
    }

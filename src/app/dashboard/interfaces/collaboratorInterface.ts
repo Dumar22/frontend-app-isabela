@@ -7,9 +7,9 @@ export class CollaboratorClass {
       public name: string,
       public operation: string,
       public document:number,
-      public phone:boolean,
-      public state: boolean,
-      public warehouse: string
+      public phone:string,
+      public mail:string,
+      public status?: boolean
   ) {}
 }
 
@@ -21,9 +21,9 @@ export interface Collaborator{
   name: string,
   operation: string,
   document:number,
-  phone?:boolean,
-  state: boolean,
-  warehouse: string,
+  phone?:string,
+  mail?:string,
+  status?: boolean
 }
 
 export interface LoadCollaborator{

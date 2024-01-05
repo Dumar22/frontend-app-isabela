@@ -3,11 +3,12 @@ export interface Material{
   name: string,
   code: string,
   unity: string,
+  serial?:string,
   quantity: number,
-  value: number,  
-  warehouse:string,
+  price: number,  
   available: boolean,
- 
+  total?: number,
+  observation?: string, 
 }
 
 export class MaterialClass {
@@ -17,7 +18,7 @@ export class MaterialClass {
     public code: string,
     public unity: string,
     public quantity: number,
-    public value: number,
+    public price: number,
     public serial: string,    
     public available: boolean,
 

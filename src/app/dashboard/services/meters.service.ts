@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { WarehousesService } from './warehouses.service';
 import { Observable, map } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.prod';
 import { HttpClient, HttpEvent, HttpEventType } from '@angular/common/http';
 import { Meter } from '../interfaces/metersInterface';
 
@@ -22,19 +22,19 @@ export class MetersService {
 
 
   getMeterById(id:string):Observable<Meter>{
-    return this.http.get<Meter>(`${this.baseUrl}/meter/${id}`,this.createHeaders.createHeaders())
+    return this.http.get<Meter>(`${this.baseUrl}/meters/${id}`,this.createHeaders.createHeaders())
   }
 
   saveMeter( meter: Meter): Observable<Meter>{
-   return this.http.post<Meter>(`${this.baseUrl}/meter`, meter,this.createHeaders.createHeaders())
+   return this.http.post<Meter>(`${this.baseUrl}/meters`, meter,this.createHeaders.createHeaders())
   }
 
   updateMeter(id:string, meter:Meter): Observable<void>{
-    return this.http.put<void>(`${this.baseUrl}/meter/${meter.id}`, meter,this.createHeaders.createHeaders())
+    return this.http.patch<void>(`${this.baseUrl}/meters/${id}`, meter,this.createHeaders.createHeaders())
   }
 
   deleteMeter(meter: Meter): Observable<Meter>{
-    return this.http.delete<Meter>(`${this.baseUrl}/meter/${meter.id}`,this.createHeaders.createHeaders());
+    return this.http.delete<Meter>(`${this.baseUrl}/meters/${meter.id}`,this.createHeaders.createHeaders());
   }
 
   loadMeters(file: File): Observable<number> {

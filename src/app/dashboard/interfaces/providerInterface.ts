@@ -2,8 +2,6 @@ export interface Provider{
   id?: string,
   name: string,
   nit: string,
-  ally?:boolean
-  warehouse: string
 }
 export class ProviderC{
   constructor(

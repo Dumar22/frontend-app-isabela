@@ -9,20 +9,22 @@ export interface Transfers{
     documentdelivery: string,
     receive: string,
     documentreceive: string,
-    materialTransferDetail: Material[],
+    createDetailTransferDto?: Material[],
+    details?: Material[],
 
 }
 
 export interface Material{
     id?: string,
     name: string,
-    code: string,
-    unity: string,
-    state: boolean,
-    quantity: number,
-    restore:number,
-    serial: number,
-    value: number,       
-    total: number,       
-    obs: string,       
+    code: string;
+    unity: string;
+    serial: string;
+    brand: string; 
+    quantity: number;
+    price: number;
+    observation?: string;       
+    total: number,  
+    available: boolean,    
+    obs?: string,       
   }

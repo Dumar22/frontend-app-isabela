@@ -4,19 +4,18 @@
   <h4 class="text-center">Agregar materiales a la factura</h4>
 <form class="row" [formGroup]="materialForm" (ngSubmit)="addMaterial()">
   <div class="col-md-3">
-    <label class="form-label">Código:</label>
-    <select class="form-select" aria-label="Default select example" formControlName="code" (change)="onMaterialSelect()">
-        <option selected >--Seleccione un código--</option>
-        <option *ngFor="let materialItem of material">{{ materialItem.code }}</option>          
+    <label for="code" class="form-label">Código:</label>
+<select id="code" class="form-select" aria-label="Default select example" formControlName="code" (change)="onMaterialSelect()">
+        <option value="" selected >--Seleccione un código--</option>
+        <option *ngFor="let materialItem of material" [ngValue]="materialItem.code">{{ materialItem.code }}</option>        
     </select>
 </div>
 <div class="col-md-4">
     <label class="form-label">Material:</label>
-    <select class="form-select" aria-label="Default select example" formControlName="name"
-    (change)="onMaterialSelectCode()">
-        <option selected >--Seleccione un material--</option>
-        <option *ngFor="let materialItem of material">{{ materialItem.name }}</option>          
-    </select>       
+    <select class="form-select" aria-label="Default select example" formControlName="name" (change)="onMaterialSelectCode()">
+      <option value="" selected>--Seleccione un material--</option>
+      <option *ngFor="let materialItem of material" [value]="materialItem.name">{{ materialItem.name }}</option>
+  </select>      
 </div>
     <div class="col-md-2">
       <label class="form-label">Cantidad:</label>
@@ -57,7 +56,7 @@
         <td>{{ material.unity }}</td>
         <td>{{ material.quantity }}</td>
         <td>{{ material.serial }}</td>
-        <td>{{ material.value }}</td>
+        <td>{{ material.price }}</td>
         <td>{{ material.obs }}</td>
         <td><button (click)="removeMaterial(material)" class="btn btn-danger">Eliminar</button></td>
       </tr>

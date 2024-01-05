@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.prod';
 import { Warehouse } from '../interfaces/warehouseInterface';
 
 @Injectable({
@@ -24,27 +24,28 @@ export class WarehousesService {
 
 
    getWarehouseById(id:string):Observable<Warehouse>{
-     return this.http.get<Warehouse>(`${this.baseUrl}/warehouse/${id}`,this.createHeaders())
+     return this.http.get<Warehouse>(`${this.baseUrl}/warehouses/${id}`,this.createHeaders())
    }
 
    saveWarehouse( warehouse: Warehouse): Observable<Warehouse>{
-    return this.http.post<Warehouse>(`${this.baseUrl}/warehouse`, warehouse, this.createHeaders())
+    return this.http.post<Warehouse>(`${this.baseUrl}/warehouses`, warehouse, this.createHeaders())
    }
 
    updateWarehouse(id:string, warehouse:Warehouse): Observable<void>{
-     return this.http.put<void>(`${this.baseUrl}/warehouse/${warehouse.id}`, warehouse, this.createHeaders())
+     return this.http.patch<void>(`${this.baseUrl}/warehouses/${id}`, warehouse, this.createHeaders())
    }
 
    deleteWarehouse(warehouse: Warehouse): Observable<Warehouse>{
-     return this.http.delete<Warehouse>(`${this.baseUrl}/warehouse/${warehouse.id}`, this.createHeaders());
+     return this.http.delete<Warehouse>(`${this.baseUrl}/warehouses/${warehouse.id}`, this.createHeaders());
    }
 
    createHeaders(){
+    const token = localStorage.getItem('token');
     return {
-      headers: new HttpHeaders({
-        'Authorization': localStorage.getItem('token')!
-      })
+      headers: new HttpHeaders()
+        .set('Authorization', `Bearer ${ token }`)
+      }
     } 
   }
 
-}
+

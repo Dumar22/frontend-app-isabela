@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {  FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { WorkRegisterService } from 'src/app/dashboard/services/work-install.service';
@@ -17,7 +17,7 @@ export class AddEditWorkRegisterComponent {
 
   form: FormGroup;
   id: string ;
-  public warehouse : string ;
+  public warehouses : string ;
   operation: string = 'Agregar ';
 
  
@@ -31,19 +31,23 @@ export class AddEditWorkRegisterComponent {
     this.form = this.fb.group({
       registration: ['', Validators.required],
       name: ['', Validators.required],
-      ot: ['', Validators.required],      
-      address: ['', Validators.required],
+      ot: [ '' , Validators.required],      
+      addres: ['', Validators.required],
       phone: ['', Validators.required],     
+      observation: ['', Validators.required],     
       
     });
     this.id = this.aRouter.snapshot.paramMap.get('id')?? '';      
   }
 
+  isValidField(field: string) {
+    return this.workRegisterService.isValidField(this.form, field);
+  }
   
 
   ngOnInit(): void {
     const user = this.authService.currentUser
-    this.warehouse = user().warehouse;
+    this.warehouses = user().warehouses[0];
 
     if (this.id != '') {
       // Es editar
@@ -54,15 +58,15 @@ export class AddEditWorkRegisterComponent {
 
   getWorInstall(id: string) {    
     this.workRegisterService.getWorkRegisterById(id)
-    .subscribe((data: any) => {
-      const workRegister = data.workInstall;      
+    .subscribe((data: WorkRegister) => {  
+              
       this.form.setValue({
-        registration: workRegister.registration,
-        name: workRegister.name,
-        ot: workRegister.ot,        
-        address: workRegister.address,
-        phone: workRegister.phone,
-            
+        name: data.name,
+        addres: data.addres,
+        registration: data.registration,
+        ot: data.ot,        
+        phone: data.phone,
+        observation: data.observation    
       });
     });
   }
@@ -70,23 +74,28 @@ export class AddEditWorkRegisterComponent {
   addWorkRegister() {
     
     const workRegister: WorkRegister = {
-      registration: this.form.value.registration,
       name: this.form.value.name,
+      addres: this.form.value.addres,
+      registration: this.form.value.registration,
       ot: this.form.value.ot,     
-      address: this.form.value.address,
       phone: this.form.value.phone,   
-    
+      observation: this.form.value.observation,   
+      
     };
+
+    console.log(workRegister);
+    
 
     if (this.id !== '') {
       // Es editar
       workRegister.id = this.id;
-      this.workRegisterService.updateWorkRegister(this.id, workRegister)
+      const {id, ...rest } = workRegister
+      this.workRegisterService.updateWorkRegister(this.id, rest)
       .subscribe({
         next: () => {
           this.showNotification(
             '¡Éxito!',
-            'Matricula Actualizada con éxito:',
+            'Contrato Actualizado con éxito:',
             'success'
           );
         this.router.navigate(['dashboard/list-work-register']);
@@ -97,41 +106,54 @@ export class AddEditWorkRegisterComponent {
     });
     } else {
       // Es agregagar
-      this.workRegisterService.saveWorkRegister(workRegister)
+      const {id, ...rest } = workRegister
+      this.workRegisterService.saveWorkRegister(rest)
       .subscribe({
         next: () => {
           this.showNotification(
             '¡Éxito!',
-            'Matricula Agregada con éxito:',
+            'Contrato Agregado con éxito:',
             'success'
           );
         this.router.navigate(['dashboard/list-work-register']);
       },
       error: (error) => {
+        //console.log(error);
+        
         this.handleError(error);
       }
     });
     }
   }
 
-  handleError(error: any) {
-    if (error.status == 0) {
-      // Error de conexión
-      this.showNotification('¡Error!', 'Hubo un error de conexión con el servidor.', 'error');
-    } else if (error.error.errors) {
-      // Errores de validación del formulario
-      const errores = error.error.errors;
-      errores.forEach((error: { msg: any; }) => {
-        this.showNotification('¡Error!', error.msg, 'error');
-      });
-    } else if (error.error.msg === 'La matricula ya existe, ingrese una diferente') {
-      // Usuario ya existe
-      this.showNotification('¡Error!', 'La matricula ya existe en la base de datos. Ingrese una diferente.', 'error');
+  handleError(error: any) {    
+    // console.log(error);
+
+    if (error.status === 0) {
+        // Error de conexión
+        this.showNotification('¡Error!', 'Hubo un error de conexión con el servidor.', 'error');
+    } else if (error.status === 500) {
+        // Error de conexión     
+        this.showNotification('¡Error!', 'Internal Server Error.', 'error');
+    } else if (error && error.error && error.error.message) {      
+        // Errores de validación del formulario
+        const errores = error.error.message;   
+
+        if (Array.isArray(errores)) {
+            let mensajeError = '';
+            errores.forEach((error: { message: any; }, index: number) => {      
+                mensajeError += `${index + 1}. ${error}\n`;
+            });
+            this.showNotification('¡Error!', mensajeError, 'error');
+        } else {         
+            // Si el mensaje de error no es un array, podrías manejarlo de otra manera.
+            this.showNotification('¡Error!', errores, 'error');
+        }
     } else {
-      // Otro tipo de error
-      this.showNotification('¡Error!', error.error.msg, 'error');
+        // Manejar otros casos de error aquí
+        this.showNotification('¡Error!', 'Error inesperado. Por favor, inténtalo de nuevo.', 'error');
     }
-  }
+}
   
 
   showNotification(title: string, message: string, icon: string) {

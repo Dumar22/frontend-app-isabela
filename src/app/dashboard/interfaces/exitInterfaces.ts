@@ -24,5 +24,18 @@ export interface Material{
     obs: string,       
   }
   
+  export class ExitC{
+    constructor(
+    public id:string,
+    public date: string,
+    public exitNumber: string,
+    public warehouse:string,
+    public collaboratorCode: string,
+    public collaboratorName: string,
+    public collaboratorDocument: string,
+    public collaboratorOperation: string,    
+    public materialExitDetail: Material[],
+    ){}
+  }
  
   

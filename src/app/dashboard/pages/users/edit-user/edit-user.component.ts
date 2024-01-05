@@ -33,17 +33,18 @@ options = [
 
   constructor(
     private fb: FormBuilder,
-    private _userService: UsersService,
+    private userService: UsersService,
     private warehouseService: WarehousesService,
     private router: Router,
     private validatorsService: ValidatorsService,
     private route: ActivatedRoute){
+
      this.formulario = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(5), Validators.pattern(/^[a-zA-ZáéíóúñÁÉÍÓÚüÜ\s]+ [a-zA-ZáéíóúñÁÉÍÓÚüÜ\s]+$/)]],
+      fullName: ['', [Validators.required, Validators.minLength(5), Validators.pattern(/^[a-zA-ZáéíóúñÁÉÍÓÚüÜ\s]+ [a-zA-ZáéíóúñÁÉÍÓÚüÜ\s]+$/)]],
       user: ['', [Validators.required, Validators.minLength(5)]],
-      rol: ['', [Validators.required, Validators.minLength(5)]],
-      warehouse: ['', [Validators.required, Validators.minLength(5)]],
-      status: ['', [Validators.required, Validators.minLength(5)]],
+      rol: [[], Validators.required],     
+      warehouseIds: [[], Validators.required],
+      // isActive: ['', [Validators.required, Validators.minLength(5)]],
     })
     this.id = String(route.snapshot.paramMap.get('id'));
     }
@@ -64,57 +65,102 @@ options = [
       this.getListWarehouses(); // Obtener los datos de la tabla desde un servicio
     }
 
-    getListWarehouses() {      
-      this.warehouseService.getWarehouses()
-        .subscribe((data: any) => {
-          this.warehouses = data.warehouses;          
+    async getListWarehouses() {      
+      await this.warehouseService.getWarehouses()
+        .subscribe((data: Warehouse[]) => {                   
+          this.warehouses = data;          
         });
     }
 
     getUser(id: string) {
+
       this.loading = true;
-      this._userService.getUser(id).subscribe(
-        (data: UserForm) => {
-          this.loading = false;
+      this.userService.getUserById(id)
+      .subscribe((data:any ) => { 
+      
+              
           this.formulario.setValue({
-            name: data.name,
+            fullName: data.fullName,
             user: data.user,
-            rol: data.rol,
-            warehouse: data.warehouse,
-            status: data.status,
+            rol: data.rol[0],            
+            // isActive: data.isActive,
+            warehouseIds: data.warehouses[0].id,
            })
           })
         }
 
 
-        addUser() {
-           const user: UserForm = {
-            name: this.formulario.value.name,
+        addUser(id: string) {
+          const selectedRol = this.formulario.get('rol').value; // Obtener el valor del campo "rol"
+    const rolesArray = [selectedRol];
+    const selectedWarehouseIds = this.formulario.get('warehouseIds').value; // Obtener el valor del campo "rol"
+    const warehouseArray = [selectedWarehouseIds];
+
+    const user: UserForm = {
+      fullName: this.formulario.value.fullName,
             user: this.formulario.value.user,
-            rol: this.formulario.value.rol,
-            warehouse: this.formulario.value.warehouse,
-            status: this.formulario.value.status
-          }
-          this.loading = true;
+            rol: rolesArray,            
+            warehouseIds: warehouseArray,
+            // isActive: this.formulario.value.isActive
+           
+    };
+   
+    this.userService.updateUser( id, user)
+      .subscribe({
+        next: () => {
+          this.showNotification(
+            '¡Éxito!',
+            'Usuario Actualizado con éxito:',
+            'success'
+          );
+        this.router.navigate(['dashboard/list-users']);
+      },
+      error: (error) => {
+        this.handleError(error);
+      }
+    });
+    
+   }
 
-           // Es editar
-            user.id = this.id;
-            this._userService.updateUser(this.id, user).subscribe(() => {
-              // alert(`El producto ${user.name} fue actualizado con exito`);
-              this.showNotification('¡Éxito!', 'Usuario actualizado con éxito:', 'success');
 
-              this.loading = false;
-              this.router.navigate(['dashboard/list-users']);
-            })
+
+   handleError(error: any) {    
+    // console.log(error);
+
+    if (error.status === 0) {
+        // Error de conexión
+        this.showNotification('¡Error!', 'Hubo un error de conexión con el servidor.', 'error');
+    } else if (error.status === 500) {
+        // Error de conexión     
+        this.showNotification('¡Error!', 'Internal Server Error.', 'error');
+    } else if (error && error.error && error.error.message) {      
+        // Errores de validación del formulario
+        const errores = error.error.message;   
+
+        if (Array.isArray(errores)) {
+            let mensajeError = '';
+            errores.forEach((error: { message: any; }, index: number) => {      
+                mensajeError += `${index + 1}. ${error}\n`;
+            });
+            this.showNotification('¡Error!', mensajeError, 'error');
+        } else {         
+            // Si el mensaje de error no es un array, podrías manejarlo de otra manera.
+            this.showNotification('¡Error!', errores, 'error');
         }
+    } else {
+        // Manejar otros casos de error aquí
+        this.showNotification('¡Error!', 'Error inesperado. Por favor, inténtalo de nuevo.', 'error');
+    }
+}
+  
 
-        showNotification(title: string, message: string, icon: string) {
-          Swal.fire({
-            icon: icon as SweetAlertIcon, // Convertimos el parámetro "icon" a un tipo SweetAlertIcon
-            title: title,
-            text: message
-          });
-        }
+  showNotification(title: string, message: string, icon: string) {
+    Swal.fire({
+      icon: icon as SweetAlertIcon, // Convertimos el parámetro "icon" a un tipo SweetAlertIcon
+      title: title,
+      text: message,
+    });
+  }
 
 
   }

@@ -18,7 +18,7 @@ import { UiModulesModule } from 'src/app/dashboard/components/ui-modules/ui-modu
 export class AddEditMeterComponent {
   form: FormGroup;
   id: string ;
-  public warehouse : string ;
+  public warehouses : string ;
   operation: string = 'Agregar ';
 
   options = [
@@ -38,10 +38,9 @@ export class AddEditMeterComponent {
       code: ['', Validators.required],
       unity: ['', Validators.required],      
       quantity: ['', Validators.required],
-      value: ['', Validators.required],     
+      price: ['', Validators.required],     
       serial: ['', Validators.required],     
       brand: ['', Validators.required],     
-      warehouse: [this.warehouse, Validators.required],
       available: [false],
     });
     this.id = this.aRouter.snapshot.paramMap.get('id')?? '';
@@ -64,7 +63,7 @@ export class AddEditMeterComponent {
 
   ngOnInit(): void {
     const user = this.authService.currentUser
-    this.warehouse = user().warehouse;
+    this.warehouses = user().warehouses[0];
 
     if (this.id != '') {
       // Es editar
@@ -75,17 +74,16 @@ export class AddEditMeterComponent {
 
   getMeter(id: string) {    
     this.meterService.getMeterById(id)
-    .subscribe((data: any) => {
-      const meter = data.meter;      
+    .subscribe((data: Meter) => {
+      const meter = data;      
       this.form.setValue({
         name: meter.name,
         code: meter.code,
         unity: meter.unity,        
         quantity: meter.quantity,
-        value: meter.value,
+        price: meter.price,
         serial: meter.serial,
-        brand: meter.brand,
-        warehouse: this.warehouse,
+        brand: meter.brand,        
         available: meter.available,        
       });
     });
@@ -98,17 +96,17 @@ export class AddEditMeterComponent {
       code: this.form.value.code,
       unity: this.form.value.unity,     
       quantity: this.form.value.quantity,
-      value: this.form.value.value,   
+      price: this.form.value.price,   
       serial: this.form.value.serial,
       brand: this.form.value.brand,
-      warehouse: this.warehouse,
       available: this.form.value.available,
     };
 
     if (this.id !== '') {
       // Es editar
       meter.id = this.id;
-      this.meterService.updateMeter(this.id, meter)
+      const {id, ...rest } = meter
+      this.meterService.updateMeter(this.id, rest)
       .subscribe({
         next: () => {
           this.showNotification(
@@ -119,7 +117,8 @@ export class AddEditMeterComponent {
         this.router.navigate(['dashboard/list-meters']);
       },
       error: (error) => {
-        this.handleError(error);
+        this.handleError(error);        
+        
       }
     });
     } else {
@@ -141,24 +140,34 @@ export class AddEditMeterComponent {
     }
   }
 
-  handleError(error: any) {
-    if (error.status == 0) {
-      // Error de conexión
-      this.showNotification('¡Error!', 'Hubo un error de conexión con el servidor.', 'error');
-    } else if (error.error.errors) {
-      // Errores de validación del formulario
-      const errores = error.error.errors;
-      errores.forEach((error: { msg: any; }) => {
-        this.showNotification('¡Error!', error.msg, 'error');
-      });
-    } else if (error.error.msg === 'El Medidor ya existe, ingrese uno diferente') {
-      // Usuario ya existe
-      this.showNotification('¡Error!', 'El Medidor ya existe en la base de datos. Ingrese uno diferente.', 'error');
+  handleError(error: any) {    
+    // console.log(error);
+
+    if (error.status === 0) {
+        // Error de conexión
+        this.showNotification('¡Error!', 'Hubo un error de conexión con el servidor.', 'error');
+    } else if (error.status === 500) {
+        // Error de conexión     
+        this.showNotification('¡Error!', 'Internal Server Error.', 'error');
+    } else if (error && error.error && error.error.message) {      
+        // Errores de validación del formulario
+        const errores = error.error.message;   
+
+        if (Array.isArray(errores)) {
+            let mensajeError = '';
+            errores.forEach((error: { message: any; }, index: number) => {      
+                mensajeError += `${index + 1}. ${error}\n`;
+            });
+            this.showNotification('¡Error!', mensajeError, 'error');
+        } else {         
+            // Si el mensaje de error no es un array, podrías manejarlo de otra manera.
+            this.showNotification('¡Error!', errores, 'error');
+        }
     } else {
-      // Otro tipo de error
-      this.showNotification('¡Error!', error.error.msg, 'error');
+        // Manejar otros casos de error aquí
+        this.showNotification('¡Error!', 'Error inesperado. Por favor, inténtalo de nuevo.', 'error');
     }
-  }
+}
   
 
   showNotification(title: string, message: string, icon: string) {

@@ -2,7 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, firstValueFrom, map } from 'rxjs';
 import { LoadUser, User, UserForm } from '../interfaces/usersInterface';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.prod';
+import { WarehousesService } from './warehouses.service';
 
 
 @Injectable({
@@ -15,31 +16,27 @@ export class UsersService {
   baseUrl=environment.base_url
 
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private createHeaders: WarehousesService) { }
 
    getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.baseUrl}/users`);
+    return this.http.get<User[]>(`${this.baseUrl}/auth`);
   }
 
 
- getUser(id:string): Observable<User> {
-    return this.http.get<User>(`${this.baseUrl}/user/${id}`);
+ getUserById(id:string): Observable<UserForm> {
+    return this.http.get<UserForm>(`${this.baseUrl}/auth/${id}`,this.createHeaders.createHeaders());
   }
 
 
-  register(formValue: any) {
-    return firstValueFrom(
-      this.http.post( `${this.baseUrl}/user`, formValue)
-    )
+  register(user : UserForm):Observable<UserForm> {
+    return this.http.post<UserForm>( `${this.baseUrl}/auth/register`, user, this.createHeaders.createHeaders())
+    
   }
-
-  addUser(user: UserForm): Observable<UserForm>{
-    return this.http.post<UserForm>( `${this.baseUrl}/user`, user)
-
-  }
+ 
 
   get token(): string {
-    return localStorage.getItem('token') || '';
+    return sessionStorage.getItem('token') || '';
   }
 
 
@@ -54,32 +51,14 @@ export class UsersService {
     }
   }
 
-  LoadAllUsers( desde: number = 0 ) {
-    const url = `${ this.baseUrl }/users?desde=${ desde }`;
-
-    return this.http.get<LoadUser>( url )
-            .pipe(
-              map( resp => {
-                const users = resp.users.map(
-                  user => new User(user.id, user.name, user.user,user.status, user.rol, user.warehouse )
-                );
-                return {
-                  users,
-                  total: resp.total
-                };
-
-              })
-            )
-  }
-
-
+  
   deleteUser(user: User) {
-    const url = `${this.baseUrl}/user/${ user.id }`;
+    const url = `${this.baseUrl}/auth/${ user.id }`;
     return this.http.delete(url, this.headers);
   }
 
   updateUser(id: string, user: UserForm): Observable<void> {
-    return this.http.put<void>(`${this.baseUrl}/user/${user.id}`, user);
+    return this.http.patch<void>(`${this.baseUrl}/auth/${id}`, user);
   }
 
 

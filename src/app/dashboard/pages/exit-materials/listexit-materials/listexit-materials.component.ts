@@ -54,7 +54,7 @@ export class ListexitMaterialsComponent {
     this.exit = this.exitTemp;
     return ;
   }
-   this.searchService.search('invoices', term )
+   this.searchService.search('exit', term )
         .subscribe( resp => {
           this.exit = resp;
         });

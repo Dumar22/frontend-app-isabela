@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../environments/environment.prod';
 import { map } from 'rxjs/operators';
 
 import { User } from '../interfaces/usersInterface';
@@ -10,6 +10,8 @@ import { InvoiceClass } from '../interfaces/invoiceInterface';
 import { WarehouseC } from '../interfaces/warehouseInterface';
 import { ProviderC } from '../interfaces/providerInterface';
 import { MeterClass } from '../interfaces/metersInterface';
+import { WorkRegisterC } from '../interfaces/workRegisterInterface';
+import { ExitC } from '../interfaces/exitInterfaces';
 
 
 const base_url = environment.base_url;
@@ -23,7 +25,7 @@ export class SearchService {
   constructor( private http: HttpClient ) { }
 
   get token(): string {
-    return localStorage.getItem('token') || '';
+    return sessionStorage.getItem('token') || '';
   }
 
   get headers() {
@@ -75,6 +77,48 @@ export class SearchService {
     );
   }
 
+   private transformarExitRegister( resultados: any[] ): ExitC[] {
+
+    return resultados.map(
+      exit => new ExitC( 
+      exit.id,
+      exit.date,
+      exit.exitNumber,
+      exit.warehouse, 
+      exit.collaboratorCode, 
+      exit.collaboratorName ,     
+      exit.collaboratorDocument,   
+      exit.collaboratorOperation,    
+      exit.materialExitDetail )     
+    );
+  }
+   private transformarExit( resultados: any[] ): ExitC[] {
+
+    return resultados.map(
+      exit => new ExitC( 
+      exit.id,
+      exit.date,
+      exit.exitNumber,
+      exit.warehouse, 
+      exit.collaboratorCode, 
+      exit.collaboratorName ,     
+      exit.collaboratorDocument,   
+      exit.collaboratorOperation,    
+      exit.materialExitDetail )     
+    );
+  }
+   private transformarWorkInstall( resultados: any[] ): WorkRegisterC[] {
+
+    return resultados.map(
+      register => new WorkRegisterC( 
+      register.id  ,
+      register.registration ,
+      register.name ,
+      register.ot , 
+      register.address , 
+      register.phone  )     
+    );
+  }
    private transformarMeters( resultados: any[] ): MeterClass[] {
 
     return resultados.map(
@@ -113,7 +157,7 @@ export class SearchService {
   }
 
   search(
-      table: 'users'|'materials' | 'meters' |'providers'|'collaborators'|'invoices'|'warehouses',
+      table: 'users'|'materials' | 'meters' |'exit' |'exitregister' |'workinstall' |'providers'|'collaborators'|'invoices'|'warehouses',
       term: string
     ) {
 
@@ -133,9 +177,18 @@ export class SearchService {
                       case 'materials':
                       
                       return this.transformarMaterials( resp.resultados );
+                      
                       case 'meters':
                       
                       return this.transformarMeters( resp.resultados );
+
+                  case 'exit':
+                      
+                      return this.transformarExit( resp.resultados )
+
+                  case 'exitregister':
+                      
+                      return this.transformarExitRegister( resp.resultados )
 
                   case 'invoices':
                       
@@ -144,6 +197,10 @@ export class SearchService {
                    case 'warehouses':
 
                      return this.transformarWarehouses( resp.resultados );   
+ 
+                   case 'workinstall':
+
+                     return this.transformarWorkInstall( resp.resultados );   
  
                    case 'providers':
 

@@ -15,11 +15,11 @@ import { Router } from '@angular/router';
 })
 export class ListUsersComponent implements OnInit {
   
-  public users: any[] = [];
-  public usersCount: number = 0;  
+  public users: User[] = []; 
   public usersTemp: User[] = [];
   public desde: number = 0;
   public loading: boolean = true;
+  warehouse : string = '';
 
   constructor(private userService: UsersService,
      private searchService: SearchService,
@@ -31,9 +31,8 @@ export class ListUsersComponent implements OnInit {
 
   loadingUsers() {
     this.loading = true;
-    this.userService.LoadAllUsers(this.desde)
-    .subscribe( ({ total, users }) => {
-      this.usersCount = total;
+    this.userService.getUsers()
+    .subscribe( (users: User[])  => {
       this.users = users;
       this.usersTemp = users;
       this.loading = false;
@@ -50,7 +49,7 @@ export class ListUsersComponent implements OnInit {
   }
    this.searchService.search('users', term )
         .subscribe( resp => {
-          this.users = resp;
+          
         });
   }
 
@@ -66,7 +65,7 @@ export class ListUsersComponent implements OnInit {
 
     Swal.fire({
       title: '¿Borrar usuario?',
-      text: `Esta a punto de borrar a ${ user.name }`,
+      text: `Esta a punto de borrar a ${ user.fullName }`,
       icon: 'question',
       showCancelButton: true,
       confirmButtonText: 'Si, borrarlo'
@@ -79,7 +78,7 @@ export class ListUsersComponent implements OnInit {
             this.loadingUsers();
             Swal.fire(
               'Usuario borrado',
-              `${ user.name } fue eliminado correctamente`,
+              `${ user.fullName } fue eliminado correctamente`,
               'success'
             );
 

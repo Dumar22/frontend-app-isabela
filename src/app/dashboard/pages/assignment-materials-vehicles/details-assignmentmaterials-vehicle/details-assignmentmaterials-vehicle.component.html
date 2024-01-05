@@ -1,0 +1,50 @@
+<div class="container my-4" *ngIf="assignmentMaterialVehicle">
+    <div class="card shadow-sm">
+      <div class="card-body" >
+        <h2 class="card-title mb-4">Detalles de la Asignación </h2>
+        <div class="space">
+          <p><strong>Fecha:</strong> {{ assignmentMaterialVehicle.date }}</p>
+          <p><strong>Tipo entrega:</strong> {{ assignmentMaterialVehicle.reason }}</p>
+        </div>
+        <div class="space">
+          <p ><strong>Nombre</strong> {{ assignmentMaterialVehicle.collaborator.name }}</p>
+          <p ><strong>Código:</strong> {{ assignmentMaterialVehicle.collaborator.code }}</p>
+      </div>
+      <div class="space">
+        <p><strong>Operación:</strong> {{ assignmentMaterialVehicle.collaborator.operation }}</p>
+        <p><strong>Vehículo:</strong> {{ assignmentMaterialVehicle.vehicle.plate }}</p>
+    </div>
+    <p><strong>Observación:</strong> {{ assignmentMaterialVehicle.observation }}</p>
+        
+        <h4>Lista de materiales</h4>
+        <hr>
+        
+        <table class="table table-bordered table-striped mt-4">
+          <thead class="bg-light">
+            <tr>
+                <th scope="col">Código</th>
+              <th scope="col">Herramienta</th>
+              <th scope="col">Unidad</th>
+              <th scope="col">Cantidad asignada</th>
+              <th scope="col">Valor unidad</th>
+              <th scope="col">Total</th>
+            </tr>
+          </thead>         
+          <tbody>
+            <tr *ngFor="let material of assignmentMaterialVehicle.details">
+                <td>{{ material.material.code }}</td>
+              <td>{{ material.material.name }}</td>
+              <td>{{ material.material.unity }}</td>
+              <td>{{ material.assignedQuantity }}</td>
+              <td>{{ material.material.price |  currency:'$' }}</td>
+              <td>{{ material.material.price * material.assignedQuantity |  currency:'$'}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card-footer">
+        <button type="button" class="btn btn-primary mr-2" (click)="editToolAssignment(assignmentMaterialVehicle)">Editar</button>
+        <button type="button" class="btn btn-secondary" (click)="prev()">Volver</button>
+      </div>
+    </div>
+  </div>

@@ -39,9 +39,9 @@ export class ListProvidersComponent {
     this.loading = true;
      this.providerService.getProviders()
   .subscribe((data: any) => {    
-    this.providers = data.providers;
+    this.providers = data;
     this.providers.sort((a, b) => a.name.localeCompare(b.name));
-    this.providerTemp = data.providers;  
+    this.providerTemp = data;  
     this.loading = false;
     } );
    }

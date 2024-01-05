@@ -21,21 +21,25 @@ export class SidenavComponent {
     {
      texto: 'Entradas',
      ruta: 'list-entries'
-    },
-    {
-      texto: 'Salidas',
-      ruta: 'list-exit-materials'
-     },
-    {
-      texto: 'Salidas con matrícula',
+    },    
+     {
+      texto: 'Salidas de almacén',
       ruta: 'list-exit-register'
+     },    
+    {
+      texto: 'Asignación de materiales a vehiculos',
+      ruta: 'list-assignment-materials-vehicles'
      },
      {
-      texto: 'Traslados',
+      texto: 'Asignación de herramientas',
+      ruta: 'list-tools-assignment'
+     },   
+     {
+      texto: 'Traslado de materiales',
       ruta: 'list-trasfers'
      },       
      {
-      texto: 'Materiales almacén',
+      texto: 'Materiales de almacén',
       ruta: 'list-materials'
      },
      {
@@ -43,9 +47,13 @@ export class SidenavComponent {
       ruta: 'list-meters'
      },
      {
-      texto: 'Matriculas',
-      ruta: 'list-work-register'
+      texto: 'Herramientas',
+      ruta: 'list-tools'
      },
+     {
+      texto: 'Contratos',
+      ruta: 'list-work-register'
+     },     
       {
       texto: 'Móviles',
       ruta: 'list-collaborators'
@@ -55,17 +63,21 @@ export class SidenavComponent {
       ruta: 'list-providers'
      },
      {
+      texto: 'Vehículos',
+      ruta: 'list-vehicles'
+     },
+     {
       texto: 'Cargas ecxel',
       ruta: 'load-file'
      },
-    //  {
-    //   texto: 'Bodegas',
-    //   ruta: 'list-warehuses'
-    //  },
-    //  {
-    //   texto: 'Usuarios',
-    //   ruta: 'list-users'
-    //  },
+     {
+      texto: 'Bodegas',
+      ruta: 'list-warehuses'
+     },
+     {
+      texto: 'Usuarios',
+      ruta: 'list-users'
+     },
 
    ]
 

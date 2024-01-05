@@ -19,7 +19,7 @@
     
     <button type="button"
      class="btn btn-primary"
-      (click)="addMaterial()">Nueva matricula</button>
+      (click)="addMaterial()">Nuevo contrato</button>
   </div>
   <div class="row animated fadeIn fast"
   *ngIf="loading">
@@ -37,9 +37,9 @@
       <thead>
         <tr  >
           <th scope="col">#</th>
-          <th scope="col">Matricula</th>
-          <th scope="col">Nombre</th>
-          <th scope="col">Oren de trabajo</th>
+          <th scope="col">N° Contrato</th>
+          <th scope="col">Subscriptor</th>
+          <th scope="col">Orden de trabajo</th>
           <th scope="col">Dirección</th>
           <th scope="col">Teléfono</th>
           <!-- <th scope="col">Estado</th> -->
@@ -59,7 +59,7 @@
           <td>{{item.registration}}</td>
           <td>{{item.name}}</td>
           <td>{{item.ot}}</td>
-          <td>{{item.address}}</td>
+          <td>{{item.addres}}</td>
           <td>{{item.phone}}</td>
           <!-- <td>
             <span [ngClass]="item.available ? 'badge badge-success' : 'badge badge-danger'">

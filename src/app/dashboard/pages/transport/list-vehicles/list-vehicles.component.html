@@ -1,0 +1,86 @@
+<div class="container">
+
+    <div class="row animated fadeIn fast mb-4">
+      <div class="col-12">
+          <div class="card">
+              <div class="card-body">
+  
+                  <input type="text"
+                          class="form-control"
+                          placeholder="Buscar vehículo..."
+                          (keyup)="search( txtTermino.value )"
+                          #txtTermino/>
+  
+              </div>
+          </div>
+      </div>
+    </div>
+  
+    <div class="bg-info.bg-gradient d-flex ">  
+     <button type="button"
+      class="btn btn-primary"
+       (click)="addVehicle()"> Nuevo Vehículo</button>     
+   </div> 
+   <div class="row animated fadeIn fast"
+       *ngIf="loading">
+      <div class="col-12">
+          <div class="alert text-center">
+            <h4 class="alert-heading">Cargando</h4>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mb-0">Por favor espere</p>
+          </div>
+  
+    </div>
+  </div>
+   <div>
+     <table class="table">
+       <thead>
+         <tr  >
+           <th scope="col">#</th>
+           <th scope="col">Marca</th>
+           <th scope="col">Modelo</th>
+           <th scope="col">Placa</th>
+           <th scope="col">Actualizar</th>
+           <th scope="col">Eliminar</th>
+           
+         </tr>
+       </thead>
+       <tbody>
+         <tr *ngFor="let item of vehicles | paginate
+         : {
+             itemsPerPage: tableSize,
+             currentPage: page,
+             totalItems: count
+           };
+     let i = index">
+           <th scope="row">{{i + 1}}</th>
+           <td>{{item.make}}</td>
+           <td>{{item.model}}</td>
+           <td>{{item.plate}}</td>
+  
+           <td>  <button type="button"
+             class="btn btn-secondary btn-sm btn-rounded text-primary"
+             (click)=" updateVehicle(item)">
+             Actualizar
+           </button>
+         </td>
+           <td>  <button type="button" (click)="deleteVehicle(item)" class="btn btn-secondary btn-sm btn-rounded text-danger">
+             Eliminar
+           </button>
+         </td>
+         </tr>
+       </tbody>
+     </table>
+     <div class="d-flex justify-content-center">
+      <pagination-controls
+        previousLabel="Anterior"
+        nextLabel="Siguiente"
+        (pageChange)="onTableDataChange($event)"
+      >
+      </pagination-controls>
+    </div>
+   </div>
+   
+  
+   </div>
+  

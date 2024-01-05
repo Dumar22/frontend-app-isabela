@@ -41,8 +41,8 @@ export class MeterListComponent {
     this.metersService.getMeters()
     .subscribe((data: any) =>{
       this.total = data.total;
-      this.meters = data.meters;
-      this.metersTemp = data.meters;
+      this.meters = data;
+      this.metersTemp = data;
       this.loading = false;
     } );
    }

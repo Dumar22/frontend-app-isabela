@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Transfers } from 'src/app/dashboard/interfaces/transferInterface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TransferServiceService } from 'src/app/dashboard/services/transfer-service.service';
+import { Material } from 'src/app/dashboard/interfaces/materialsInterface';
 
 @Component({
   standalone: true,
@@ -11,7 +12,8 @@ import { TransferServiceService } from 'src/app/dashboard/services/transfer-serv
   styleUrls: ['./details-transfer.component.css']
 })
 export class DetailsTransferComponent {
-  traslado: Transfers;
+  
+  transfer: Transfers
 
   constructor(
     private route: ActivatedRoute,
@@ -21,8 +23,8 @@ export class DetailsTransferComponent {
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    this.transferService.getTransfersById(id).subscribe((data: any) => {
-      this.traslado = data.transfer;               
+    this.transferService.getTransfersById(id).subscribe((data: Transfers) => {
+      this.transfer = data;               
      });
   }
 

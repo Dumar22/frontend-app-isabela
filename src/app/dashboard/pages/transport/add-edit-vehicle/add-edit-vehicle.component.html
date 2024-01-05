@@ -1,0 +1,43 @@
+
+<!-- Crea la estructura HTML del formulario -->
+<div class="container d-flex justify-content-center">
+
+
+    <div class="col-md-6">
+      <form [formGroup]="form" (ngSubmit)="addVehicle()">
+        <div class="justify-content-center text-center mb-4">
+  
+          <h2 >{{ operation }} Vehículo </h2>
+        </div>
+        <div class="form-group mb-2">
+          <label for="name">Marca</label>
+          <input type="text" id="make" class="form-control" formControlName="make">
+        </div>
+        <div class="form-group mb-2">
+          <label for="model">Modelo</label>
+          <input type="text" id="model" placeholder=" año " class="form-control" formControlName="model">
+        </div>
+        <div class="form-group mb-2">
+          <label for="name">Placa</label>
+          <input type="text" id="plate" placeholder="XXX###" class="form-control" formControlName="plate">
+        </div>
+        
+        <div class="form-group mb-2">
+          <label for="name">Estado del vehículo: </label> <br>
+          <div class="form-check form-check-inline mb-2">
+            <input mdbInput type="radio" formControlName="status" id="activo" [value]="true">
+            <label class="form-check-label" for="activo">Activo</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input mdbInput type="radio" formControlName="status" id="inactivo" [value]="false">
+            <label class="form-check-label" for="inactivo">No Activo</label>
+          </div>
+        </div>
+        
+      
+  
+        <button type="submit" class="btn btn-primary ">{{ operation }} Vehiculo</button>
+      </form>
+    </div>
+  </div>
+  

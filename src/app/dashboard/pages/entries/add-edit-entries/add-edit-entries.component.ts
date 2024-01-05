@@ -58,7 +58,7 @@ export class AddEditEntriesComponent {
   getListProvider(){
     this.providerService.getProviders()
     .subscribe((data:any) =>{      
-      this.provider = data.providers;
+      this.provider = data;
   });
   }
 
@@ -158,24 +158,34 @@ export class AddEditEntriesComponent {
     }
   }
 
-  handleError(error: any) {
-    if (error.status == 0) {
-      // Error de conexión
-      this.showNotification('¡Error!', 'Hubo un error de conexión con el servidor.', 'error');
-    } else if (error.error.errors) {
-      // Errores de validación del formulario
-      const errores = error.error.errors;
-      errores.forEach((error: { msg: any; }) => {
-        this.showNotification('¡Error!', error.msg, 'error');
-      });
-    } else if (error.error.msg === 'El Entrada ya existe, ingrese uno diferente') {
-      // Usuario ya existe
-      this.showNotification('¡Error!', 'El Entrada ya existe en la base de datos. Ingrese uno diferente.', 'error');
+  handleError(error: any) {    
+    // console.log(error);
+
+    if (error.status === 0) {
+        // Error de conexión
+        this.showNotification('¡Error!', 'Hubo un error de conexión con el servidor.', 'error');
+    } else if (error.status === 500) {
+        // Error de conexión     
+        this.showNotification('¡Error!', 'Internal Server Error.', 'error');
+    } else if (error && error.error && error.error.message) {      
+        // Errores de validación del formulario
+        const errores = error.error.message;   
+
+        if (Array.isArray(errores)) {
+            let mensajeError = '';
+            errores.forEach((error: { message: any; }, index: number) => {      
+                mensajeError += `${index + 1}. ${error}\n`;
+            });
+            this.showNotification('¡Error!', mensajeError, 'error');
+        } else {         
+            // Si el mensaje de error no es un array, podrías manejarlo de otra manera.
+            this.showNotification('¡Error!', errores, 'error');
+        }
     } else {
-      // Otro tipo de error
-      this.showNotification('¡Error!', error.error.msg, 'error');
+        // Manejar otros casos de error aquí
+        this.showNotification('¡Error!', 'Error inesperado. Por favor, inténtalo de nuevo.', 'error');
     }
-  }
+}
   
   showNotification(title: string, message: string, icon: string) {
     Swal.fire({

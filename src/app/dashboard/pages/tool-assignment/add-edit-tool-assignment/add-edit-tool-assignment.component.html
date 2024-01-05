@@ -1,0 +1,56 @@
+    
+
+<div class="container">
+    <h3 class="text-center mb-5">Agregar nueva Asignación</h3>
+  
+    <form class="row" (ngSubmit)="addtoolAssignment()" autocomplete="off" [formGroup]="toolAssignmentForm">
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Fecha</label>
+        <input type="date" class="form-control" formControlName="date" />
+        
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Tipo</label>
+        <select class="form-select" aria-label="Default select example" formControlName="reason">
+          <option selected value="">--Seleccione--</option>
+          <option *ngFor="let type of types" [ngValue]="type.value">{{ type.name }}</option>
+        </select>
+        
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Colaborador</label>
+        <select class="form-select" aria-label="Default select example" formControlName="collaboratorId">
+          <option selected value="">--Seleccione--</option>
+          <option *ngFor="let collaborator of collaborator" [ngValue]="collaborator.id">{{ collaborator.name }}</option>
+        </select>
+      </div>
+      
+      <div class="col-md-4 mb-3">
+        <label class="form-label">Observaciones</label>
+        <textarea  rows="3" type="text" class="form-control" formControlName="observation" placeholder="">
+          </textarea>
+        
+      </div>
+                  
+      
+      
+      <hr />
+     <!-- Detales de herramientas -->
+     <add-edit-details-tool-assignment
+        [tools]="tools"
+        (toolsChange)="onToolsChange($event)"
+      ></add-edit-details-tool-assignment> 
+      <hr />
+  
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary">Guardar Asignacion de herramienta</button>
+      </div>
+  
+    </form>
+  
+  </div>
+  
+  
+  
+

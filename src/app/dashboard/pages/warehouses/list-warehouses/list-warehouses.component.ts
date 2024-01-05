@@ -35,8 +35,8 @@ export class ListWarehousesComponent implements OnInit {
     this.loading = true;
     this.warehouseService.getWarehouses()
     .subscribe((data:any) =>{
-      this.warehouses = data.warehouses;           
-      this.warehouseTemp = data.warehouses
+      this.warehouses = data;           
+      this.warehouseTemp = data
       this.loading = false;
     } );
    }

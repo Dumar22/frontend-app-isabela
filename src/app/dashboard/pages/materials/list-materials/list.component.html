@@ -61,12 +61,12 @@
         <td>{{item.code}}</td>
         <td>{{item.unity}}</td>
         <td>{{item.quantity}}</td>
-        <td>{{item.value}}</td>
+        <td>{{item.price | currency:'$' }}</td>
         <td>
           <span [ngClass]="item.available ? 'badge badge-success' : 'badge badge-danger'">
             {{ item.available ? 'Disponible' : 'No disponible' }}</span>
          </td>
-        <td>{{item.total}}</td>
+        <td>{{item.total | currency:'$'}}</td>
         <td>  <button type="button"
           class="btn btn-secondary btn-sm btn-rounded text-primary"
           (click)=" updateMaterial(item)">

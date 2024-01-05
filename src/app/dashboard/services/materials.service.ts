@@ -2,7 +2,7 @@ import { HttpClient, HttpEvent, HttpEventType } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.prod';
 import { Material } from '../interfaces/materialsInterface';
 import { WarehousesService } from './warehouses.service';
 
@@ -11,14 +11,10 @@ import { WarehousesService } from './warehouses.service';
 })
 export class MaterialsService {
 
-
-
   baseUrl=environment.base_url
 
-
   constructor(private http: HttpClient,
-     private createHeaders: WarehousesService) { }
-     
+     private createHeaders: WarehousesService) { }     
 
    getMaterials():Observable<Material[]> {
    return this.http.get<Material[]>(`${this.baseUrl}/materials`,this.createHeaders.createHeaders())
@@ -26,20 +22,20 @@ export class MaterialsService {
    }
 
 
-  getMatrialById(id:string):Observable<Material>{
-    return this.http.get<Material>(`${this.baseUrl}/material/${id}`,this.createHeaders.createHeaders())
+  getMaterialById(id:string):Observable<Material>{
+    return this.http.get<Material>(`${this.baseUrl}/materials/${id}`,this.createHeaders.createHeaders())
   }
 
   saveMaterial( material: Material): Observable<Material>{
-   return this.http.post<Material>(`${this.baseUrl}/material`, material,this.createHeaders.createHeaders())
+   return this.http.post<Material>(`${this.baseUrl}/materials`, material,this.createHeaders.createHeaders())
   }
 
   updateMaterial(id:string, material:Material): Observable<void>{
-    return this.http.put<void>(`${this.baseUrl}/material/${material.id}`, material,this.createHeaders.createHeaders())
+    return this.http.patch<void>(`${this.baseUrl}/materials/${id}`, material,this.createHeaders.createHeaders())
   }
 
   deleteMaterial(material: Material): Observable<Material>{
-    return this.http.delete<Material>(`${this.baseUrl}/material/${material.id}`,this.createHeaders.createHeaders());
+    return this.http.delete<Material>(`${this.baseUrl}/materials/${material.id}`,this.createHeaders.createHeaders());
   }
   
   loadMaterials(file: File): Observable<number> {

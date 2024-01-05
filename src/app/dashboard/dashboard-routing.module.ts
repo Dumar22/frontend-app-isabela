@@ -29,6 +29,16 @@ import { ListWorkRegisterComponent } from './pages/work-register/list-work-regis
 import { AddEditWorkRegisterComponent } from './pages/work-register/add-edit-work-register/add-edit-work-register.component';
 import { DetailsTransferComponent } from './pages/transfer/details-transfer/details-transfer.component';
 import { DetailExitSeriesComponent } from './pages/exit-series/detail-exit-series/detail-exit-series.component';
+import { ListToolsComponent } from './pages/tools/list-tools/list-tools.component';
+import { AddEditToolsComponent } from './pages/tools/add-edit-tools/add-edit-tools.component';
+import { ListVehiclesComponent } from './pages/transport/list-vehicles/list-vehicles.component';
+import { AddEditVehicleComponent } from './pages/transport/add-edit-vehicle/add-edit-vehicle.component';
+import { ListToolAsignamentComponent } from './pages/tool-assignment/list-tool-asignament/list-tool-asignament.component';
+import { DetailsToolAssignmentComponent } from './pages/tool-assignment/details-tool-assignment/details-tool-assignment.component';
+import { AddEditToolAssignmentComponent } from './pages/tool-assignment/add-edit-tool-assignment/add-edit-tool-assignment.component';
+import { ListAssignmentMaterialsVehicleComponent } from './pages/assignment-materials-vehicles/list-assignment-materials-vehicle/list-assignment-materials-vehicle.component';
+import { AddEditAssignmentMaterialsVehicleComponent } from './pages/assignment-materials-vehicles/add-edit-assignment-materials-vehicle/add-edit-assignment-materials-vehicle.component';
+import { DetailsAssignmentmaterialsVehicleComponent } from './pages/assignment-materials-vehicles/details-assignmentmaterials-vehicle/details-assignmentmaterials-vehicle.component';
 
 
 export const routes: Routes = [
@@ -38,6 +48,9 @@ export const routes: Routes = [
   { path: 'list-users', component: ListUsersComponent },
   { path: 'add-user', component: AddUserComponent },
   { path: 'edit-user/:id', component: EditUserComponent},
+  { path: 'list-tools',component: ListToolsComponent},
+  { path: 'add-tool',component: AddEditToolsComponent},
+  { path: 'edit-tool/:id',component: AddEditToolsComponent},
   { path: 'list-materials',component: ListComponent},
   { path: 'add',component: AddEditComponent},
   { path: 'edit/:id',component: AddEditComponent},
@@ -48,6 +61,9 @@ export const routes: Routes = [
   {path: 'addwarehuse',component:AddEditWarehouseComponent},
   {path: 'editwarehuse/:id',component:AddEditWarehouseComponent},  
   {path: 'list-providers',component:ListProvidersComponent},
+  {path: 'list-vehicles',component:ListVehiclesComponent},
+  {path: 'add-edit-vehicle',component:AddEditVehicleComponent},
+  {path: 'add-edit-vehicle/:id',component:AddEditVehicleComponent},
   {path: 'addprovider',component:AddEditprovidersComponent},
   {path: 'editprovider/:id',component:AddEditprovidersComponent},
   {path: 'list-work-register',component:ListWorkRegisterComponent},
@@ -64,6 +80,14 @@ export const routes: Routes = [
   {path: 'list-trasfers',component:ListTransferComponent},
   {path: 'add-transfer',component:AddEditTransferComponent},
   {path: 'edit-transfer/:id',component:AddEditTransferComponent},
+  {path: 'list-tools-assignment',component:ListToolAsignamentComponent},
+  {path: 'add-tools-assignment',component:AddEditToolAssignmentComponent},
+  {path: 'edit-tools-assignment/:id',component:AddEditToolAssignmentComponent},
+  {path: 'details-tools-assignment/:id',component:DetailsToolAssignmentComponent},
+  {path: 'list-assignment-materials-vehicles',component:ListAssignmentMaterialsVehicleComponent},
+  {path: 'add-assignment-materials-vehicles',component:AddEditAssignmentMaterialsVehicleComponent},
+  {path: 'edit-assignment-materials-vehicles/:id',component:AddEditAssignmentMaterialsVehicleComponent},
+  {path: 'details-assignment-materials-vehicles/:id',component:DetailsAssignmentmaterialsVehicleComponent},
   {path: 'details-exit-register/:id',component:DetailExitSeriesComponent},
   {path: 'list-exit-register',component:ListexitSerieComponent},
   {path: 'details-transfer/:id',component:DetailsTransferComponent},

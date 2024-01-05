@@ -5,8 +5,8 @@
     <!-- Navbar brand -->
     <a class="navbar-brand me-2" href="https://mdbgo.com/">
       <img
-        src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp"
-        height="16"
+        src="../../../../assets/Cafe_redes.png"
+        height="80"
         alt="MDB Logo"
         loading="lazy"
         style="margin-top: -1px;"
@@ -16,8 +16,13 @@
     <!-- Toggle button -->
     
 
-    <p>Bienvenido {{username }}</p>
+    <p>Usuario: <br> <small>{{ username | uppercase }}</small></p>
     <!-- Collapsible wrapper -->
+
+    <p > Fecha actual: <br>  <small>{{ currentTime | date: 'dd/MM/yyyy' }}</small></p>
+    <p >  Hora: <br> <small>{{ currentTime | date: 'HH:mm:ss' }}</small></p>
+
+    
     <div class="collapse navbar-collapse justify-content-end" id="navbarButtonsExample">
       <!-- Left links -->
       

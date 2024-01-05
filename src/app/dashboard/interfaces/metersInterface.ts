@@ -4,10 +4,9 @@ export interface Meter{
     code: string,
     unity: string,
     quantity: number,
-    value: number,  
+    price: number,  
     serial: string,
-    brand: string,    
-    warehouse:string,
+    brand: string,
     available: boolean,
    
   }

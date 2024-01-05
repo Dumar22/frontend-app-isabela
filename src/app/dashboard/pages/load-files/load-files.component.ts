@@ -6,7 +6,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { UiModulesModule } from '../../components/ui-modules/ui-modules.module';
 import { MaterialsService } from '../../services/materials.service';
 import { MetersService } from '../../services/meters.service';
-import { CollaboratorService } from '../../services/list-collaborator.service';
+import { CollaboratorService } from '../../services/collaborator.service';
 import { ProviderService } from '../../services/provider.service';
 
 @Component({

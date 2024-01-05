@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.prod';
 import { WarehousesService } from './warehouses.service';
 import { Exit } from '../interfaces/exitInterfaces';
 
@@ -25,11 +25,11 @@ export class ExitService {
   getExitById(id:string):Observable<Exit>{
     return this.http.get<Exit>(`${this.baseUrl}/exit/${id}`,this.createHeaders.createHeaders())
   }
-  downloadExitPDF(id: string) {
-    return this.http.get(`${this.baseUrl}/dowload-exit/${id}`, {
-      responseType: 'blob' 
-    });
-  }
+  // downloadExitPDF(id: string) {
+  //   return this.http.get(`${this.baseUrl}/dowload-exit/${id}`, {
+  //     responseType: 'blob' 
+  //   });
+  // }
 
   saveExit( exit: Exit): Observable<Exit>{
    return this.http.post<Exit>(`${this.baseUrl}/exit`, exit,this.createHeaders.createHeaders())
@@ -43,5 +43,14 @@ export class ExitService {
     return this.http.delete<Exit>(`${this.baseUrl}/exit/${exit.id}`,this.createHeaders.createHeaders());
   }
 
+
+  downloadExitPDF(id: string) {
+
+    const headers = this.createHeaders.createHeaders();
+    return this.http.get(`${this.baseUrl}/dowload-exit/${id}`, {
+      headers: headers.headers,
+       responseType: 'blob' 
+    });
+  }
   
 }

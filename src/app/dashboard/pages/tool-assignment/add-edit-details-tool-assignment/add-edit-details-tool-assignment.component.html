@@ -1,0 +1,62 @@
+
+<!-- Formulario para agregar detalles de materiales -->
+<div class="container">
+    <h4 class="text-center">Agregar Herramientas</h4>
+  <form class="row" [formGroup]="toolForm" (ngSubmit)="addTool()">
+    <label class="form-label">Fecha</label>
+        <input type="date" class="form-control" formControlName="assignedAt" />
+   
+  <div class="col-md-4">
+      <label class="form-label">Herramienta:</label>
+      <select class="form-select" aria-label="Default select example" formControlName="toolId" >
+        <option value="" selected>--Seleccione una Herramienta--</option>
+        <option *ngFor="let materialItem of tool" [value]="materialItem.id">{{ materialItem.name }}</option>
+    </select>      
+  </div>
+      <div class="col-md-2">
+        <label class="form-label">Cantidad:</label>
+        <input type="number" id="assignedQuantity" formControlName="assignedQuantity" class="form-control" required>
+      </div>
+      <div class="col-md-3 mb-1">
+        <label class="form-label">Durabilidad:</label>
+        <input type="text" id="durabilityTool" formControlName="durabilityTool" class="form-control">
+      </div>
+      <div class="col-md-12 mb-4">
+        <label class="form-label">Observaciones:</label>
+        <textarea id="observation" formControlName="observation" class="form-control"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Agregar Herramienta</button>
+    </form>
+  </div>
+  
+  
+    
+    <!-- Tabla para mostrar los materiales agregados -->
+    <table class="table mt-5 table-striped">
+      <thead class="table-primary">
+        <tr>
+          <th scope="col" >Código</th>
+          <th scope="col" >Nombre</th>
+          <th scope="col" >Unidad</th>
+          <th scope="col" >Cantidad</th>
+          <th scope="col" >valor</th>
+          <th scope="col" >Observaciones</th>
+          <th scope="col" >Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let material of tools">
+          <td>{{ getToolProperty(material.toolId, 'code') }}</td>
+          <td>{{  getToolProperty(material.toolId, 'name') }}</td>
+          <td>{{ getToolProperty(material.toolId, 'unity') }}</td>
+          <td>{{ material.assignedQuantity }}</td>          
+          <td>{{  getToolProperty(material.toolId, 'price') }}</td>
+          <td>{{ material.observation }}</td>
+          <td><button (click)="removeMaterial(material)" class="btn btn-danger">Eliminar</button></td>
+        </tr>
+      </tbody>
+    </table>
+    
+  
+  
+  

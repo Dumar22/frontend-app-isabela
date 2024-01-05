@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CollaboratorService } from '../../../services/list-collaborator.service';
+import { CollaboratorService } from '../../../services/collaborator.service';
 import { ValidatorsService } from 'src/app/dashboard/services/Validate.service';
 import { Collaborator } from 'src/app/dashboard/interfaces/collaboratorInterface';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
@@ -19,7 +19,7 @@ export class AddEditCollaboratorComponent {
 
   form: FormGroup;
   id: string ;
-  public warehouse : string ;
+  public warehouses : string ;
   operation: string = 'Agregar ';
 
   constructor(private fb:FormBuilder,
@@ -36,8 +36,9 @@ export class AddEditCollaboratorComponent {
         operation: ['', Validators.required],
         document: ['', Validators.required],
         phone: ['', Validators.required],
-        state: ['', Validators.required],
-        warehouse: [this.warehouse, Validators.required]
+        mail: ['', Validators.required],
+        status: [true, Validators.required],
+        
       });
       this.id = this.aRouter.snapshot.paramMap.get('id')?? '';
   }
@@ -48,7 +49,7 @@ export class AddEditCollaboratorComponent {
 
   ngOnInit(): void {
     const user = this.authService.currentUser
-    this.warehouse = user().warehouse;
+    this.warehouses = user().warehouses[0];
 
     if (this.id != '') {
       // Es editar
@@ -66,14 +67,14 @@ export class AddEditCollaboratorComponent {
         operation: data.operation,
         document: data.document,
         phone: data.phone,
-       state: data.state,
-       warehouse: this.warehouse
+       status: data.status,
+       mail: data.mail,
+       
       });
     });
   }
 
-  addCollaborator() {
-   
+  addCollaborator() {   
 
     const collaborator: Collaborator = {
       name: this.form.value.name,
@@ -81,14 +82,15 @@ export class AddEditCollaboratorComponent {
       operation: this.form.value.operation,
       document: this.form.value.document,
       phone: this.form.value.phone,
-      state: this.form.value.state,
-      warehouse: this.warehouse
+      status: this.form.value.status,
+      mail: this.form.value.mail
     };
 
     if (this.id !== '') {
       // Es editar
       collaborator.id = this.id;
-       this.collaboratorService.updateCollaborator(this.id, collaborator).subscribe({
+      const {id, ...rest } = collaborator
+       this.collaboratorService.updateCollaborator(this.id, rest).subscribe({
         next: () => {
           this.showNotification(
             '¡Éxito!',
@@ -120,24 +122,34 @@ export class AddEditCollaboratorComponent {
     }
   }
 
-  handleError(error: any) {
-    if (error.status == 0) {
-      // Error de conexión
-      this.showNotification('¡Error!', 'Hubo un error de conexión con el servidor.', 'error');
-    } else if (error.error.errors) {
-      // Errores de validación del formulario
-      const errores = error.error.errors;
-      errores.forEach((error: { msg: any; }) => {
-        this.showNotification('¡Error!', error.msg, 'error');
-      });
-    } else if (error.error.msg === 'El Movil ya existe, ingrese uno diferente') {
-      // Usuario ya existe
-      this.showNotification('¡Error!', 'El Movil ya existe en la base de datos. Ingrese uno diferente.', 'error');
+  handleError(error: any) {    
+    // console.log(error);
+
+    if (error.status === 0) {
+        // Error de conexión
+        this.showNotification('¡Error!', 'Hubo un error de conexión con el servidor.', 'error');
+    } else if (error.status === 500) {
+        // Error de conexión     
+        this.showNotification('¡Error!', 'Internal Server Error.', 'error');
+    } else if (error && error.error && error.error.message) {      
+        // Errores de validación del formulario
+        const errores = error.error.message;   
+
+        if (Array.isArray(errores)) {
+            let mensajeError = '';
+            errores.forEach((error: { message: any; }, index: number) => {      
+                mensajeError += `${index + 1}. ${error}\n`;
+            });
+            this.showNotification('¡Error!', mensajeError, 'error');
+        } else {         
+            // Si el mensaje de error no es un array, podrías manejarlo de otra manera.
+            this.showNotification('¡Error!', errores, 'error');
+        }
     } else {
-      // Otro tipo de error
-      this.showNotification('¡Error!', error.error.msg, 'error');
+        // Manejar otros casos de error aquí
+        this.showNotification('¡Error!', 'Error inesperado. Por favor, inténtalo de nuevo.', 'error');
     }
-  }
+}
 
   showNotification(title: string, message: string, icon: string) {
     Swal.fire({

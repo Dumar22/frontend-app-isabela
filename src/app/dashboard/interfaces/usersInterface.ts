@@ -1,22 +1,24 @@
+import { Warehouse } from "./warehouseInterface";
 
 export class User {
 constructor (
   public id: string,
-  public name: string,
+  public fullName: string,
   public user: string,
-  public status: boolean,
-  public rol: string,
-  public warehouse: string
+  public isActive: boolean,
+  public rol: string[],
+  public warehouses: Warehouse[]
 ) {}
 }
 
 export interface UserForm {
   id?: string,
-  name: string,
+  fullName: string,
   user: string,
-  status: boolean,
-  rol: string,
-  warehouse: string,
+  password?:string,
+  isActive?: boolean,
+  rol: string[],
+  warehouseIds: Warehouse[],
   
 }
 

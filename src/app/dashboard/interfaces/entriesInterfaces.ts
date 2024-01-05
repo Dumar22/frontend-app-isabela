@@ -16,7 +16,7 @@ export interface Material{
     state: boolean,
     quantity: number,
     serial: number,
-    value: number,       
+    price: number,       
     total: number,       
     obs: string,       
   }

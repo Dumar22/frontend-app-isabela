@@ -44,7 +44,7 @@ export class ListTransferComponent {
       this.loading = true;
       this.transferService.getTransfers()
       .subscribe((data:any) =>{
-        this.transfer = data.transferAuth;                
+        this.transfer = data;                
         this.transfer.sort((a, b) => a.date.localeCompare(b.date));
         this.transferTemp = data;
         this.loading = false;
@@ -98,7 +98,7 @@ export class ListTransferComponent {
 
     Swal.fire({
       title: '¿Borrar Traslado?',
-      text: `Esta a punto de borrar a ${ transfer.transferNumber }`,
+      text: `Esta a punto de borrar el traslado ${ transfer.transferNumber }`,
       icon: 'question',
       showCancelButton: true,
       confirmButtonText: 'Si, borrar'

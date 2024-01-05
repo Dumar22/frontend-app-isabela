@@ -64,8 +64,8 @@
          <td>{{item.document}}</td>
          <td>{{item.phone}}</td>
          <td>
-          <span [ngClass]="item.state ? 'badge badge-success' : 'badge badge-danger'">
-            {{ item.state ? 'activo' : 'inactivo' }}
+          <span [ngClass]="item.status ? 'badge badge-success' : 'badge badge-danger'">
+            {{ item.status ? 'activo' : 'inactivo' }}
           </span>
         </td>
           
@@ -95,7 +95,4 @@
  </div>
 
  </div>
- <div class="d-flex col-sm-8 col-md-8 col-lg-8 mt-2 mx-auto rounded row-cols-2 m-2">
 
-  <p>Total: {{total}}</p>
-</div>

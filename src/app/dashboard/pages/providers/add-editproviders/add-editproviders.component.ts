@@ -20,7 +20,7 @@ export class AddEditprovidersComponent {
 
   form: FormGroup;
   id: string ;
-  public warehouse : string ;
+  public warehouses : string ;
   operation: string = 'Agregar ';
 
   constructor(private fb:FormBuilder,
@@ -34,8 +34,6 @@ export class AddEditprovidersComponent {
       this.form = this.fb.group({
         name: ['', Validators.required],
         nit: ['', Validators.required],
-        ally: ['', Validators.required],
-        warehouse: [this.warehouse, Validators.required]
       });
       this.id = this.aRouter.snapshot.paramMap.get('id')?? '';
   }
@@ -47,7 +45,7 @@ export class AddEditprovidersComponent {
   ngOnInit(): void {
 
     const user = this.authService.currentUser
-    this.warehouse = user().warehouse;
+    this.warehouses = user().warehouses[0];
 
     if (this.id != '') {
       // Es editar
@@ -62,8 +60,6 @@ export class AddEditprovidersComponent {
       this.form.setValue({
         name: data.name,
         nit: data.nit,
-        ally: data.ally,
-        warehouse: this.warehouse
       });
     });
   }
@@ -73,14 +69,13 @@ export class AddEditprovidersComponent {
     const provider: Provider = {
       name: this.form.value.name,
       nit: this.form.value.nit,
-      ally: this.form.value.ally,
-     warehouse: this.warehouse
     };
 
     if (this.id !== '') {
       // Es editar
       provider.id = this.id;
-       this.providerService.updateProvider(this.id, provider)
+      const {id, ...rest } = provider
+       this.providerService.updateProvider(id, rest)
        .subscribe({
         next: () => {
           this.showNotification(
@@ -114,24 +109,34 @@ export class AddEditprovidersComponent {
   }
 
 
-  handleError(error: any) {
-    if (error.status == 0) {
-      // Error de conexión
-      this.showNotification('¡Error!', 'Hubo un error de conexión con el servidor.', 'error');
-    } else if (error.error.errors) {
-      // Errores de validación del formulario
-      const errores = error.error.errors;
-      errores.forEach((error: { msg: any; }) => {
-        this.showNotification('¡Error!', error.msg, 'error');
-      });
-    } else if (error.error.msg === 'El Proveedor ya existe, ingrese uno diferente') {
-      // Usuario ya existe
-      this.showNotification('¡Error!', 'El Proveedor ya existe en la base de datos. Ingrese uno diferente.', 'error');
+  handleError(error: any) {    
+    // console.log(error);
+
+    if (error.status === 0) {
+        // Error de conexión
+        this.showNotification('¡Error!', 'Hubo un error de conexión con el servidor.', 'error');
+    } else if (error.status === 500) {
+        // Error de conexión     
+        this.showNotification('¡Error!', 'Internal Server Error.', 'error');
+    } else if (error && error.error && error.error.message) {      
+        // Errores de validación del formulario
+        const errores = error.error.message;   
+
+        if (Array.isArray(errores)) {
+            let mensajeError = '';
+            errores.forEach((error: { message: any; }, index: number) => {      
+                mensajeError += `${index + 1}. ${error}\n`;
+            });
+            this.showNotification('¡Error!', mensajeError, 'error');
+        } else {         
+            // Si el mensaje de error no es un array, podrías manejarlo de otra manera.
+            this.showNotification('¡Error!', errores, 'error');
+        }
     } else {
-      // Otro tipo de error
-      this.showNotification('¡Error!', error.error.msg, 'error');
+        // Manejar otros casos de error aquí
+        this.showNotification('¡Error!', 'Error inesperado. Por favor, inténtalo de nuevo.', 'error');
     }
-  }
+}
   
   showNotification(title: string, message: string, icon: string) {
     Swal.fire({
