@@ -1,0 +1,11 @@
+.container {
+    display: flex;
+    justify-content: space-between; /* o cualquier otro valor según tus necesidades */
+  }
+  
+
+  .space{
+    display: flex; 
+    justify-content: space-between;
+    width: 70%;
+}

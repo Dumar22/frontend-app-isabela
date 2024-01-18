@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
 import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
 import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
@@ -15,7 +14,7 @@ import { MdbScrollspyModule } from 'mdb-angular-ui-kit/scrollspy';
 import { MdbTabsModule } from 'mdb-angular-ui-kit/tabs';
 import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
-import { NgxPaginationModule } from 'ngx-pagination';
+import {NgxPaginationModule} from 'ngx-pagination';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { NgxFileDropModule } from 'ngx-file-drop';
 
@@ -41,6 +40,7 @@ import { NgxFileDropModule } from 'ngx-file-drop';
     MdbTooltipModule,
     MdbValidationModule,
     SweetAlert2Module,
+    
     NgxFileDropModule,
   ],
   exports: [

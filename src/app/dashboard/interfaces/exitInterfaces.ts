@@ -1,41 +1,60 @@
-export interface Exit{
-    id?:string,
-    date: string,
-    exitNumber: string,
-    warehouse:string,
-    collaboratorCode: string,
-    collaboratorName: string,
-    collaboratorDocument: string,
-    collaboratorOperation: string,    
-    materialExitDetail: Material[],
+export interface Exit {
+  id?:           string;
+  ExitNumber?:   number;
+  date:         string;
+  type:         string;
+  observation?:  string; 
+  collaborator?: Collaborator;
+  collaboratorId?: string;
+  contract?:     Contract;
+  contractId?:     string;
+  state:     string;
+  details?:      any[];
+ 
 }
 
-export interface Material{
-    id?: string,
-    name: string,
-    code: string,
-    unity: string,
-    state: boolean,
-    quantity: number,
-    restore:number,
-    serial: number,
-    value: number,       
-    total: number,       
-    obs: string,       
-  }
-  
-  export class ExitC{
-    constructor(
-    public id:string,
-    public date: string,
-    public exitNumber: string,
-    public warehouse:string,
-    public collaboratorCode: string,
-    public collaboratorName: string,
-    public collaboratorDocument: string,
-    public collaboratorOperation: string,    
-    public materialExitDetail: Material[],
-    ){}
-  }
- 
-  
+export interface Collaborator {
+  id:        string;
+  name:      string;
+  code:      string;
+  operation: string;
+  document:  number;
+  phone:     number;
+  mail:      string;
+  status:    boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  deletedBy: null;
+  deletedAt: null;
+}
+
+export interface Contract {
+  id:           string;
+  registration: string;
+  name:         string;
+  ot:           string;
+  addres:       string;
+  phone:        string;
+  observation:  null;
+  createdAt:    Date;
+  updatedAt:    Date;
+  deletedBy:    null;
+  deletedAt:    null;
+}
+
+export interface User {
+  rol:       string[];
+  id:        string;
+  user:      string;
+  fullName:  string;
+  isActive:  boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface Warehouse {
+  id:        string;
+  name:      string;
+  createdAt: Date;
+  updatedAt: Date;
+}

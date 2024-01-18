@@ -44,11 +44,10 @@ export class TransferServiceService {
   }
 
   downloadTransfersPDF(id: string) {
-
     const headers = this.createHeaders.createHeaders();
-    return this.http.get(`${this.baseUrl}/dowload-transfers/${id}`, {
+    return this.http.get(`${this.baseUrl}transfers/pdf/${id}`, {
       headers: headers.headers,
-       responseType: 'blob' 
+      responseType: 'arraybuffer' 
     });
   }
 }

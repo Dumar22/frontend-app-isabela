@@ -22,10 +22,10 @@ export class NavarComponent implements OnInit{
  
   //public user = computed(() => this.authService.currentUser() );
  
- ngOnInit() {
- const  user =  this.authService.currentUser() ;
+  ngOnInit() {
+ const  user = this.authService.currentUser() ;
 
-    this.username = user.fullName
+    this.username =  user.fullName
  
     this.currentTime = new Date();
     interval(1000).subscribe(() => {

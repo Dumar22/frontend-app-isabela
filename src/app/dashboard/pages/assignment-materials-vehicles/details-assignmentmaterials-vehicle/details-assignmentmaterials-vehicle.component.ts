@@ -26,8 +26,6 @@ export class DetailsAssignmentmaterialsVehicleComponent {
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     this.assignmentMaterialsVehicleService.getMaterialVehicleById(id).subscribe((data: MaterialVehicle) => {
-      console.log(data);
-      
       this.assignmentMaterialVehicle = data;               
      });
   }

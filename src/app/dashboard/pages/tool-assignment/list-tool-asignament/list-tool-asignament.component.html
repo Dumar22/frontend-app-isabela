@@ -15,11 +15,6 @@
           </div>
       </div>
     </div>
-  
-  <div class="bg-info.bg-gradient d-flex">
-    <button type="button" class="btn btn-primary " (click)="addToolAssignment()"  >Nueva Asignación</button>
-  
-  </div>
    </div>
   
   <div class="row animated fadeIn fast"
@@ -42,16 +37,13 @@
       <thead >
         <tr>
         <th>#</th>
-        <th>Fecha</th>
         <th>Nombre</th>
-        <th>Detalles asignación</th>
-        <th>Descargar</th>
-        <th>Editar</th>
-        <th>Eliminar</th>
+        <th>Asignar herramienta</th>
+        <th>Ver asignaciones</th>
         </tr>
       </thead>
       <tbody>
-        <tr  *ngFor="let tooAssignament of toolAssignment | paginate
+        <tr  *ngFor="let collaborator of collaboratorsList | paginate
         : {
             itemsPerPage: tableSize,
             currentPage: page,
@@ -61,32 +53,18 @@
             <p class="fw-normal mb-1 text-primary">{{i+1}}.</p>
           </td>
           <td>
-            <p class="fw-bold mb-1">{{tooAssignament.date}}</p>
+            <p class="fw-normal mb-1">{{collaborator.collaborator.name}}</p>
           </td>
-          <td>
-            <p class="fw-normal mb-1">{{tooAssignament.collaborator.name            }}</p>
-          </td>
-          <!-- <td>
-            <span class="badge badge-success ">{{factura.providerName}}</span>
-          </td> -->
+         
           <td><button type="button" class="btn btn-secondary btn-sm btn-rounded"
-            (click)="detailTransfer(tooAssignament)">
+            (click)="addToolAssignment(collaborator)">
+            Asignar herramienta
+          </button></td>
+          <td><button type="button" class="btn btn-secondary btn-sm btn-rounded"
+            (click)="detailsAssignmentTool(collaborator)">
             Ver Detalles
           </button></td>
-          <td> <button class="btn btn-secondary btn-sm btn-rounded"
-            (click)="downloadTransfer(tooAssignament)">
-            Descargar PDF
-          </button></td>
-          <td>
-            <button type="button" class="btn btn-secondary btn-sm btn-rounded" (click)="updateToolAssignment(tooAssignament)">
-              Editar
-            </button>
-          </td>
-          <td>
-            <button type="button" (click)="deleteToolAssignment(tooAssignament)" class="btn btn-secondary btn-sm btn-rounded text-danger">
-              Eliminar
-            </button>
-          </td>
+         
         </tr>
   
       </tbody>

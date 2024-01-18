@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ToolAssignment, Tool, Detail, Collaborator} from 'src/app/dashboard/interfaces/tool-assignmentInterface';
+import {  Component } from '@angular/core';
+import {  FormBuilder,  ReactiveFormsModule, Validators } from '@angular/forms';
+import {  Tool, ToolAssignment} from 'src/app/dashboard/interfaces/tool-assignmentInterface';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CollaboratorService } from 'src/app/dashboard/services/collaborator.service';
 import { ToolAssignmentService } from 'src/app/dashboard/services/toolAssignment.service';
 import { ValidatorsService } from 'src/app/dashboard/services/Validate.service';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { AddEditDetailsToolAssignmentComponent } from "../add-edit-details-tool-assignment/add-edit-details-tool-assignment.component";
+import { ToolsService } from 'src/app/dashboard/services/tools.service';
 
 @Component({
     selector: 'app-add-edit-tool-assignment',
@@ -21,26 +21,26 @@ import { AddEditDetailsToolAssignmentComponent } from "../add-edit-details-tool-
 })
 export class AddEditToolAssignmentComponent { 
 
-  tools:Detail[] = [];
-  toolNames: []
+ 
+  tool:Tool[] = [];
   id: string ;
-  details: FormArray;
   mode: string = 'Agregar '; 
-  public collaborator: Collaborator[];
 
   types = [
-    {value: 'nueva entrga', name: 'Nueva entrga' },
-    {value: 'entrega por desgaste', name: 'Entrega por desgaste' },
-    {value: 'entrega por perdida', name: 'Entrega por perdida' },
-    {value: 'entrega controlada', name: 'Entrega controlada' },
+    {value: 'Nueva entrga', name: 'Nueva entrga' },
+    {value: 'Entrega por desgaste', name: 'Entrega por desgaste' },
+    {value: 'Entrega por perdida', name: 'Entrega por perdida' },
+    {value: 'Entrega controlada', name: 'Entrega controlada' },
   ]
 
    public toolAssignmentForm = this.formBuilder.group({
-    date: ['', Validators.required],
+   
+    assignedAt: ['', Validators.required],    
     reason: ['', Validators.required],
-    observation: ['', Validators.required],
-    collaboratorId: ['', Validators.required],    
-    details: this.formBuilder.array([])
+    collaboratorId: ['', ],    
+    toolId: ['', Validators.required],    
+    assignedQuantity: [0, Validators.required],    
+    observation: [''],    
       });
 
     
@@ -48,104 +48,39 @@ export class AddEditToolAssignmentComponent {
     private formBuilder: FormBuilder,
     private aRouter: ActivatedRoute,
     private router:Router,
-    private collaboratorService: CollaboratorService,
+    private toolService: ToolsService,
     private toolAssignmentService:ToolAssignmentService,
      private validatorsService:ValidatorsService) { 
-      this.details = this.toolAssignmentForm.get('details') as FormArray;
         this.id = this.aRouter.snapshot.paramMap.get('id')?? '';
   }
 
   ngOnInit(): void {
-    this.getListCollaborator()
-    if (this.id != '') {
-      // Es editar
-     this.mode = 'Editar ';
-     this.getToolAssignment()
-    
-    }
+    this.getListTools();    
   }
 
-  getListCollaborator(){
-    this.collaboratorService.getCollaborators()
-    .subscribe((data:any) =>{      
-      this.collaborator = data;
-      
+  getListTools(){
+    this.toolService.getTools()
+    .subscribe((data:Tool[]) =>{       
+      this.tool = data;      
   });
   }
 
   isValidField(field: string) {
     return this.validatorsService.isValidField(this.toolAssignmentForm, field);
   }
-
-  onToolsChange(tools: Detail[]) {
-    this.tools = tools;
-  }
-
-
-  getToolAssignment() {
-    this.toolAssignmentService.getToolAssignmentById(this.id)
-    .subscribe((data: ToolAssignment) => {
-      const toolAssignment = data;
-      // console.log(toolAssignment);     
-       this.tools = toolAssignment.details;
-      
-      this.toolAssignmentForm.patchValue({
-        date: toolAssignment.date,
-        reason: toolAssignment.reason,
-        observation: toolAssignment.observation,
-        collaboratorId: toolAssignment.collaborator.id,
-        
-        
-      });
-      toolAssignment.details.forEach((tool: Detail) => {                
-        this.details.push(
-          this.formBuilder.group({
-            toolId: [tool.tool.id, Validators.required],
-            assignedAt: [tool.assignedAt],
-            assignedQuantity: [tool.assignedQuantity, [Validators.required, Validators.min(1)]],
-            observation: [tool.observation],
-            durabilityTool: [tool.durabilityTool]
-          })
-        );
-      });     
-    });
-  }
     
-  addtoolAssignment() {     
+   addtoolAssignment() {     
         
     if (this.toolAssignmentForm.valid) {
       const newToolAssignment: ToolAssignment = {
-        date: this.toolAssignmentForm.value.date,
-        reason: this.toolAssignmentForm.value.reason,
-        observation: this.toolAssignmentForm.value.observation,
-        collaboratorId: this.toolAssignmentForm.value.collaboratorId,
-        details: this.tools
+        reason:this.toolAssignmentForm.value.reason,
+        collaboratorId:this.id,
+        toolId:this.toolAssignmentForm.value.toolId,
+        assignedQuantity:this.toolAssignmentForm.value.assignedQuantity,
+        observation:this.toolAssignmentForm.value.observation,
+        assignedAt:this.toolAssignmentForm.value.assignedAt,
       };
-      
-      
-      if (this.id != '') {
 
-        //editar        
-        const {id ,...rest} = newToolAssignment
-        console.log(rest);
-        
-        this.toolAssignmentService.updateToolAssignment(this.id, rest)
-        .subscribe({
-          next: () => {
-            this.showNotification(
-              '¡Éxito!',
-              'Assignación de herramienta Actualizado con éxito:',
-              'success'
-            );
-            this.router.navigate(['dashboard/list-tools-assignment']);
-          },
-          error: (error) => {
-            this.handleError(error);
-          }
-        });
-
-      } else {
-        
         this.toolAssignmentService.saveToolAssignment(newToolAssignment)
       .subscribe({
         next: () => {
@@ -154,13 +89,13 @@ export class AddEditToolAssignmentComponent {
             'Assignación de herramienta Agregado con éxito:',
             'success'
           );
-          this.router.navigate(['dashboard/list-tools-assignment']);
+          this.router.navigate(['dashboard/details-tools-assignment', this.id]);
         },
         error: (error) => {
           this.handleError(error);
         }
       });
-      }
+      
       
     }
   }

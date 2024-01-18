@@ -45,6 +45,7 @@
          <th scope="col">Documento</th>
          <th scope="col">Teléfono</th>
          <th scope="col">Estado</th>
+         <th scope="col">Asignar Herramienta</th>
          <th scope="col">Actualizar</th>
          <th scope="col">Eliminar</th>
        </tr>
@@ -71,6 +72,12 @@
           
             
 
+         <td>  <button type="button"
+           class="btn btn-secondary btn-sm btn-rounded text-primary"
+           (click)=" addToolAssignment(item)">
+           Asignar
+         </button>
+       </td>
          <td>  <button type="button"
            class="btn btn-secondary btn-sm btn-rounded text-primary"
            (click)=" updateCollaborator(item)">

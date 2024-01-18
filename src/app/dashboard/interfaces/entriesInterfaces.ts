@@ -5,7 +5,8 @@ export interface Entries{
     origin:string,
     providerName: string,
     providerNit: string,
-    materialEntryDetail: Material[],
+    createDetailDto: Material[],
+    details?: Material[],
 }
 
 export interface Material{
@@ -13,24 +14,14 @@ export interface Material{
     name: string,
     code: string,
     unity: string,
-    state: boolean,
-    quantity: number,
     serial: number,
+    brand: number,
+    quantity: number,
     price: number,       
-    total: number,       
-    obs: string,       
+    total?: number,       
+    observation: string,       
   }
   
-  export class InvoiceClass {
-    constructor(
-    public id:string,
-     public date: string,
-     public invoiceNumber: string,
-     public origin:string,
-     public providerName: string,
-     public providerNit: string,
-     public materials: Material[],   
-   
-    ) {}
-  }
+ 
+  
   

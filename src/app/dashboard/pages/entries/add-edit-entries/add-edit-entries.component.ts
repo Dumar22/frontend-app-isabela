@@ -21,7 +21,7 @@ export class AddEditEntriesComponent {
   materials: Material[] = [];
   formEntry: FormGroup;
   id: string ;
-  materialEntryDetail: FormArray;
+  createDetailDto: FormArray;
   mode: string = 'Agregar '; 
   public provider: Provider[];
 
@@ -40,10 +40,10 @@ export class AddEditEntriesComponent {
       origin: ['', Validators.required],
       providerName: ['', Validators.required],
       providerNit: ['', Validators.required],
-      materialEntryDetail: this.formBuilder.array([])
+      createDetailDto: this.formBuilder.array([])
         });
-        this.materialEntryDetail = this.formEntry.get('materialEntryDetail') as FormArray;
         this.id = this.aRouter.snapshot.paramMap.get('id')?? '';
+        this.createDetailDto = this.formEntry.get('createDetailDto') as FormArray;
   }
 
   ngOnInit(): void {
@@ -85,24 +85,27 @@ export class AddEditEntriesComponent {
 
   getEntry(id: string) {
     this.entryService.getEntryById(id)
-    .subscribe((data: any) => {
-      const entry = data.entry;
-      this.materials = entry.materialEntryDetail;
-      this.formEntry.setValue({
+    .subscribe((data: Entries) => {
+      const entry = data;
+      this.materials = entry.details;
+      this.formEntry.patchValue({
         date: entry.date,
         entryNumber: entry.entryNumber,
         origin: entry.origin,
         providerName: entry.providerName,
         providerNit: entry.providerNit,
-        materialEntryDetail: []
+       createDetailDto: []
       });
-      entry.materialEntryDetail.forEach((material: any) => {
-        this.materialEntryDetail.push(
+ // Inicializar createDetailDto como un FormArray
+ this.createDetailDto = this.formEntry.get('createDetailDto') as FormArray;
+
+      entry.details.forEach((material: any) => {
+        this.createDetailDto.push(
           this.formBuilder.group({
             name: [material.name, Validators.required],
             quantity: [material.quantity, [Validators.required, Validators.min(1)]],
             serie: [material.serie],
-            observaciones: [material.observaciones]
+            observations: [material.observaciones]
           })
         );
       });
@@ -117,13 +120,14 @@ export class AddEditEntriesComponent {
         origin: this.formEntry.value.origin,
         providerName: this.formEntry.value.providerName,
         providerNit: this.formEntry.value.providerNit,
-        materialEntryDetail: this.materials
+        createDetailDto: this.materials
       };
 
       if (this.id != '') {
+         newEntry.id = this.id;
         //editar
-        newEntry.id = this.id;
-        this.entryService.updateEntry(this.id, newEntry)
+      const { id, ...rest} =  newEntry      
+        this.entryService.updateEntry(id, rest)
         .subscribe({
           next: () => {
             this.showNotification(

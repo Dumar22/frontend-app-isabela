@@ -15,20 +15,17 @@ import { AddEditCollaboratorComponent } from './pages/collaborators/add-edit-col
 import { ListEntriesComponent } from './pages/entries/list-entries/list-entries.component';
 import { AddEditEntriesComponent } from './pages/entries/add-edit-entries/add-edit-entries.component';
 import { ListTransferComponent } from './pages/transfer/list-transfer/list-transfer.component';
-import { ListexitSerieComponent } from './pages/exit-series/listexit-serie/listexit-serie.component';
 import { ListexitMaterialsComponent } from './pages/exit-materials/listexit-materials/listexit-materials.component';
 import { MeterListComponent } from './pages/materials/meter-list/meter-list.component';
 import { AddEditMeterComponent } from './pages/materials/add-edit-meter/add-edit-meter.component';
 import { DetailsEntriesComponent } from './pages/entries/details-entries/details-entries.component';
 import { AddEditTransferComponent } from './pages/transfer/add-edit-transfer/add-edit-transfer.component';
-import { AddEditExitSerialsComponent } from './pages/exit-series/add-edit-exit-serials/add-edit-exit-serials.component';
 import { AddEditMaterialsComponent } from './pages/exit-materials/add-edit-materials/add-edit-materials.component';
 import { LoadFilesComponent } from './pages/load-files/load-files.component';
 import { DetailsExitComponent } from './pages/exit-materials/details-exit/details-exit.component';
 import { ListWorkRegisterComponent } from './pages/work-register/list-work-register/list-work-register.component';
 import { AddEditWorkRegisterComponent } from './pages/work-register/add-edit-work-register/add-edit-work-register.component';
 import { DetailsTransferComponent } from './pages/transfer/details-transfer/details-transfer.component';
-import { DetailExitSeriesComponent } from './pages/exit-series/detail-exit-series/detail-exit-series.component';
 import { ListToolsComponent } from './pages/tools/list-tools/list-tools.component';
 import { AddEditToolsComponent } from './pages/tools/add-edit-tools/add-edit-tools.component';
 import { ListVehiclesComponent } from './pages/transport/list-vehicles/list-vehicles.component';
@@ -39,6 +36,9 @@ import { AddEditToolAssignmentComponent } from './pages/tool-assignment/add-edit
 import { ListAssignmentMaterialsVehicleComponent } from './pages/assignment-materials-vehicles/list-assignment-materials-vehicle/list-assignment-materials-vehicle.component';
 import { AddEditAssignmentMaterialsVehicleComponent } from './pages/assignment-materials-vehicles/add-edit-assignment-materials-vehicle/add-edit-assignment-materials-vehicle.component';
 import { DetailsAssignmentmaterialsVehicleComponent } from './pages/assignment-materials-vehicles/details-assignmentmaterials-vehicle/details-assignmentmaterials-vehicle.component';
+import { EditExitComponent } from './pages/exit-materials/edit-exit/edit-exit.component';
+import { ListProyectsComponent } from './pages/proyects/listProyects/listProyects.component';
+import { AddEditProyectComponent } from './pages/proyects/addEditProyect/addEditProyect.component';
 
 
 export const routes: Routes = [
@@ -60,6 +60,9 @@ export const routes: Routes = [
   {path: 'list-warehuses',component:ListWarehousesComponent},
   {path: 'addwarehuse',component:AddEditWarehouseComponent},
   {path: 'editwarehuse/:id',component:AddEditWarehouseComponent},  
+  {path: 'list-proyect',component:ListProyectsComponent},
+  {path: 'editproyect/:id',component:AddEditProyectComponent},  
+  {path: 'addproyect',component:AddEditProyectComponent},
   {path: 'list-providers',component:ListProvidersComponent},
   {path: 'list-vehicles',component:ListVehiclesComponent},
   {path: 'add-edit-vehicle',component:AddEditVehicleComponent},
@@ -74,7 +77,6 @@ export const routes: Routes = [
   {path: 'editcollaborator/:id',component:AddEditCollaboratorComponent},
   {path: 'list-entries',component:ListEntriesComponent},
   {path: 'details-entries/:id',component:DetailsEntriesComponent},
-  {path: 'details-exit/:id',component:DetailsExitComponent},
   {path: 'add-entry',component:AddEditEntriesComponent},
   {path: 'edit-entry/:id',component:AddEditEntriesComponent},
   {path: 'list-trasfers',component:ListTransferComponent},
@@ -82,20 +84,18 @@ export const routes: Routes = [
   {path: 'edit-transfer/:id',component:AddEditTransferComponent},
   {path: 'list-tools-assignment',component:ListToolAsignamentComponent},
   {path: 'add-tools-assignment',component:AddEditToolAssignmentComponent},
+  {path: 'add-tools-assignment/:id',component:AddEditToolAssignmentComponent},
   {path: 'edit-tools-assignment/:id',component:AddEditToolAssignmentComponent},
   {path: 'details-tools-assignment/:id',component:DetailsToolAssignmentComponent},
   {path: 'list-assignment-materials-vehicles',component:ListAssignmentMaterialsVehicleComponent},
   {path: 'add-assignment-materials-vehicles',component:AddEditAssignmentMaterialsVehicleComponent},
   {path: 'edit-assignment-materials-vehicles/:id',component:AddEditAssignmentMaterialsVehicleComponent},
   {path: 'details-assignment-materials-vehicles/:id',component:DetailsAssignmentmaterialsVehicleComponent},
-  {path: 'details-exit-register/:id',component:DetailExitSeriesComponent},
-  {path: 'list-exit-register',component:ListexitSerieComponent},
   {path: 'details-transfer/:id',component:DetailsTransferComponent},
-  {path: 'add-exit-register',component:AddEditExitSerialsComponent},
-  {path: 'edit-exit-register/:id',component:AddEditExitSerialsComponent},
   {path: 'list-exit-materials',component:ListexitMaterialsComponent},
+  {path: 'details-exit/:id',component:DetailsExitComponent},
   {path: 'add-exit-material',component:AddEditMaterialsComponent},
-  {path: 'edit-exit-material/:id',component:AddEditMaterialsComponent},
+  {path: 'edit-exit-material/:id',component:EditExitComponent},
   {path: 'load-file',component:LoadFilesComponent},
 ]
   }

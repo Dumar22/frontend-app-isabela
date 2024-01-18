@@ -1,0 +1,91 @@
+<div class="container">
+    <div class="row animated fadeIn fast mb-4">
+      <div class="col-12">
+          <div class="card">
+              <div class="card-body">
+  
+                  <input type="text"
+                          class="form-control"
+                          placeholder="Buscar herramienta..."
+                          
+                          #txtTermino/>
+  
+              </div>
+          </div>
+      </div>
+    </div>
+  
+   <div class="bg-info.bg-gradient d-flex justify-content-between ">
+    
+    <button type="button"
+     class="btn btn-primary"
+      (click)="addTool()">Nuevo Proyecto</button>
+  </div>
+  <div class="row animated fadeIn fast"
+  *ngIf="loading">
+  <div class="col-12">
+     <div class="alert text-center">
+       <h4 class="alert-heading">Cargando</h4>
+       <i class="fa fa-spin fa-refresh fa-2x"></i>
+       <p class="mb-0">Por favor espere</p>
+     </div>
+  
+  </div>
+  </div>
+  <div>
+    <table class="table">
+      <thead>
+        <tr  >
+          <th scope="col">#</th>
+          <th scope="col">Proyecto</th>
+          <th scope="col">Fecah Inicio</th>
+          <th scope="col">Observaciones </th>
+          <th scope="col">Asiganar materiales </th>
+          <th scope="col"> </th>
+          <th scope="col"> </th>
+         
+          
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of proyects| paginate
+        : {
+            itemsPerPage: tableSize,
+            currentPage: page,
+            totalItems: count
+          };
+    let i = index" [ngClass]="{'table-warning': item.name < limit}" >
+          <th scope="row">{{i + 1}}</th>
+          <td>{{item.name}}</td>
+          <td>{{item.initialize}}</td>
+          <td>{{item.obs}}</td>
+          <td>  <button type="button"
+            class="btn btn-secondary btn-sm btn-rounded text-primary"
+            (click)=" updateTool(item)">
+            Asignar
+          </button>
+        </td>
+          <td>  <button type="button"
+            class="btn btn-secondary btn-sm btn-rounded text-primary"
+            (click)=" updateTool(item)">
+            Actualizar
+          </button>
+        </td>
+          <td>  <button type="button" (click)="deleteProyect(item)" class="btn btn-secondary btn-sm btn-rounded text-danger">
+            Eliminar
+          </button>
+        </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="d-flex justify-content-center">
+      <pagination-controls
+        previousLabel="Anterior"
+        nextLabel="Siguiente"
+        (pageChange)="onTableDataChange($event)"
+      >
+      </pagination-controls>
+    </div>
+  </div>
+  
+  </div>

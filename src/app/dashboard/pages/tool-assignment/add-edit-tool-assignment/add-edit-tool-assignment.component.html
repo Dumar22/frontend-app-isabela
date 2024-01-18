@@ -6,42 +6,38 @@
     <form class="row" (ngSubmit)="addtoolAssignment()" autocomplete="off" [formGroup]="toolAssignmentForm">
       <div class="col-md-6 mb-3">
         <label class="form-label">Fecha</label>
-        <input type="date" class="form-control" formControlName="date" />
+        <input type="date" class="form-control" formControlName="assignedAt" />
         
       </div>
       <div class="col-md-6 mb-3">
-        <label class="form-label">Tipo</label>
+        <label class="form-label">Tipo asignación</label>
         <select class="form-select" aria-label="Default select example" formControlName="reason">
           <option selected value="">--Seleccione--</option>
           <option *ngFor="let type of types" [ngValue]="type.value">{{ type.name }}</option>
         </select>
         
       </div>
-
-      <div class="col-md-6 mb-3">
-        <label class="form-label">Colaborador</label>
-        <select class="form-select" aria-label="Default select example" formControlName="collaboratorId">
-          <option selected value="">--Seleccione--</option>
-          <option *ngFor="let collaborator of collaborator" [ngValue]="collaborator.id">{{ collaborator.name }}</option>
-        </select>
-      </div>
       
-      <div class="col-md-4 mb-3">
-        <label class="form-label">Observaciones</label>
-        <textarea  rows="3" type="text" class="form-control" formControlName="observation" placeholder="">
-          </textarea>
+      <div class="col-md-4">
+        <label class="form-label">Herramienta:</label>
+        <select class="form-select" aria-label="Default select example" formControlName="toolId" >
+          <option value="" selected>--Seleccione una Herramienta--</option>
+          <option *ngFor="let materialItem of tool" [value]="materialItem.id">{{ materialItem.name }}</option>
+      </select>      
+    </div>
+        <div class="col-md-3">
+          <label class="form-label">Cantidad:</label>
+          <input type="number" id="assignedQuantity" formControlName="assignedQuantity" class="form-control" required>
+        </div>
         
-      </div>
-                  
+        <div class="col-md-12 mb-4">
+          <label class="form-label">Observaciones:</label>
+          <textarea id="observation" formControlName="observation" class="form-control"></textarea>
+        </div>    
       
       
       <hr />
-     <!-- Detales de herramientas -->
-     <add-edit-details-tool-assignment
-        [tools]="tools"
-        (toolsChange)="onToolsChange($event)"
-      ></add-edit-details-tool-assignment> 
-      <hr />
+    
   
       <div class="col-12">
         <button type="submit" class="btn btn-primary">Guardar Asignacion de herramienta</button>

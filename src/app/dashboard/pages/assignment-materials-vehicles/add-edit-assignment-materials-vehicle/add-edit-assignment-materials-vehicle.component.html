@@ -1,0 +1,60 @@
+
+
+<div class="container">
+    <h3 class="text-center mb-5">Asignar Materiales a Vehículo</h3>
+  
+    <form class="row" (ngSubmit)="add()" autocomplete="off" [formGroup]="form">
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Fecha</label>
+        <input type="date" class="form-control" formControlName="date" />
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Tipo asignación</label>
+        <select class="form-select" aria-label="Default select example" formControlName="reason">
+          <option selected value="">--Seleccione--</option>
+          <option *ngFor="let type of types" [ngValue]="type.value">{{ type.name }}</option>
+        </select>
+        
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Responsable: </label>
+        <select class="form-select" aria-label="Default select example" formControlName="collaboratorId" >
+          <option selected>--Seleccione--</option>
+          <option *ngFor="let collaborator of collaborator" [value]="collaborator.id" >{{ collaborator.name }}</option>
+        </select>
+      </div>
+      
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Vehiculo placa: </label>
+        <select class="form-select" aria-label="Default select example" formControlName="vehicleId" >
+          <option selected>--Seleccione--</option>
+          <option *ngFor="let vehicle of vehicles" [value]="vehicle.id">{{ vehicle.plate }}</option>
+        </select>
+      </div>
+
+      <div class="col-md-12 mb-4">
+        <label class="form-label">Observaciones:</label>
+        <textarea id="observation" formControlName="observation" class="form-control"></textarea>
+      </div>
+      
+      
+      <hr />
+      <add-edet-details-assignment-materials-vehicle
+        [materials]="materials"
+        (materialsChange)="onMaterialsChange($event)"
+      ></add-edet-details-assignment-materials-vehicle>
+  
+      <hr />
+  
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary">Guardar Traslado</button>
+      </div>
+  
+    </form>
+  
+  </div>
+  
+  
+  
+

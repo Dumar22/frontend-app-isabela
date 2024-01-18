@@ -1,51 +1,67 @@
 <div class="container my-4" *ngIf="toolAssignment">
-    <div class="card shadow-sm">
-      <div class="card-body" >
-        <h2 class="card-title mb-4">Detalles de la Asignación </h2>
-        <div class="space">
-          <p><strong>Fecha:</strong> {{ toolAssignment.date }}</p>
-          <p><strong>Tipo entrega:</strong> {{ toolAssignment.reason }}</p>
-        </div>
-        <div class="space">
-          <p ><strong>Nombre</strong> {{ toolAssignment.collaborator.name }}</p>
-          <p ><strong>Código:</strong> {{ toolAssignment.collaborator.code }}</p>
-      </div>
+  <div class="card shadow-sm">
+    <div class="card-body">
+      <h2 class="card-title mb-4">Detalles de la Asignación</h2>
+
       <div class="space">
-        <p><strong>Operación:</strong> {{ toolAssignment.collaborator.operation }}</p>
-    </div>
-    <p><strong>Observación:</strong> {{ toolAssignment.observation }}</p>
-        
-        <h4>Lista de Herramientas</h4>
-        <hr>
-        
-        <table class="table table-bordered table-striped mt-4">
-          <thead class="bg-light">
-            <tr>
-                <th scope="col">Código</th>
-              <th scope="col">Herramienta</th>
-              <th scope="col">Unidad</th>
-              <th scope="col">Cantidad asignada</th>
-              <th scope="col">obsevación</th>
-              <th scope="col">Valor unidad</th>
-              <th scope="col">Total</th>
-            </tr>
-          </thead>         
-          <tbody>
-            <tr *ngFor="let tool of toolAssignment.details">
-                <td>{{ tool.tool.code }}</td>
-              <td>{{ tool.tool.name }}</td>
-              <td>{{ tool.tool.unity }}</td>
-              <td>{{ tool.assignedQuantity }}</td>
-              <td>{{ tool.tool.observation }}</td>
-              <td>{{ tool.tool.price |  currency:'$' }}</td>
-              <td>{{ tool.tool.price * tool.assignedQuantity |  currency:'$'}}</td>
-            </tr>
-          </tbody>
-        </table>
+        <p><strong>Nombre</strong> {{ toolAssignment[0]?.collaborator.name}} </p>
+        <p>
+          <strong>Código:</strong> {{ toolAssignment[0]?.collaborator.code}}</p>
+          <p>
+          <strong>Operación:</strong> {{toolAssignment[0]?.collaborator.operation}}
+          
+        </p>
       </div>
-      <div class="card-footer">
-        <button type="button" class="btn btn-primary mr-2" (click)="editToolAssignment(toolAssignment)">Editar</button>
-        <button type="button" class="btn btn-secondary" (click)="prev()">Volver</button>
-      </div>
+
+   
+
+      <h4>Lista de Herramientas asignadas</h4>
+      <hr />
+
+      <table class="table table-bordered table-striped mt-4">
+        <thead class="bg-light">
+          <tr>
+            <th scope="col">Código</th>
+            <th scope="col">Herramienta</th>
+            <th scope="col">Unidad</th>
+            <th scope="col">Cantidad asignada</th>
+            <th scope="col">Tipo de asignación</th>
+            <th scope="col">Fecha de asignación</th>
+            <th scope="col">obsevación</th>
+            <th scope="col">Valor unidad</th>
+            <th scope="col">Total</th>
+            <th scope="col">devolucion de heramientas Asignación</th>
+            <th scope="col">Eliminar Asignación</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let tool of toolAssignment">
+            <td>{{ tool.tool?.code }}</td>
+            <td>{{ tool.tool.name }}</td>
+            <td>{{ tool.tool.unity }}</td>
+            <td>{{ tool.assignedQuantity }}</td>
+            <td>{{ tool.reason }}</td>
+            <td>{{ tool.assignedAt }}</td>
+            <td>{{ tool.tool.observation }}</td>
+            <td>{{ tool.tool.price | currency : "$" }}</td>
+            <td>
+              {{ tool.tool.price * tool.assignedQuantity | currency : "$" }}
+            </td>
+            <td>
+              {{ tool.tool.price * tool.assignedQuantity | currency : "$" }}
+            </td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-danger btn-sm btn-rounded"
+                (click)="remove(tool)"
+              >
+                Eliminar
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
+</div>

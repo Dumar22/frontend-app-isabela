@@ -22,6 +22,7 @@ export class ListComponent implements OnInit {
   public materialsTemp: Material[] = [];
   public total: number; 
   public loading: boolean = true;
+  totalValue: number = 0;
   limit = 20; // Establecer el límite de unidades para marcar en amarillo
   page: number = 1;
   count: number = 0;
@@ -35,7 +36,7 @@ export class ListComponent implements OnInit {
   ngOnInit(): void{
 
     this.getListMaterials();
-
+ 
    };
 
    getListMaterials(){
@@ -44,12 +45,14 @@ export class ListComponent implements OnInit {
     this.materialsService.getMaterials()
     .subscribe((data: any) =>{
       this.total = data;
-      this.materials = data;0      
+      this.materials = data;     
       this.materials.sort((a, b) => a.name.localeCompare(b.name));
+      this.totalValue = this.materials.reduce((total, material) => total + material.total, 0);
       this.materialsTemp = data;
       this.loading = false;
     } );
    }
+
 
 
    onTableDataChange(event: any) {
@@ -74,6 +77,10 @@ export class ListComponent implements OnInit {
           this.materials = resp ;
         });
   }
+
+
+
+
 
    deleteMaterial(material:Material) {
 

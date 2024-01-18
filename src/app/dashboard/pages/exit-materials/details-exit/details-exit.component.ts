@@ -22,7 +22,8 @@ export class DetailsExitComponent {
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     this.exitService.getExitById(id).subscribe((data: any) => {
-      this.exit = data.exit;       
+      this.exit = data;
+             
          
     });
   }

@@ -40,7 +40,7 @@ export class CollaboratorService {
     const formData = new FormData();
     formData.append('file', file, file.name);
     const headers = this.createHeaders.createHeaders();
-    return this.http.post(`${this.baseUrl}/collaborators/upload`, formData, {
+    return this.http.post(`${this.baseUrl}/collaborators/upload-excel`, formData, {
       headers: headers.headers,
       reportProgress: true,
       observe: 'events' // Agrega esta línea para especificar el tipo de observación

@@ -22,8 +22,7 @@ export class DetailsEntriesComponent {
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     this.entryService.getEntryById(id).subscribe((data: any) => {
-      this.entrada = data.entry;       
-         
+      this.entrada = data;     
     });
   }
 

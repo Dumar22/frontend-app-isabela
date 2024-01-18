@@ -119,9 +119,9 @@ export class ListAssignmentMaterialsVehicleComponent {
     detailMaterialVehicle(assignmentMaterialVehicle: ToolAssignment){      
       this.router.navigate(['dashboard/details-assignment-materials-vehicles', assignmentMaterialVehicle.id]);
       }
-    updateMaterialVehicle(toolAssignment: ToolAssignment){
-      this.router.navigate(['dashboard/edit-assignment-materials-vehicles/',toolAssignment.id]);
-    }
+    // updateMaterialVehicle(toolAssignment: ToolAssignment){
+    //   this.router.navigate(['dashboard/edit-assignment-materials-vehicles/',toolAssignment.id]);
+    // }
   
     addMaterialVehicle():void{
       this.router.navigate(['dashboard/add-assignment-materials-vehicles']);

@@ -13,17 +13,19 @@ export class ExitService {
   baseUrl=environment.base_url
 
 
-  constructor(private http: HttpClient, private createHeaders: WarehousesService) { }
+  constructor(
+    private http: HttpClient, 
+    private createHeaders: WarehousesService) { }
 
    getExit():Observable<Exit[]> {
     
-   return  this.http.get<Exit[]>(`${this.baseUrl}/exit`, this.createHeaders.createHeaders())
+   return  this.http.get<Exit[]>(`${this.baseUrl}/exit-materials`, this.createHeaders.createHeaders())
 
    }
 
 
   getExitById(id:string):Observable<Exit>{
-    return this.http.get<Exit>(`${this.baseUrl}/exit/${id}`,this.createHeaders.createHeaders())
+    return this.http.get<Exit>(`${this.baseUrl}/exit-materials/${id}`,this.createHeaders.createHeaders())
   }
   // downloadExitPDF(id: string) {
   //   return this.http.get(`${this.baseUrl}/dowload-exit/${id}`, {
@@ -32,22 +34,22 @@ export class ExitService {
   // }
 
   saveExit( exit: Exit): Observable<Exit>{
-   return this.http.post<Exit>(`${this.baseUrl}/exit`, exit,this.createHeaders.createHeaders())
+   return this.http.post<Exit>(`${this.baseUrl}/exit-materials`, exit,this.createHeaders.createHeaders())
   }
 
   updateExit(id:string, exit:Exit): Observable<void>{
-    return this.http.put<void>(`${this.baseUrl}/exit/${exit.id}`, exit, this.createHeaders.createHeaders())
+    return this.http.patch<void>(`${this.baseUrl}/exit-materials/${id}`, exit, this.createHeaders.createHeaders())
   }
 
   deleteExit(exit: Exit): Observable<Exit>{
-    return this.http.delete<Exit>(`${this.baseUrl}/exit/${exit.id}`,this.createHeaders.createHeaders());
+    return this.http.delete<Exit>(`${this.baseUrl}/exit-materials/${exit.id}`,this.createHeaders.createHeaders());
   }
 
 
   downloadExitPDF(id: string) {
 
     const headers = this.createHeaders.createHeaders();
-    return this.http.get(`${this.baseUrl}/dowload-exit/${id}`, {
+    return this.http.get(`${this.baseUrl}/dowload-exit-materials/${id}`, {
       headers: headers.headers,
        responseType: 'blob' 
     });

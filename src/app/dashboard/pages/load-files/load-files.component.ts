@@ -1,3 +1,4 @@
+import { WorkRegisterService } from 'src/app/dashboard/services/work-install.service';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
@@ -27,7 +28,8 @@ export class LoadFilesComponent {
      private loadMaterials: MaterialsService,
      private loadCollaborators: CollaboratorService,
      private loadMeters : MetersService,
-     private loadProviders: ProviderService) {
+     private loadProviders: ProviderService,
+     private loadRegsitartion: WorkRegisterService) {
     this.form = this.formBuilder.group({
       file: ['', Validators.required],
       type: ['', Validators.required]
@@ -160,6 +162,32 @@ export class LoadFilesComponent {
             },
             error: error => {
               clearTimeout(progressTimeoutp);
+              this.loading = false;
+              this.progress = 50; // Reinicializamos el progreso
+              this.handleError(error); // Handle errors
+            }
+          });
+          console.log('mat',archivo);
+          break;
+
+        case 'matriculas':
+          this.progress = 0; // Reinicializamos el progreso
+          const progressTimeoutma = setTimeout(() => {
+            this.handleProgressAndSuccess(progressTimeout);
+          }, 3);
+  
+          this.loadRegsitartion.loadWorkRegister(archivo).subscribe({
+            next: progress => {
+              this.progress = progress;
+              if (progress === 100) {
+                this.showNotification('¡Éxito!', 'Archivo cargado exitosamente.', 'success');
+                clearTimeout(progressTimeoutma);
+                this.loading = false;
+                this.progress = 0; // Reinicializamos el progreso
+              }
+            },
+            error: error => {
+              clearTimeout(progressTimeoutma);
               this.loading = false;
               this.progress = 50; // Reinicializamos el progreso
               this.handleError(error); // Handle errors

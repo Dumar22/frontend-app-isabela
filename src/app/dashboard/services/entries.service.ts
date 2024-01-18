@@ -40,7 +40,7 @@ export class EntriesService {
   }
 
   updateEntry(id:string, entry:Entries): Observable<void>{
-    return this.http.put<void>(`${this.baseUrl}/entries/${entry.id}`, entry, this.createHeaders.createHeaders())
+    return this.http.patch<void>(`${this.baseUrl}/entries/${id}`, entry, this.createHeaders.createHeaders())
   }
 
   deleteEntry(entry: Entries): Observable<Entries>{

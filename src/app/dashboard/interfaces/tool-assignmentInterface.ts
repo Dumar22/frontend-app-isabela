@@ -1,23 +1,14 @@
 export interface ToolAssignment {
     id?: string,
-    date:           string;
     reason:         string;
-    observation?:    string;
     collaboratorId: string;
     collaborator?:   Collaborator;
-    details:        Detail[];
-
-}
-
-export interface Detail {
-    toolID?:           string;
-    tool?:             Tool;
+    toolId?:           string;
+    tool?:             Tool;   
     assignedQuantity: number;
-    durabilityTool:   number;
     observation?:      string;
-    assignedAt:       Date;
+    assignedAt:      string;
 }
-
 
 export interface Collaborator {
     id:        string;

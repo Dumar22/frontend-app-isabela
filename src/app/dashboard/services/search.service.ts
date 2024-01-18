@@ -11,7 +11,7 @@ import { WarehouseC } from '../interfaces/warehouseInterface';
 import { ProviderC } from '../interfaces/providerInterface';
 import { MeterClass } from '../interfaces/metersInterface';
 import { WorkRegisterC } from '../interfaces/workRegisterInterface';
-import { ExitC } from '../interfaces/exitInterfaces';
+import { Exit } from '../interfaces/exitInterfaces';
 
 
 const base_url = environment.base_url;
@@ -77,12 +77,13 @@ export class SearchService {
     );
   }
 
-   private transformarExitRegister( resultados: any[] ): ExitC[] {
+   private transformarExitRegister( resultados: any[] ): any[] {
 
     return resultados.map(
-      exit => new ExitC( 
+      exit => new ( 
       exit.id,
       exit.date,
+      exit.type,
       exit.exitNumber,
       exit.warehouse, 
       exit.collaboratorCode, 
@@ -92,10 +93,10 @@ export class SearchService {
       exit.materialExitDetail )     
     );
   }
-   private transformarExit( resultados: any[] ): ExitC[] {
+   private transformarExit( resultados: any[] ): Exit[] {
 
     return resultados.map(
-      exit => new ExitC( 
+      exit => new( 
       exit.id,
       exit.date,
       exit.exitNumber,

@@ -39,9 +39,7 @@ export class AddEditDetailsToolAssignmentComponent {
 
   getListTools(){
     this.toolService.getTools()
-    .subscribe((data:Tool[]) =>{ 
-      console.log(data);
-             
+    .subscribe((data:Tool[]) =>{             
       this.tool = data;      
   });
   }

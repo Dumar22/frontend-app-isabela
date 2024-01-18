@@ -100,12 +100,22 @@ export class ListCollaboratorsComponent implements OnInit {
     })
   }
 
+  // assingTool(collaborator: Collaborator){
+  //   this.router.navigate(['dashboard/editcollaborator/',collaborator.id]);
+  // }
   updateCollaborator(collaborator: Collaborator){
     this.router.navigate(['dashboard/editcollaborator/',collaborator.id]);
   }
 
   addCollaborator():void{
     this.router.navigate(['dashboard/addcollaborators']);
+  }
+
+  addToolAssignment(collaborator: Collaborator) {
+    this.router.navigate([
+      'dashboard/add-tools-assignment/',
+      collaborator.id,
+    ]);
   }
 
 }

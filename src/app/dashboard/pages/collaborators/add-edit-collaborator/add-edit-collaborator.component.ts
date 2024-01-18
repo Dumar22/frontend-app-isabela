@@ -7,6 +7,7 @@ import { ValidatorsService } from 'src/app/dashboard/services/Validate.service';
 import { Collaborator } from 'src/app/dashboard/interfaces/collaboratorInterface';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { ColaboratorOperation } from '../../../interfaces/collaboratorInterface';
 
 @Component({
   selector: 'add-edit-collaborator',
@@ -21,6 +22,7 @@ export class AddEditCollaboratorComponent {
   id: string ;
   public warehouses : string ;
   operation: string = 'Agregar ';
+ public colaboratorOperation: any[] = ColaboratorOperation;
 
   constructor(private fb:FormBuilder,
     private router:Router,

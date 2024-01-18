@@ -42,7 +42,7 @@ export class MaterialsService {
     const formData = new FormData();
     formData.append('file', file, file.name);
     const headers = this.createHeaders.createHeaders();
-    return this.http.post(`${this.baseUrl}/materials/upload`, formData, {
+    return this.http.post(`${this.baseUrl}/materials/upload-excel`, formData, {
       headers: headers.headers,
       reportProgress: true,
       observe: 'events' // Agrega esta línea para especificar el tipo de observación

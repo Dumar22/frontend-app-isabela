@@ -74,22 +74,20 @@ export class ListTransferComponent {
         });
   }
 
-  downloadTransfer(transfer: Transfers) {
-    console.log('dowload',transfer.id);
-    
-    this.transferService.downloadTransfersPDF(transfer.id)
-    .subscribe(response => {
-      
-      const url = window.URL.createObjectURL(response);
-      
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `factura-${transfer.transferNumber}.pdf`;
-      link.click();
+  downloadTransfer(transfer: Transfers)  {
+    const id = transfer.id; // replace with your transfer ID
+    this.transferService.downloadTransfersPDF(id).subscribe((data) => {
+      const blob = new Blob([data], { type: 'application/pdf' });
+      const url = window.URL.createObjectURL(blob);
 
+      // Use anchor tag to trigger download
+      const a = document.createElement('a');
+      document.body.appendChild(a);
+      a.href = url;
+      a.download = 'example.pdf';
+      a.click();
       window.URL.revokeObjectURL(url);
-
-   });
+    });
   }
 
 

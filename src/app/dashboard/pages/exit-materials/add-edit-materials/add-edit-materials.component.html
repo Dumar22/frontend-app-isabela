@@ -9,40 +9,52 @@
         <input type="date" class="form-control" formControlName="date" />
         <!-- <div *ngIf="isValidField('date')" class="form-text text-danger">La fecha es requerida</div> -->
       </div>
-      <div class="col-md-4 mb-3">
-        <label class="form-label">Salida N°</label>
-        <input type="number" class="form-control" formControlName="exitNumber" placeholder="0" />
-        <!-- <div *ngIf="isValidField('id_add')" class="form-text text-danger">El campo es requerido</div> -->
-      </div>
       
       <div class="col-md-4 mb-3">
-        <label class="form-label">Código Móvil</label>
-        <select class="form-select" aria-label="Default select example" formControlName="collaboratorCode" (change)="onCollaboratorSelect()">
+        <label class="form-label">Tipo de asignación</label>
+        <select class="form-select" aria-label="Default select example" formControlName="type" >
           <option selected>--Seleccione--</option>
-          <option *ngFor="let collaborator of collaborator">{{ collaborator.code }}</option>
+          <option *ngFor="let type of typeAssinment">{{ type.name }}</option>
         </select>
       </div>
       <div class="col-md-4 mb-3">
-        <label class="form-label">Nombre</label>
-        <input type="text" class="form-control" formControlName="collaboratorName" placeholder="" />
-        <!-- <div *ngIf="isValidField('invoiceorigin')" class="form-text text-danger">El campo es requerido</div> -->
+        <label class="form-label">Estado de asignación</label>
+        <select class="form-select" aria-label="Default select example" formControlName="state" >
+          <option selected>--Seleccione--</option>
+          <option *ngFor="let type of stateAssinment">{{ type.name }}</option>
+        </select>
       </div>
+
       <div class="col-md-4 mb-3">
-        <label class="form-label">Documento</label>
-        <input type="number" class="form-control" formControlName="collaboratorDocument" placeholder="" />
+        <label class="form-label">Móvil</label>
+        <select class="form-select" aria-label="Default select example" formControlName="collaboratorId">
+          <option selected>--Seleccione--</option>
+          <option *ngFor="let collaborator of collaborator" [value]="collaborator.id">{{ collaborator.code }} - {{ collaborator.name}}</option>
+        </select>
       </div>
+
       <div class="col-md-4 mb-3">
-        <label class="form-label">Operación</label>
-        <input type="text" class="form-control" formControlName="collaboratorOperation" placeholder="" />
+        <label class="form-label">Contrato</label>
+        <select class="form-select" aria-label="Default select example" formControlName="contractId">
+          <option selected>--Seleccione--</option>
+          <option *ngFor="let c of contract" [value]="c.id">{{ c.ot }} - {{ c.registration}}</option>
+        </select>
       </div>
-  
-      <material-details
-        [materials]="materials"
-        (materialsChange)="onMaterialsChange($event)"
-      ></material-details>
-  
+
+      <div class="col-md-4 mb-3">
+        <label class="form-label">Observación</label>
+       <textarea name="" id="" cols="30" rows="10"></textarea>
+      </div>
+
       <hr />
-  
+      <add-details
+      [materials]="materials"
+      (materialsChange)="onMaterialsChange($event)"
+    ></add-details>
+
+    <hr />
+
+      
       <div class="col-12">
         <button type="submit" class="btn btn-primary">Guardar Entrada</button>
       </div>

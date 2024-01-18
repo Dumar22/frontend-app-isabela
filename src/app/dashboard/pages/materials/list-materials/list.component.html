@@ -20,6 +20,10 @@
   <button type="button"
    class="btn btn-primary"
     (click)="addMaterial()">Nuevo material</button>
+
+    <div class="total-box">
+      <p><strong>Valor Total de Materiales: </strong> {{ totalValue | currency:'$' }}</p>
+    </div>
 </div>
 <div class="row animated fadeIn fast"
 *ngIf="loading">

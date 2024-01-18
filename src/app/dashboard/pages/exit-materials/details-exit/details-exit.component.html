@@ -1,35 +1,49 @@
 <div class="container my-4" *ngIf="exit">
     <div class="card shadow-sm">
       <div class="card-body" >
-        <h2 class="card-title mb-4">Detalles de la salida {{ exit.exitNumber }}</h2>
-        <p><strong>Fecha:</strong> {{ exit.date }}</p>
-        <p><strong>Código:</strong> {{ exit.collaboratorCode }}</p>
-        <p><strong>Nombre:</strong> {{ exit.collaboratorName }}</p>
-        <p><strong>Documento:</strong> {{ exit.collaboratorDocument }}</p>
-        <p><strong>Operación:</strong> {{ exit.collaboratorOperation }}</p>
+        <h2 class="card-title mb-4">Detalles de la salida {{ exit.ExitNumber }}</h2>
+        <div class="space">
+          <div >
+            <p><strong>Fecha:</strong> {{ exit.date }}</p>
+            <p><strong>Contrato:</strong> {{ exit.contract.registration}}</p>
+            <p><strong>Orden de trabajo:</strong> {{ exit.contract.ot}}</p>
+            <p><strong>Dirección:</strong> {{ exit.contract.addres}}</p>
+          </div>
+          <div >
+            <p><strong>Código:</strong> {{ exit.collaborator.code }}</p>
+            <p><strong>Nombre:</strong> {{ exit.collaborator.name }}</p>
+            <p><strong>Documento:</strong> {{ exit.collaborator.document }}</p>
+            <p><strong>Operación:</strong> {{ exit.collaborator.operation}}</p>
+          </div>
+        </div>
+                
         <table class="table table-bordered table-striped mt-4">
           <thead class="bg-light">
             <tr>
               <th scope="col">Nombre</th>
               <th scope="col">Código</th>
               <th scope="col">Unidad</th>
-              <th scope="col">Cantidad</th>
-              <th scope="col">Devolución</th>
-              <th scope="col">Valor unitario</th>
               <th scope="col">Serial</th>
+              <th scope="col">Cantidad Asignada</th>
+              <th scope="col">Devolución</th>
+              <th scope="col">Utilizado</th>
+              <th scope="col">Valor unitario</th>
               <th scope="col">Total</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let material of exit.materialExitDetail">
-              <td>{{ material.name }}</td>
-              <td>{{ material.code }}</td>
-              <td>{{ material.unity }}</td>
-              <td>{{ material.quantity }}</td>
-              <td>{{ material.restore }}</td>
-              <td>{{ material.value }}</td>
-              <td>{{ material.serial }}</td>
-              <td>{{ material.total }}</td>
+            <tr *ngFor="let detail of exit.details">
+              <td>{{ detail.meter ? detail.meter.name : detail.material.name }}</td>
+              <td>{{ detail.meter ? detail.meter.code : detail.material.code }}</td>
+              <td>{{ detail.meter ? detail.meter.unity : detail.material.unity }}</td>
+              <td>{{ detail.meter ? detail.meter.serial : detail.material.serial }}</td>
+              <!-- <td>{{ detail.meter ? 'Medidor' : 'Material' }}</td> -->
+              <td>{{ detail.assignedQuantity }}</td>
+              <td>{{ detail.restore }}</td>
+              <td>{{ detail.used }}</td>
+              <!-- <td>{{ detail.value }}</td> -->
+              <td>{{ detail.meter ? detail.meter.price : detail.material.price }}</td>
+              <td>{{ detail.total }}</td>
             </tr>
           </tbody>
         </table>

@@ -15,9 +15,12 @@
         <label for="code">Código</label>
         <input type="text" id="code" class="form-control" formControlName="code">
       </div>
-      <div class="form-group">
-        <label for="operation">Operación</label>
-        <input type="text" id="operation" class="form-control" formControlName="operation">
+      <div class="col-md-4 mb-3">
+        <label class="form-label">Operación</label>
+        <select class="form-select"  aria-label="Default select example" formControlName="operation" >
+          <option selected>--Seleccione--</option>
+          <option *ngFor="let type of colaboratorOperation">{{ type.value }}</option>
+        </select>
       </div>
       <div class="form-group ">
         <label for="document">Documento</label>
@@ -25,7 +28,7 @@
       </div>
       <div class="form-group">
         <label for="phone">Teléfono</label>
-        <input type="number" id="phone" class="form-control" formControlName="phone">
+        <input type="text" id="phone" class="form-control" formControlName="phone">
       </div>
       <div class="form-group">
         <label for="mail">Correo</label>

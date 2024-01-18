@@ -29,7 +29,7 @@ export class MaterialDetailsComponent {
             name: ['', Validators.required],
             quantity: [0, [Validators.required, Validators.min(1)]],
             serial: [''],
-           observaciones: ['']
+           observations: ['']
          });
      }
 
@@ -77,7 +77,7 @@ onMaterialSelectCode() {
             name: this.materialForm.value.name,
             quantity: this.materialForm.value.quantity,
             serial: this.materialForm.value.serial,
-            observaciones: this.materialForm.value.observaciones,
+            observations: this.materialForm.value.observations,
             unity: selectedMaterial.unity, // Ajusta esta línea según la propiedad correspondiente en tu objeto de material
             price: selectedMaterial.price, // Ajusta esta línea según la propiedad correspondiente en tu objeto de material
         };

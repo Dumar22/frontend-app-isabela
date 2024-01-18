@@ -39,9 +39,9 @@ export class ListexitMaterialsComponent {
   
       this.loading = true;
       this.exitService.getExit()
-      .subscribe((data:any) =>{
-        this.exit = data.exitAuth;              
-        this.exitTemp = data.exitAuth;
+      .subscribe((data:any) =>{       
+        this.exit = data;              
+        this.exitTemp = data;
         this.loading = false;
       } );
      }
@@ -66,31 +66,20 @@ export class ListexitMaterialsComponent {
     this.exitService.downloadExitPDF(exit.id)
     .subscribe(response => {
       
-      const url = window.URL.createObjectURL(response);
+      console.log(response);
       
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `factura-${exit.exitNumber}.pdf`;
-      link.click();
-
-      window.URL.revokeObjectURL(url);
 
     });
   }
   
-  detailExit(entry: Exit){      
+  detailExit(entry: Exit){          
     this.router.navigate(['dashboard/details-exit', entry.id]);
     }
 
   deleteExit(exit: Exit) {
-
-    // if ( user.id === this.userService.id ) {
-    //   return Swal.fire('Error', 'No puede borrarse a si mismo', 'error');
-    // }
-
     Swal.fire({
       title: '¿Borrar entrada?',
-      text: `Esta a punto de borrar a ${ exit.exitNumber }`,
+      text: `Esta a punto de borrar a ${ exit.ExitNumber }`,
       icon: 'question',
       showCancelButton: true,
       confirmButtonText: 'Si, borrar'
@@ -102,8 +91,8 @@ export class ListexitMaterialsComponent {
 
             this.getListExits();
             Swal.fire(
-              'Usuario borrado',
-              `${ exit.exitNumber } fue eliminado correctamente`,
+              'Salida Eliminada',
+              `salida ${ exit.ExitNumber } fue eliminada correctamente`,
               'success'
             );
 

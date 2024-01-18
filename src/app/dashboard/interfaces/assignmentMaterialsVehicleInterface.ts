@@ -2,16 +2,16 @@ export interface MaterialVehicle {
     id?:            string,
     date:           string;
     reason:         string;
-    observation:    string;
-    collaboratorID: string;
+    observation?:    string;
+    collaboratorId: string;
     collaborator?:   Collaborator;
-    vehicleID:      string;
-    vehicle:        Vehicle;
+    vehicleId:      string;
+    vehicle?:        Vehicle;
     details:        Detail[];
 }
 
 export interface Detail {
-    materialID:       string;
+    materialId:       string;
     material:       Material;
     assignedQuantity: number;
     observation:      string;

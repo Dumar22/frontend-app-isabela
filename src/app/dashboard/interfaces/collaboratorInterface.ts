@@ -30,3 +30,21 @@ export interface LoadCollaborator{
   total: number;
   collaborator: CollaboratorClass[];
 }
+
+
+export const ColaboratorOperation = [
+{ value: 'AUXILIAR DE BODEGA Y MENSAJERO' },
+{ value: 'AUXILIAR DE BODEGA Y PROGRAMADOR' },
+{ value: 'AUXILIAR DE INGENIERIA' },
+{ value: 'AUXILIAR DE INSTALACION'},
+{ value: 'CONDUCTOR '
+},{ value: 'COORDINADOR DE SERVICIOS ASOCIADOS' },
+{ value: 'COORDINADORA SST' },
+{ value: 'DIRECTOR TALENTO HUMANO'},
+{ value: 'JEFE DE BODEGA' },
+{ value: 'RESIDENTE DE OBRA' },
+{ value: 'SUPERVISOR PEGADOR'},
+{ value: 'SUPERVISOR PEGADOR' },
+{ value: 'TECNICO INSTALADOR' },
+
+]

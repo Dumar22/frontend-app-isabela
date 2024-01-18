@@ -31,9 +31,9 @@ export class AddEditVehicleComponent {
     ){
       this.form = this.fb.group({
         make: ['', Validators.required],
-        plate: ['', Validators.required, Validators.minLength(6), Validators.maxLength(6)],
+        plate: ['', Validators.required],
         model: ['', Validators.required],
-        status: [false , Validators.required],
+        status: ['' , Validators.required],
       });
       this.id = this.aRouter.snapshot.paramMap.get('id')?? '';
   }
@@ -74,7 +74,7 @@ export class AddEditVehicleComponent {
       plate: this.form.value.plate,
       status: this.form.value.status,
     };
-    console.log(vehicle);
+    
     if (this.id !== '') {
       // Es editar
       vehicle.id = this.id;
