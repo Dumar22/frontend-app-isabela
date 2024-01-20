@@ -9,6 +9,7 @@ export interface Transfers{
     documentdelivery: string,
     receive: string,
     documentreceive: string,
+    observation?: string;
     createDetailTransferDto?: Material[],
     details?: Material[],
 

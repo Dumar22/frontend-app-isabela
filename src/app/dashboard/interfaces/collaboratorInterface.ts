@@ -37,8 +37,8 @@ export const ColaboratorOperation = [
 { value: 'AUXILIAR DE BODEGA Y PROGRAMADOR' },
 { value: 'AUXILIAR DE INGENIERIA' },
 { value: 'AUXILIAR DE INSTALACION'},
-{ value: 'CONDUCTOR '
-},{ value: 'COORDINADOR DE SERVICIOS ASOCIADOS' },
+{ value: 'CONDUCTOR'},
+{ value: 'COORDINADOR DE SERVICIOS ASOCIADOS' },
 { value: 'COORDINADORA SST' },
 { value: 'DIRECTOR TALENTO HUMANO'},
 { value: 'JEFE DE BODEGA' },

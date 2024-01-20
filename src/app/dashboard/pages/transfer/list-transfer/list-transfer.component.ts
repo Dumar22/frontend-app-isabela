@@ -76,17 +76,22 @@ export class ListTransferComponent {
 
   downloadTransfer(transfer: Transfers)  {
     const id = transfer.id; // replace with your transfer ID
-    this.transferService.downloadTransfersPDF(id).subscribe((data) => {
+    const transferNumber = transfer.transferNumber
+    this.transferService.downloadPDF(id).subscribe((data: ArrayBuffer) => {
+      // Crea un Blob a partir del ArrayBuffer recibido
       const blob = new Blob([data], { type: 'application/pdf' });
+    
+      // Crea una URL para el Blob y utiliza un enlace <a> para iniciar la descarga del archivo
       const url = window.URL.createObjectURL(blob);
-
-      // Use anchor tag to trigger download
       const a = document.createElement('a');
       document.body.appendChild(a);
       a.href = url;
-      a.download = 'example.pdf';
+      a.download = `Traslado_${transferNumber}.pdf`;
       a.click();
       window.URL.revokeObjectURL(url);
+ 
+    
+     
     });
   }
 

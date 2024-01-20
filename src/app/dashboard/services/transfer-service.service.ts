@@ -43,11 +43,10 @@ export class TransferServiceService {
     return this.http.delete<Transfers>(`${this.baseUrl}/transfers/${transfer.id}`,this.createHeaders.createHeaders());
   }
 
-  downloadTransfersPDF(id: string) {
-    const headers = this.createHeaders.createHeaders();
-    return this.http.get(`${this.baseUrl}transfers/pdf/${id}`, {
-      headers: headers.headers,
-      responseType: 'arraybuffer' 
-    });
+  downloadPDF(id: string): Observable<ArrayBuffer> {
+    const url = `${this.baseUrl}/transfers/pdf/${id}`;
+    const headers = this.createHeaders.createHeaders();  // Asegúrate de incluir las cabeceras necesarias
+  
+    return this.http.get(url, { headers:headers.headers, responseType: 'arraybuffer' });
   }
 }

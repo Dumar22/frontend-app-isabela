@@ -84,7 +84,7 @@ export class LoadFilesComponent {
             this.handleError(error); // Handle errors
           }
         });
-        console.log('mat',archivo);
+        // console.log('mat',archivo);
         break;
   
       case 'meters':
@@ -114,7 +114,7 @@ export class LoadFilesComponent {
         }
           
         );
-        console.log('medi',archivo);
+        // console.log('medi',archivo);
         break;
   
         case 'collaborators':
@@ -140,7 +140,7 @@ export class LoadFilesComponent {
             this.handleError(error); // Handle errors
           }
         });
-        console.log('mat',archivo);
+        // console.log('mat',archivo);
         break;
   
 
@@ -167,7 +167,7 @@ export class LoadFilesComponent {
               this.handleError(error); // Handle errors
             }
           });
-          console.log('mat',archivo);
+          // console.log('mat',archivo);
           break;
 
         case 'matriculas':
@@ -193,7 +193,7 @@ export class LoadFilesComponent {
               this.handleError(error); // Handle errors
             }
           });
-          console.log('mat',archivo);
+          // console.log('mat',archivo);
           break;
     
       default:

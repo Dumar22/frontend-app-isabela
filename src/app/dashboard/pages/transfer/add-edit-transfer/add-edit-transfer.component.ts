@@ -34,6 +34,7 @@ export class AddEditTransferComponent {
     documentdelivery: ['', Validators.required],
     receive: ['', Validators.required],
     documentreceive: ['', Validators.required],
+    observation: ['', Validators.required],
     createDetailTransferDto: this.formBuilder.array([])
       });
 
@@ -106,6 +107,7 @@ export class AddEditTransferComponent {
         documentdelivery: transfer.documentdelivery,
         receive: transfer.receive,
         documentreceive: transfer.documentreceive,
+        observation: transfer.observation,
         
       });
       transfer.details.forEach((material: Material) => {        

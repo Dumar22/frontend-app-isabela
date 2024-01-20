@@ -46,13 +46,11 @@ export class ExitService {
   }
 
 
-  downloadExitPDF(id: string) {
-
-    const headers = this.createHeaders.createHeaders();
-    return this.http.get(`${this.baseUrl}/dowload-exit-materials/${id}`, {
-      headers: headers.headers,
-       responseType: 'blob' 
-    });
+  downloadPDF(id: string): Observable<ArrayBuffer> {
+    const url = `${this.baseUrl}/exit-materials/pdf/${id}`;
+    const headers = this.createHeaders.createHeaders();  // Asegúrate de incluir las cabeceras necesarias
+  
+    return this.http.get(url, { headers:headers.headers, responseType: 'arraybuffer' });
   }
   
 }

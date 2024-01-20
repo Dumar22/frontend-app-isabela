@@ -70,7 +70,9 @@ export class AddEditAssignmentMaterialsVehicleComponent {
 
   getListCollaborator(){
     this.collaboratorService.getCollaborators()
-    .subscribe((data:Collaborator[]) =>{      
+    .subscribe((data:Collaborator[]) =>{   
+        //  console.log(data);
+         
       this.collaborator = data.filter((collaborator) => {
         return collaborator.operation === 'CONDUCTOR';
       });
@@ -79,7 +81,7 @@ export class AddEditAssignmentMaterialsVehicleComponent {
   
   getListVehicles(){
     this.vehicleService.getVehicles()
-    .subscribe((data:Vehicle[]) =>{      
+    .subscribe((data:Vehicle[]) =>{            
       this.vehicles = data;
       
   });

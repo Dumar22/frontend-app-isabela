@@ -61,13 +61,20 @@ export class ListexitMaterialsComponent {
   }
 
   downloadExit(exit: Exit) {
-    console.log('dowload',exit.id);
+    const id = exit.id; // replace with your transfer ID
+    const exitnumber = exit.ExitNumber
+    this.exitService.downloadPDF(id).subscribe((data: ArrayBuffer) => {
+      // Crea un Blob a partir del ArrayBuffer recibido
+      const blob = new Blob([data], { type: 'application/pdf' });
     
-    this.exitService.downloadExitPDF(exit.id)
-    .subscribe(response => {
-      
-      console.log(response);
-      
+      // Crea una URL para el Blob y utiliza un enlace <a> para iniciar la descarga del archivo
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      document.body.appendChild(a);
+      a.href = url;
+      a.download = `Traslado_${exitnumber}.pdf`;
+      a.click();
+      window.URL.revokeObjectURL(url);
 
     });
   }
