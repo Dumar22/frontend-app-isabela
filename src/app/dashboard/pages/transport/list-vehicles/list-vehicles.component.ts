@@ -37,9 +37,7 @@ export class ListVehiclesComponent {
     this.loading = true;
      this.vehicleService.getVehicles()
   .subscribe((data: any) => {  
-    console.log(data);
     
-          
     this.vehicles = data;
     this.vehicles.sort((a, b) => a.make.localeCompare(b.make));
     this.vehicleTemp = data;  

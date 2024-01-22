@@ -1,26 +1,30 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import Swal, { SweetAlertIcon } from 'sweetalert2';
-import { ValidatorsService } from 'src/app/dashboard/services/Validate.service';
-import { Contract, Exit } from 'src/app/dashboard/interfaces/exitInterfaces';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { FormArray, Validators, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ExitService } from 'src/app/dashboard/services/exit.service';
 import { Collaborator } from 'src/app/dashboard/interfaces/collaboratorInterface';
+import { Contract } from 'src/app/dashboard/interfaces/exitInterfaces';
+import { Material } from 'src/app/dashboard/interfaces/materialsInterface';
+import { ValidatorsService } from 'src/app/dashboard/services/Validate.service';
 import { CollaboratorService } from 'src/app/dashboard/services/collaborator.service';
-import { WorkRegisterService } from 'src/app/dashboard/services/work-install.service';
+import { ExitService } from 'src/app/dashboard/services/exit.service';
 import { MaterialsService } from 'src/app/dashboard/services/materials.service';
 import { MetersService } from 'src/app/dashboard/services/meters.service';
-import { AddDetailsComponent } from '../add-details/add-details.component';
-import { Material } from 'src/app/dashboard/interfaces/materialsInterface';
+import { WorkRegisterService } from 'src/app/dashboard/services/work-install.service';
+import Swal, { SweetAlertIcon } from 'sweetalert2';
 
 @Component({
+  selector: 'add-exit-list',
   standalone: true,
-  imports: [CommonModule,ReactiveFormsModule, AddDetailsComponent, ],
-  templateUrl: './add-edit-materials.component.html',
-  styleUrls: ['./add-edit-materials.component.css']
+  imports: [
+    CommonModule, ReactiveFormsModule
+  ],
+  templateUrl: './add-exit-list.component.html',
+  styleUrls: ['./add-exit-list.component.css'],
+  
 })
-export class AddEditMaterialsComponent {
+export class AddExitListComponent {
+
   materials:any [] = [];
   detailsArray: FormArray;
   id: string ;
@@ -159,4 +163,4 @@ details: this.materials
         });
       }
 
-}
+ }

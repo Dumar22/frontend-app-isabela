@@ -72,7 +72,7 @@ export class ListexitMaterialsComponent {
       const a = document.createElement('a');
       document.body.appendChild(a);
       a.href = url;
-      a.download = `Traslado_${exitnumber}.pdf`;
+      a.download = `Salida_${exitnumber}.pdf`;
       a.click();
       window.URL.revokeObjectURL(url);
 
