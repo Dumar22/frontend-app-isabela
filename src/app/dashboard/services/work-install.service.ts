@@ -40,6 +40,10 @@ export class WorkRegisterService {
      return this.http.delete<WorkRegister>(`${this.baseUrl}/contract/${contract.id}`,  this.createHeaders.createHeaders());
    }
 
+   searchWorkRegister(term: string): Observable<WorkRegister[]> {
+    return this.http.get<WorkRegister[]>(`${this.baseUrl}/contract/search/${term}`,this.createHeaders.createHeaders());
+  }
+
 
    loadWorkRegister(file: File): Observable<number> {
     const formData = new FormData();

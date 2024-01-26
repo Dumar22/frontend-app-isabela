@@ -41,6 +41,10 @@ export class ToolsService {
   deleteTool(tool: Tools): Observable<Tools>{
     return this.http.delete<Tools>(`${this.baseUrl}/tools/${tool.id}`,this.createHeaders.createHeaders());
   }
+
+  searchTool(term: string): Observable<Tools[]> {
+    return this.http.get<Tools[]>(`${this.baseUrl}/tools/search/${term}`,this.createHeaders.createHeaders());
+  }
   
   loadTools(file: File): Observable<number> {
     const formData = new FormData();

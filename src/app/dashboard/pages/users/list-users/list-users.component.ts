@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { UsersService } from '../../../services/users.service';
 import { User } from '../../../interfaces/usersInterface';
 import Swal from 'sweetalert2';
-import { SearchService } from 'src/app/dashboard/services/search.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -22,7 +21,6 @@ export class ListUsersComponent implements OnInit {
   warehouse : string = '';
 
   constructor(private userService: UsersService,
-     private searchService: SearchService,
       private router: Router) { }
 
   ngOnInit(): void {
@@ -38,22 +36,6 @@ export class ListUsersComponent implements OnInit {
       this.loading = false;
     } );
   }
-
-
- //Buscar
- search (term: string ) {
-
-  if ( term.length === 0 ) {
-    this.users = this.usersTemp;
-    return ;
-  }
-   this.searchService.search('users', term )
-        .subscribe( resp => {
-          
-        });
-  }
-
-
 
   // Eliminar
 

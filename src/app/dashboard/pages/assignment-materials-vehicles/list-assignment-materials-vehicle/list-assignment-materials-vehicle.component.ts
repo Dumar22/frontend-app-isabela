@@ -5,7 +5,6 @@ import { UiModulesModule } from 'src/app/dashboard/components/ui-modules/ui-modu
 import { MaterialVehicle } from 'src/app/dashboard/interfaces/assignmentMaterialsVehicleInterface';
 import { ToolAssignment } from 'src/app/dashboard/interfaces/tool-assignmentInterface';
 import { AssignmentMaterialsVehicleService } from 'src/app/dashboard/services/assignmentMaterialsVehicle.service';
-import { SearchService } from 'src/app/dashboard/services/search.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -30,7 +29,6 @@ export class ListAssignmentMaterialsVehicleComponent {
 
 
   constructor(private assignmentMaterialsVehicleService: AssignmentMaterialsVehicleService,    
-    private searchService: SearchService,
     private router: Router) { }
 
 
@@ -68,10 +66,10 @@ export class ListAssignmentMaterialsVehicleComponent {
       this.assignmentMaterialsVehicle = this.assignmentMaterialsVehicle;
       return ;
     }
-     this.searchService.search('providers', term )
-          .subscribe( resp => {
-            this.assignmentMaterialsVehicle = resp;
-          });
+    //  this.searchService.search('providers', term )
+    //       .subscribe( resp => {
+    //         this.assignmentMaterialsVehicle = resp;
+    //       });
     }
   
   

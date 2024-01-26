@@ -2,7 +2,6 @@ import { Component, OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Collaborator, CollaboratorClass } from 'src/app/dashboard/interfaces/collaboratorInterface';
 import { CollaboratorService } from '../../../services/collaborator.service';
-import { SearchService } from 'src/app/dashboard/services/search.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { UiModulesModule } from 'src/app/dashboard/components/ui-modules/ui-modules.module';
@@ -28,7 +27,6 @@ export class ListCollaboratorsComponent implements OnInit {
 
 
   constructor(private collaboratorService: CollaboratorService,
-    private searchService: SearchService,
     private router: Router) { }
 
   ngOnInit(): void{
@@ -65,7 +63,7 @@ export class ListCollaboratorsComponent implements OnInit {
     this.collaborators = this.collaboratorTemp;
     return ;
   }
-   this.searchService.search('collaborators', term )
+   this.collaboratorService.searchCollaborator( term )
         .subscribe( resp => {
           this.collaborators = resp;
         });

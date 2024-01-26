@@ -4,7 +4,6 @@ import { Warehouse } from 'src/app/dashboard/interfaces/warehouseInterface';
 import { WarehousesService } from '../../../services/warehouses.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { SearchService } from 'src/app/dashboard/services/search.service';
 
 @Component({
   selector: 'list-warehouses',
@@ -22,7 +21,7 @@ export class ListWarehousesComponent implements OnInit {
   public loading: boolean = true;
 
   constructor(private warehouseService: WarehousesService,
-    private searchService: SearchService,
+   
     private router: Router) { }
 
   ngOnInit(): void{
@@ -41,18 +40,8 @@ export class ListWarehousesComponent implements OnInit {
     } );
    }
 
-    //Buscar
- search (term: string ) {
-
-  if ( term.length === 0 ) {
-    this.warehouses = this.warehouseTemp;
-    return ;
-  }
-   this.searchService.search('warehouses', term )
-        .subscribe( resp => {
-          this.warehouses = resp;
-        });
-  }
+    
+ 
 
 
    deleteWarehouse(warehouse:Warehouse) {

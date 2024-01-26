@@ -4,7 +4,6 @@ import { MaterialsService } from '../../../services/materials.service';
 import { Material } from 'src/app/dashboard/interfaces/materialsInterface';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
-import { SearchService } from 'src/app/dashboard/services/search.service';
 import { UiModulesModule } from 'src/app/dashboard/components/ui-modules/ui-modules.module';
 
 
@@ -30,7 +29,7 @@ export class ListComponent implements OnInit {
   tableSizes: any = [3, 6, 9, 12];
 
   constructor(private materialsService: MaterialsService,
-    private searchService: SearchService,
+    
     private router: Router) { }
 
   ngOnInit(): void{
@@ -65,14 +64,16 @@ export class ListComponent implements OnInit {
     this.getListMaterials();
   }
 
+
+  
    //Buscar
- search (term: string ) {
+ search (term: string ):void {
 
   if ( term.length === 0 ) {
     this.materials = this.materialsTemp;
     return ;
   }
-   this.searchService.search('materials', term )
+   this.materialsService.searchMaterial( term )
         .subscribe( resp => {
           this.materials = resp ;
         });

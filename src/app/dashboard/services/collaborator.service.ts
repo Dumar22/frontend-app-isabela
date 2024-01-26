@@ -36,6 +36,10 @@ export class CollaboratorService {
      return this.http.delete<Collaborator>(`${this.baseUrl}/collaborators/${collaborator.id}`,this.createHeaders.createHeaders());
    }
 
+   searchCollaborator(term: string): Observable<Collaborator[]> {
+    return this.http.get<Collaborator[]>(`${this.baseUrl}/collaborators/search/${term}`,this.createHeaders.createHeaders());
+  }
+
    loadingCollaborators(file: File): Observable<number> {
     const formData = new FormData();
     formData.append('file', file, file.name);

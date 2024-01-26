@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SearchService } from 'src/app/dashboard/services/search.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Transfers } from 'src/app/dashboard/interfaces/transferInterface';
@@ -29,7 +28,6 @@ export class ListTransferComponent {
   tableSizes: any = [3, 6, 9, 12];
 
   constructor(private transferService: TransferServiceService,
-    private searchService: SearchService,
     private router: Router) { }
 
     ngOnInit(): void{
@@ -68,7 +66,7 @@ export class ListTransferComponent {
     this.transfer = this.transferTemp;
     return ;
   }
-   this.searchService.search('invoices', term )
+   this.transferService.searchTransfer( term )
         .subscribe( resp => {
           this.transfer = resp;
         });

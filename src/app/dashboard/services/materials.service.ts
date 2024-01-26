@@ -37,6 +37,12 @@ export class MaterialsService {
   deleteMaterial(material: Material): Observable<Material>{
     return this.http.delete<Material>(`${this.baseUrl}/materials/${material.id}`,this.createHeaders.createHeaders());
   }
+
+  searchMaterial(term: string): Observable<Material[]> {
+    return this.http.get<Material[]>(`${this.baseUrl}/materials/search/${term}`,this.createHeaders.createHeaders());
+  }
+
+
   
   loadMaterials(file: File): Observable<number> {
     const formData = new FormData();

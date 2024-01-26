@@ -3,7 +3,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UiModulesModule } from 'src/app/dashboard/components/ui-modules/ui-modules.module';
 import { ToolAssignment } from 'src/app/dashboard/interfaces/tool-assignmentInterface';
-import { SearchService } from 'src/app/dashboard/services/search.service';
 import { ToolAssignmentService } from 'src/app/dashboard/services/toolAssignment.service';
 import Swal from 'sweetalert2';
 
@@ -29,7 +28,6 @@ export class ListToolAsignamentComponent {
   tableSizes: any = [3, 6, 9, 12];
   constructor(
     private toolAssignmentService: ToolAssignmentService,
-    private searchService: SearchService,
     private router: Router
   ) {}
 
@@ -91,9 +89,9 @@ export class ListToolAsignamentComponent {
       this.toolAssignment = this.toolAssignment;
       return;
     }
-    // this.searchService.search('providers', term).subscribe((resp) => {
-    //   this.toolAssignment = resp;
-    // });
+    this.toolAssignmentService.searchToolAssignment( term).subscribe((resp) => {
+      this.toolAssignment = resp;
+    });
   }
 
   deleteToolAssignment(toolAssignment: ToolAssignment) {

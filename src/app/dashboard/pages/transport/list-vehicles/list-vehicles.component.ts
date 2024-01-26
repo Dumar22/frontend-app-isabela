@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UiModulesModule } from 'src/app/dashboard/components/ui-modules/ui-modules.module';
 import { Vehicle } from 'src/app/dashboard/interfaces/vehiclesInterface';
-import { SearchService } from '../../../services/search.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { VehicleService } from 'src/app/dashboard/services/vehicle.service';
@@ -26,7 +25,7 @@ export class ListVehiclesComponent {
  
 
   constructor(private vehicleService: VehicleService,    
-    private searchService: SearchService,
+    
     private router: Router) { }
 
   ngOnInit(): void{
@@ -53,19 +52,6 @@ export class ListVehiclesComponent {
     this.tableSize = event.target.value;
     this.page = 1;
     this.getListVehicles();
-  }
-
-   //Buscar
- search (term: string ) {
-
-  if ( term.length === 0 ) {
-    this.vehicles = this.vehicleTemp;
-    return ;
-  }
-  //  this.searchService.search('providers', term )
-  //       .subscribe( resp => {
-  //         this.vehicles = resp;
-  //       });
   }
 
    deleteVehicle(vehicle:Vehicle) {

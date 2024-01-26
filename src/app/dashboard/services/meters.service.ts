@@ -37,6 +37,10 @@ export class MetersService {
     return this.http.delete<Meter>(`${this.baseUrl}/meters/${meter.id}`,this.createHeaders.createHeaders());
   }
 
+  searchMeter(term: string): Observable<Meter[]> {
+    return this.http.get<Meter[]>(`${this.baseUrl}/meters/search/${term}`,this.createHeaders.createHeaders());
+  }
+
   loadMeters(file: File): Observable<number> {
     const formData = new FormData();
     formData.append('file', file, file.name);

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
 import { MetersService } from 'src/app/dashboard/services/meters.service';
-import { SearchService } from 'src/app/dashboard/services/search.service';
 import { Router } from '@angular/router';
 import { Meter } from 'src/app/dashboard/interfaces/metersInterface';
 import { UiModulesModule } from 'src/app/dashboard/components/ui-modules/ui-modules.module';
@@ -26,7 +25,6 @@ export class MeterListComponent {
   tableSizes: any = [3, 6, 9, 12];
   
   constructor(private metersService: MetersService,
-    private searchService: SearchService,
     private router: Router) { }
 
   ngOnInit(): void{
@@ -58,13 +56,13 @@ export class MeterListComponent {
   }
 
    //Buscar
- search (term: string ) {
+ search (term: string ):void {
 
   if ( term.length === 0 ) {
     this.meters = this.metersTemp;
     return ;
   }
-   this.searchService.search('meters', term )
+   this.metersService.searchMeter( term )
         .subscribe( resp => {
           this.meters = resp ;
         });

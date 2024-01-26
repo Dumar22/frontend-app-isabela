@@ -21,6 +21,14 @@ export class AddEditToolsComponent implements OnInit {
   public warehouses : string ;
   operation: string = 'Agregar ';
 
+  typeUnities = [
+    { id: 'UNIDAD', value: 'UNIDAD' },
+    { id: 'METRO', value: 'METRO' },
+    { id: 'METRO 3(m3)', value: 'METRO 3(m3)' },
+    { id: 'KILOGRAMO', value: 'KILOGRAMO' },
+    { id: 'LITRO', value: 'LITRO' }
+  ];
+
   options = [
     { id: 'disponible', value: true, label: 'Disponible' },
     { id: 'no-disponible', value: false, label: 'No disponible' }

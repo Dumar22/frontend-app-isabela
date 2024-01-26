@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Invoice } from 'src/app/dashboard/interfaces/invoiceInterface';
-import { IvnvoiceServiceService } from '../../../services/ivnvoice-service.service';
-import { SearchService } from 'src/app/dashboard/services/search.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Exit } from 'src/app/dashboard/interfaces/exitInterfaces';
@@ -25,7 +23,7 @@ export class ListexitMaterialsComponent {
   public loading: boolean = true;
 
   constructor(private exitService: ExitService,
-    private searchService: SearchService,
+    
     private router: Router) { }
 
     ngOnInit(): void{
@@ -54,10 +52,10 @@ export class ListexitMaterialsComponent {
     this.exit = this.exitTemp;
     return ;
   }
-   this.searchService.search('exit', term )
-        .subscribe( resp => {
-          this.exit = resp;
-        });
+  //  this.searchService.search('exit', term )
+  //       .subscribe( resp => {
+  //         this.exit = resp;
+  //       });
   }
 
   downloadExit(exit: Exit) {

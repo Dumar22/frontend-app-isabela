@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Tools } from 'src/app/dashboard/interfaces/toolsInterface';
 import { ToolsService } from 'src/app/dashboard/services/tools.service';
-import { SearchService } from 'src/app/dashboard/services/search.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { UiModulesModule } from 'src/app/dashboard/components/ui-modules/ui-modules.module';
@@ -26,7 +25,7 @@ export class ListToolsComponent implements OnInit {
   tableSizes: any = [3, 6, 9, 12];
 
   constructor(private toolsService: ToolsService,
-    private searchService: SearchService,
+    
     private router: Router) { }
 
   ngOnInit(): void{
@@ -66,7 +65,7 @@ export class ListToolsComponent implements OnInit {
     this.tools = this.toolsTemp;
     return ;
   }
-   this.searchService.search('meters', term )
+   this.toolsService.searchTool( term )
         .subscribe( resp => {
           this.tools = resp ;
         });

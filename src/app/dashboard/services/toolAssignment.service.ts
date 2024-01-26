@@ -38,6 +38,10 @@ export class ToolAssignmentService {
   deleteToolAssignment(toolAssignment: ToolAssignment): Observable<ToolAssignment>{
     return this.http.delete<ToolAssignment>(`${this.baseUrl}/tool-asignament/${toolAssignment.id}`,this.createHeaders.createHeaders());
   }
+
+  searchToolAssignment(term: string): Observable<ToolAssignment[]> {
+    return this.http.get<ToolAssignment[]>(`${this.baseUrl}/tool-asignament/search/${term}`,this.createHeaders.createHeaders());
+  }
   
 
 downloadPDF(toolAssignment: ToolAssignment): Observable<ToolAssignment>{

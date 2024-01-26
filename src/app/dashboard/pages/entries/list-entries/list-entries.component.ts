@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SearchService } from 'src/app/dashboard/services/search.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Entries } from 'src/app/dashboard/interfaces/entriesInterfaces';
@@ -23,7 +22,6 @@ export class ListEntriesComponent {
   public loading: boolean = true;
 
   constructor(private entryService: EntriesService,
-    private searchService: SearchService,
     private router: Router) { }
 
     ngOnInit(): void{
@@ -53,10 +51,10 @@ export class ListEntriesComponent {
     this.entry = this.entryTemp;
     return ;
   }
-   this.searchService.search('invoices', term )
-        .subscribe( resp => {
-          this.entry = resp;
-        });
+  //  this.searchService.search('invoices', term )
+  //       .subscribe( resp => {
+  //         this.entry = resp;
+  //       });
   }
 
   downloadEntry(entry: Entries) {

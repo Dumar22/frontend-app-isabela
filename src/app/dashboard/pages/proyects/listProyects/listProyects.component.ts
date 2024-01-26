@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UiModulesModule } from 'src/app/dashboard/components/ui-modules/ui-modules.module';
 import { Proyect } from 'src/app/dashboard/interfaces/proyectsInterface';
@@ -63,9 +63,19 @@ export class ListProyectsComponent {
 
    //Buscar
 
+   search (term: string ):void {
+
+    if ( term.length === 0 ) {
+      this.proyects = this.proyectsTemp;
+      return ;
+    }
+     this.proyectService.searchProyect( term )
+          .subscribe( resp => {
+            this.proyects = resp ;
+          });
+    }
+
    deleteProyect(tool:Proyect) {
-
-
     Swal.fire({
       title: '¿Borrar Herramienta?',
       text: `Esta a punto de borrar a ${ tool.name }`,

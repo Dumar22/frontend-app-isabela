@@ -44,6 +44,10 @@ export class ProviderService {
      return this.http.delete<Provider>(`${this.baseUrl}/providers/${provider.id}`,  this.createHeaders.createHeaders());
    }
 
+   searchProvider(term: string): Observable<Provider[]> {
+    return this.http.get<Provider[]>(`${this.baseUrl}/providers/search/${term}`,this.createHeaders.createHeaders());
+  }
+
    loadingProviders(file: File): Observable<number> {
     const formData = new FormData();
     formData.append('file', file, file.name);

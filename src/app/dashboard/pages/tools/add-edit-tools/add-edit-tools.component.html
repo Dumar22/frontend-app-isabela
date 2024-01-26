@@ -12,10 +12,13 @@
           <label for="code">Código</label>
           <input type="text" id="code" class="form-control" formControlName="code">
         </div>
-        <div class="form-group">
-          <label for="unity">Unidad</label>
-          <input type="text" id="unity" class="form-control" formControlName="unity">
-        </div>     
+        <div class="col-md-12">
+          <label class="form-label">Unidad</label>
+           <select class="form-select mb-2" aria-label="Default select example" formControlName="unity" >
+             <option value="" selected >--Seleccione--</option>
+             <option *ngFor="let v of typeUnities" [value]="v.value" >{{ v.id }}</option>
+           </select> 
+         </div>    
         <div class="form-group">
           <label for="quantity">Cantidad</label>
           <input type="number" id="quantity" class="form-control" formControlName="quantity">

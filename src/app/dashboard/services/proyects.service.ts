@@ -38,6 +38,10 @@ export class ProyectsService {
   deleteTool(proyect: Proyect): Observable<Proyect>{
     return this.http.delete<Proyect>(`${this.baseUrl}/proyects/${proyect.id}`,this.createHeaders.createHeaders());
   }
+
+  searchProyect(term: string): Observable<Proyect[]> {
+    return this.http.get<Proyect[]>(`${this.baseUrl}/proyects/search/${term}`,this.createHeaders.createHeaders());
+  }
   
   
 

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WorkRegister } from 'src/app/dashboard/interfaces/workRegisterInterface';
 import { WorkRegisterService } from 'src/app/dashboard/services/work-install.service';
-import { SearchService } from 'src/app/dashboard/services/search.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { UiModulesModule } from 'src/app/dashboard/components/ui-modules/ui-modules.module';
@@ -25,7 +24,6 @@ export class ListWorkRegisterComponent {
  
   
   constructor(private workRegisterService: WorkRegisterService,
-    private searchService: SearchService,
     private router: Router) { }
 
   ngOnInit(): void{
@@ -64,7 +62,7 @@ export class ListWorkRegisterComponent {
     this.workRegister = this.workRegisterTemp;
     return ;
   }
-   this.searchService.search('workinstall', term )
+   this.workRegisterService.searchWorkRegister( term )
         .subscribe( resp => {
           this.workRegister = resp ;
         });

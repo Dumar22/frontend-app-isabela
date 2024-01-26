@@ -4,7 +4,6 @@ import { Provider } from 'src/app/dashboard/interfaces/providerInterface';
 import { ProviderService } from '../../../services/provider.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
-import { SearchService } from 'src/app/dashboard/services/search.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { UiModulesModule } from 'src/app/dashboard/components/ui-modules/ui-modules.module';
 
@@ -28,7 +27,6 @@ export class ListProvidersComponent {
  
 
   constructor(private providerService: ProviderService,    
-    private searchService: SearchService,
     private router: Router) { }
 
   ngOnInit(): void{
@@ -63,7 +61,7 @@ export class ListProvidersComponent {
     this.providers = this.providerTemp;
     return ;
   }
-   this.searchService.search('providers', term )
+   this.providerService.searchProvider( term )
         .subscribe( resp => {
           this.providers = resp;
         });
