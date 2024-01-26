@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UiModulesModule } from 'src/app/dashboard/components/ui-modules/ui-modules.module';
 import { ToolAssignment } from 'src/app/dashboard/interfaces/tool-assignmentInterface';
@@ -12,11 +12,11 @@ import Swal from 'sweetalert2';
   imports: [CommonModule, UiModulesModule],
   templateUrl: './list-tool-asignament.component.html',
   styleUrls: ['./list-tool-asignament.component.css'],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
+  
 })
 export class ListToolAsignamentComponent {
   
-  public toolAssignment: ToolAssignment[] = [];
+  public toolAssignment: any[] = [];
   public toolAssignmentTemp: ToolAssignment[] = [];
   public loading: boolean = true;
   public toolAssignmentCount: number = 0;
@@ -86,10 +86,12 @@ export class ListToolAsignamentComponent {
   //Buscar
   search(term: string) {
     if (term.length === 0) {
-      this.toolAssignment = this.toolAssignment;
+      this.toolAssignment = this.toolAssignmentTemp;
       return;
     }
-    this.toolAssignmentService.searchToolAssignment( term).subscribe((resp) => {
+    this.toolAssignmentService.searchToolAssignment(term)
+    .subscribe(resp => {
+           
       this.toolAssignment = resp;
     });
   }

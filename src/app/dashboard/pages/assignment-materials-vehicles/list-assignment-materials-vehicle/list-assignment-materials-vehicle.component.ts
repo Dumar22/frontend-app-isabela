@@ -58,22 +58,7 @@ export class ListAssignmentMaterialsVehicleComponent {
       this.page = 1;
       this.getListToolAssignment();
     }
-  
-     //Buscar
-   search (term: string ) {
-  
-    if ( term.length === 0 ) {
-      this.assignmentMaterialsVehicle = this.assignmentMaterialsVehicle;
-      return ;
-    }
-    //  this.searchService.search('providers', term )
-    //       .subscribe( resp => {
-    //         this.assignmentMaterialsVehicle = resp;
-    //       });
-    }
-  
-  
-  
+   
     deleteMaterialVehicle(assignmentMaterialVehicle:MaterialVehicle) {
   
   

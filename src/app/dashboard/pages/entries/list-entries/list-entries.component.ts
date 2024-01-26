@@ -51,10 +51,10 @@ export class ListEntriesComponent {
     this.entry = this.entryTemp;
     return ;
   }
-  //  this.searchService.search('invoices', term )
-  //       .subscribe( resp => {
-  //         this.entry = resp;
-  //       });
+   this.entryService.searchEntry( term )
+        .subscribe( resp => {
+          this.entry = resp;
+        });
   }
 
   downloadEntry(entry: Entries) {

@@ -47,5 +47,9 @@ export class EntriesService {
     return this.http.delete<Entries>(`${this.baseUrl}/entries/${entry.id}`,this.createHeaders.createHeaders());
   }
 
+  searchEntry(term: string): Observable<Entries[]> {
+    return this.http.get<Entries[]>(`${this.baseUrl}/entries/search/${term}`,this.createHeaders.createHeaders());
+  }
+
   
 }

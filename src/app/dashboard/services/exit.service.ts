@@ -27,11 +27,7 @@ export class ExitService {
   getExitById(id:string):Observable<Exit>{
     return this.http.get<Exit>(`${this.baseUrl}/exit-materials/${id}`,this.createHeaders.createHeaders())
   }
-  // downloadExitPDF(id: string) {
-  //   return this.http.get(`${this.baseUrl}/dowload-exit/${id}`, {
-  //     responseType: 'blob' 
-  //   });
-  // }
+
 
   saveExit( exit: Exit): Observable<Exit>{
    return this.http.post<Exit>(`${this.baseUrl}/exit-materials`, exit,this.createHeaders.createHeaders())
@@ -51,6 +47,9 @@ export class ExitService {
     const headers = this.createHeaders.createHeaders();  // Asegúrate de incluir las cabeceras necesarias
   
     return this.http.get(url, { headers:headers.headers, responseType: 'arraybuffer' });
+  }
+  searchExit(term: string): Observable<Exit[]> {
+    return this.http.get<Exit[]>(`${this.baseUrl}/exit-materials/search/${term}`,this.createHeaders.createHeaders());
   }
   
 }

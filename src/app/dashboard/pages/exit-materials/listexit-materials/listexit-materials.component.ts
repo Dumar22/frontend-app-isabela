@@ -52,10 +52,10 @@ export class ListexitMaterialsComponent {
     this.exit = this.exitTemp;
     return ;
   }
-  //  this.searchService.search('exit', term )
-  //       .subscribe( resp => {
-  //         this.exit = resp;
-  //       });
+   this.exitService.searchExit( term )
+        .subscribe( resp => {
+          this.exit = resp;
+        });
   }
 
   downloadExit(exit: Exit) {
