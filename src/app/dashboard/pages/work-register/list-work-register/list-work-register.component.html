@@ -37,11 +37,16 @@
       <thead>
         <tr  >
           <th scope="col">#</th>
+          <th scope="col">Municipio</th>
           <th scope="col">N° Contrato</th>
           <th scope="col">Subscriptor</th>
+          <th scope="col">Solicitud</th>
           <th scope="col">Orden de trabajo</th>
           <th scope="col">Dirección</th>
+          <th scope="col">Barrio</th>
           <th scope="col">Teléfono</th>
+          <th scope="col">Fecha de asignación</th>
+          <th scope="col">Observación</th>
           <!-- <th scope="col">Estado</th> -->
           <th scope="col">Actualizar</th>
           <th scope="col">Eliminar</th>
@@ -56,11 +61,16 @@
           };
     let i = index" >
           <th scope="row">{{i + 1}}</th>
-          <td>{{item.registration}}</td>
+          <td>{{item.municipality}}</td>
+          <td>{{item.contract}}</td>
           <td>{{item.name}}</td>
+          <td>{{item.request}}</td>
           <td>{{item.ot}}</td>
           <td>{{item.addres}}</td>
+          <td>{{item.neighborhood}}</td>
           <td>{{item.phone}}</td>
+          <td>{{item.date}}</td>
+          <td>{{item.obsevation}}</td>
           <!-- <td>
             <span [ngClass]="item.available ? 'badge badge-success' : 'badge badge-danger'">
               {{ item.available ? 'Disponible' : 'No disponible' }}</span>

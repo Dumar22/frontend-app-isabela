@@ -9,8 +9,6 @@ import { ExitService } from 'src/app/dashboard/services/exit.service';
 import { Collaborator } from 'src/app/dashboard/interfaces/collaboratorInterface';
 import { CollaboratorService } from 'src/app/dashboard/services/collaborator.service';
 import { WorkRegisterService } from 'src/app/dashboard/services/work-install.service';
-import { MaterialsService } from 'src/app/dashboard/services/materials.service';
-import { MetersService } from 'src/app/dashboard/services/meters.service';
 import { AddDetailsComponent } from '../add-details/add-details.component';
 import { Material } from 'src/app/dashboard/interfaces/materialsInterface';
 
@@ -57,9 +55,7 @@ export class AddEditMaterialsComponent {
     private collaboratorService: CollaboratorService,
     private contractService: WorkRegisterService,
     private exitService:ExitService,
-    private materialsService:MaterialsService,
-    private metersService:MetersService,
-     private validatorsService:ValidatorsService) { 
+    private validatorsService:ValidatorsService) { 
          // Inicializa detailsArray como un FormArray
     this.detailsArray = this.formExit.get('details') as FormArray;
         this.id = this.aRouter.snapshot.paramMap.get('id')?? '';

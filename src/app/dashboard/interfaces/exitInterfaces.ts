@@ -30,9 +30,10 @@ export interface Collaborator {
 
 export interface Contract {
   id:           string;
-  registration: string;
+  contract: string;
   name:         string;
   ot:           string;
+  request:       string;
   addres:       string;
   phone:        string;
   observation:  null;
