@@ -9,6 +9,7 @@ import { MaterialsService } from '../../services/materials.service';
 import { MetersService } from '../../services/meters.service';
 import { CollaboratorService } from '../../services/collaborator.service';
 import { ProviderService } from '../../services/provider.service';
+import { ToolsService } from '../../services/tools.service';
 
 @Component({
   selector: 'app-load-files',
@@ -28,6 +29,7 @@ export class LoadFilesComponent {
      private loadMaterials: MaterialsService,
      private loadCollaborators: CollaboratorService,
      private loadMeters : MetersService,
+     private loadTools : ToolsService,
      private loadProviders: ProviderService,
      private loadRegsitartion: WorkRegisterService) {
     this.form = this.formBuilder.group({
@@ -79,6 +81,32 @@ export class LoadFilesComponent {
           },
           error: error => {
             clearTimeout(progressTimeout);
+            this.loading = false;
+            this.progress = 50; // Reinicializamos el progreso
+            this.handleError(error); // Handle errors
+          }
+        });
+        // console.log('mat',archivo);
+        break;
+
+      case 'tools':
+        this.progress = 0; // Reinicializamos el progreso
+        const progressTimeoutT = setTimeout(() => {
+          this.handleProgressAndSuccess(progressTimeout);
+        }, 3);
+
+        this.loadTools.loadTools(archivo).subscribe({
+          next: progress => {
+            this.progress = progress;
+            if (progress === 100) {
+              this.showNotification('¡Éxito!', 'Archivo cargado exitosamente.', 'success');
+              clearTimeout(progressTimeoutT);
+              this.loading = false;
+              this.progress = 0; // Reinicializamos el progreso
+            }
+          },
+          error: error => {
+            clearTimeout(progressTimeoutT);
             this.loading = false;
             this.progress = 50; // Reinicializamos el progreso
             this.handleError(error); // Handle errors

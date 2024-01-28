@@ -29,13 +29,16 @@ export class AddEditWorkRegisterComponent {
     private aRouter: ActivatedRoute
   ) {
     this.form = this.fb.group({
-      registration: ['', Validators.required],
+      contract: ['', Validators.required],
       name: ['', Validators.required],
       ot: [ '' , Validators.required],      
+      request: [ '' , Validators.required],      
+      municipality: [ '' , Validators.required],      
+      neighborhood: [ '' , Validators.required],      
       addres: ['', Validators.required],
+      date: ['', Validators.required],
       phone: ['', Validators.required],     
       observation: ['', Validators.required],     
-      
     });
     this.id = this.aRouter.snapshot.paramMap.get('id')?? '';      
   }
@@ -63,8 +66,12 @@ export class AddEditWorkRegisterComponent {
       this.form.setValue({
         name: data.name,
         addres: data.addres,
-        registration: data.registration,
+        contract: data.contract,
         ot: data.ot,        
+        request: data.request,        
+        municipality: data.municipality,        
+        neighborhood: data.neighborhood,        
+        date: data.date,        
         phone: data.phone,
         observation: data.observation    
       });
@@ -76,8 +83,12 @@ export class AddEditWorkRegisterComponent {
     const workRegister: WorkRegister = {
       name: this.form.value.name,
       addres: this.form.value.addres,
-      registration: this.form.value.registration,
+      contract: this.form.value.contract,
       ot: this.form.value.ot,     
+      request: this.form.value.request,     
+      municipality: this.form.value.municipality,     
+      neighborhood: this.form.value.neighborhood,     
+      date: this.form.value.date,     
       phone: this.form.value.phone,   
       observation: this.form.value.observation,   
       

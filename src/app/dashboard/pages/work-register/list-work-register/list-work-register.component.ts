@@ -73,7 +73,7 @@ export class ListWorkRegisterComponent {
 
     Swal.fire({
       title: '¿Borrar Contrato?',
-      text: `Esta a punto de borrar el contarto ${ workRegister.registration }`,
+      text: `Esta a punto de borrar el contarto ${ workRegister.contract }`,
       icon: 'question',
       showCancelButton: true,
       confirmButtonText: 'Si, borrar'
@@ -86,7 +86,7 @@ export class ListWorkRegisterComponent {
             this.getListWorkRegister();
             Swal.fire(
               'Matrícula borrada',
-              `${ workRegister.registration } fue eliminada correctamente`,
+              `${ workRegister.contract } fue eliminada correctamente`,
               'success'
             );
 

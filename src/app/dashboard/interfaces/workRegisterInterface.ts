@@ -2,20 +2,14 @@ export interface WorkRegister{
     id?: string,
     name: string,
     addres: string
-    registration: string,
+    contract: string,
     ot: string,
+    request: string,
+    municipality: string,
+    neighborhood: string,
+    date: string,
     phone: string
     observation?: string
   }
-  export class WorkRegisterC{
-    constructor(
-    public id: string,
-    public registration: string,
-    public name: string,
-    public ot: string,
-    public address: string,
-    public phone: string
-    
-    ){}
-  }
+  
   

@@ -1,3 +1,8 @@
-span{
-    font-size: .8rem;  
+
+.table th:nth-child(7),
+.table td:nth-child(7),
+.table th:nth-child(11),
+.table td:nth-child(11) {
+  width: 300PX; /* Ajusta el ancho de la columna de dirección y observación */
+  /* white-space: normal;  Permite que el texto se envuelva en varias líneas si es necesario */
 }
