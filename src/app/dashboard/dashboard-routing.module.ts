@@ -39,6 +39,9 @@ import { DetailsAssignmentmaterialsVehicleComponent } from './pages/assignment-m
 import { EditExitComponent } from './pages/exit-materials/edit-exit/edit-exit.component';
 import { ListProyectsComponent } from './pages/proyects/listProyects/listProyects.component';
 import { AddEditProyectComponent } from './pages/proyects/addEditProyect/addEditProyect.component';
+import { ListEntriesToolsComponent } from './pages/entries-tools/list-entries-tools/list-entries-tools.component';
+import { DetailsEnriesToolsComponent } from './pages/entries-tools/details-enries-tools/details-enries-tools.component';
+import { AddEditEntriesToolsComponent } from './pages/entries-tools/add-edit-entries-tools/add-edit-entries-tools.component';
 
 
 export const routes: Routes = [
@@ -97,9 +100,13 @@ export const routes: Routes = [
   {path: 'add-exit-material',component:AddEditMaterialsComponent},
   {path: 'edit-exit-material/:id',component:EditExitComponent},
   {path: 'load-file',component:LoadFilesComponent},
+  {path: 'list-entries-tools',component:ListEntriesToolsComponent},
+  {path: 'details-entries-tools/:id',component:DetailsEnriesToolsComponent},
+  {path: 'add-entry-tools',component:AddEditEntriesToolsComponent},
+  {path: 'edit-entry-tools/:id',component:AddEditEntriesToolsComponent},
 ]
-  }
-   ] 
+}
+] 
 
   
 

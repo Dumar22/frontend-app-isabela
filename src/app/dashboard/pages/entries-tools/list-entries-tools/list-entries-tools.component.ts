@@ -1,19 +1,22 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
-import Swal from 'sweetalert2';
 import { Entries } from 'src/app/dashboard/interfaces/entriesInterfaces';
-import { EntriesService } from 'src/app/dashboard/services/entries.service';
+import Swal from 'sweetalert2';
+import { EntriesToolsService } from '../../../services/entries-tools.service';
 
 @Component({
-  selector: 'app-list-innvoice',
+  selector: 'app-list-entries-tools',
   standalone: true,
-  imports: [CommonModule],
-  templateUrl: './list-entries.component.html',
-  styleUrls: ['./list-entries.component.css']
-})
-export class ListEntriesComponent {
+  imports: [
+    CommonModule,
+  ],
+  templateUrl: './list-entries-tools.component.html',
+  styleUrls: ['./list-entries-tools.component.css'],
   
+})
+export class ListEntriesToolsComponent { 
+
   route: [] = [];
 
   public entry: any[] = [];
@@ -21,7 +24,7 @@ export class ListEntriesComponent {
   public entryTemp: Entries[] = [];
   public loading: boolean = true;
 
-  constructor(private entryService: EntriesService,
+  constructor(private entryService: EntriesToolsService,
     private router: Router) { }
 
     ngOnInit(): void{
@@ -79,7 +82,7 @@ export class ListEntriesComponent {
   }
   
   detailsEntry(entry: Entries){      
-  this.router.navigate(['dashboard/details-entries', entry.id]);
+  this.router.navigate(['dashboard/details-entries-tools', entry.id]);
   }
 
   deleteEntry(entry: Entries) {   
@@ -112,13 +115,10 @@ export class ListEntriesComponent {
   }
 
 addEntry(){
-    this.router.navigate(['dashboard/add-entry']);
+    this.router.navigate(['dashboard/add-entry-tools']);
   }
   
 editEntry(entry: Entries) {
-  this.router.navigate(['dashboard/edit-entry', entry.id]);
+  this.router.navigate(['dashboard/edit-entry-tools', entry.id]);
 }
-
-  
-
 }

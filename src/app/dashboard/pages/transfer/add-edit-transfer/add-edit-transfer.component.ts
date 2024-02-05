@@ -9,6 +9,8 @@ import { CollaboratorService } from 'src/app/dashboard/services/collaborator.ser
 import { Collaborator } from 'src/app/dashboard/interfaces/collaboratorInterface';
 import { Material, Transfers } from 'src/app/dashboard/interfaces/transferInterface';
 import { MaterialDetailsComponent } from '../../material-details/material-details.component';
+import { WarehousesService } from 'src/app/dashboard/services/warehouses.service';
+import { Warehouse } from 'src/app/dashboard/interfaces/warehouseInterface';
 
 @Component({
   standalone: true,
@@ -23,6 +25,12 @@ export class AddEditTransferComponent {
   createDetailTransferDto: FormArray;
   mode: string = 'Agregar '; 
   public collaborator: Collaborator[];
+  public warehouses: Warehouse[];
+  public autorice = [
+    {name: 'Juan Felipe Hoyos'},
+    {name: 'Sebastian Torres'},
+    {name: 'Jose Ramirez'},
+  ]
 
    public formTransfer = this.formBuilder.group({
     date: ['', Validators.required],
@@ -34,7 +42,7 @@ export class AddEditTransferComponent {
     documentdelivery: ['', Validators.required],
     receive: ['', Validators.required],
     documentreceive: ['', Validators.required],
-    observation: ['', Validators.required],
+    observation: [''],
     createDetailTransferDto: this.formBuilder.array([])
       });
 
@@ -44,6 +52,7 @@ export class AddEditTransferComponent {
     private aRouter: ActivatedRoute,
     private router:Router,
     private collaboratorService: CollaboratorService,
+    private warehouseService: WarehousesService,
     private transferService:TransferServiceService,
      private validatorsService:ValidatorsService) { 
       this.createDetailTransferDto = this.formTransfer.get('createDetailTransferDto') as FormArray;
@@ -52,6 +61,7 @@ export class AddEditTransferComponent {
 
   ngOnInit(): void {
     this.getListCollaborator()
+    this.getListWarehouses()
     if (this.id != '') {
       // Es editar
      this.mode = 'Editar ';
@@ -63,6 +73,13 @@ export class AddEditTransferComponent {
     this.collaboratorService.getCollaborators()
     .subscribe((data:any) =>{      
       this.collaborator = data;
+      
+  });
+  }
+  getListWarehouses(){
+    this.warehouseService.getWarehouses()
+    .subscribe((data:any) =>{      
+      this.warehouses = data;
       
   });
   }
@@ -123,18 +140,22 @@ export class AddEditTransferComponent {
     });
   }
     
-  addTransfer() {     
+  addTransfer() {  
+    
+    console.log(this.formTransfer.value);
+    
         
     if (this.formTransfer.valid) {
       const newExit: Transfers = {
         date: this.formTransfer.value.date,
         transferNumber: this.formTransfer.value.transferNumber,
-        origin: this.formTransfer.value.origin.toUpperCase(),
-        destination: this.formTransfer.value.destination.toUpperCase(),
+        origin: this.formTransfer.value.origin,
+        destination: this.formTransfer.value.destination,
         autorization: this.formTransfer.value.autorization.toUpperCase(),
         delivery: this.formTransfer.value.delivery,
         documentdelivery: this.formTransfer.value.documentdelivery.toString(),
         receive: this.formTransfer.value.receive,
+        observation: this.formTransfer.value.observation,
         documentreceive: this.formTransfer.value.documentreceive.toString(),
         createDetailTransferDto: this.materials
       };
@@ -143,11 +164,12 @@ export class AddEditTransferComponent {
       if (this.id != '') {
 
         //editar
-        const editedTransfer = {...this.formTransfer.value};
         
         const {id ,...rest} = newExit
+        console.log(rest);
         
-        this.transferService.updateTransfers(this.id, rest)
+        
+        this.transferService.updateTransfers(this.id, rest)        
         .subscribe({
           next: () => {
             this.showNotification(

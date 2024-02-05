@@ -44,9 +44,13 @@ export class ToolAssignmentService {
   }
   
 
-downloadPDF(toolAssignment: ToolAssignment): Observable<ToolAssignment>{
-  return this.http.delete<ToolAssignment>(`${this.baseUrl}/tool-asignament/${toolAssignment.id}`,this.createHeaders.createHeaders());
-}
+
+  downloadPDF(id: string): Observable<ArrayBuffer> {
+    const url = `${this.baseUrl}/tool-asignament/pdf/${id}`;
+    const headers = this.createHeaders.createHeaders();  // Asegúrate de incluir las cabeceras necesarias
+  
+    return this.http.get(url, { headers:headers.headers, responseType: 'arraybuffer' });
+  }
 
   
 

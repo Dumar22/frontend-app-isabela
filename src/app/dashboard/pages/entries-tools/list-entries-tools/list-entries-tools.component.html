@@ -17,7 +17,7 @@
     </div>
   
   <div class="bg-info.bg-gradient d-flex">
-    <button type="button" class="btn btn-primary " (click)="addExit()"  >Nueva salida</button>
+    <button type="button" class="btn btn-primary " (click)="addEntry()"  >Nueva Entrada</button>
   
   </div>
    </div>
@@ -44,10 +44,6 @@
         <th>#</th>
         <th>Fecha</th>
         <th>Número de Factura</th>
-        <th>Tipo de salida</th>
-        <th>Estado de salida</th>
-        <th>Contrato</th>
-        <th>Solicitud</th>
         <th>Detalles</th>
         <th>Descargar</th>
         <th>Editar</th>
@@ -55,46 +51,33 @@
         </tr>
       </thead>
       <tbody>
-        <tr  *ngFor="let factura of exit; let i = index">
+        <tr  *ngFor="let entry of entry; let i = index">
           <td>
             <p class="fw-normal mb-1 text-primary">{{i+1}}.</p>
           </td>
           <td>
-            <p class="fw-bold mb-1">{{factura.date | date: 'dd/MM/yyyy HH:mm:ss' }}</p>
+            <p class="fw-bold mb-1">{{entry.date}}</p>
           </td>
           <td>
-            <p class="fw-normal mb-1">{{factura.ExitNumber}}</p>
+            <p class="fw-normal mb-1">{{entry.entryNumber}}</p>
           </td>
-          <td>
-            <p class="fw-normal mb-1">{{factura.type}}</p>
-          </td>
-          <td>
-            <p class="fw-normal mb-1">{{factura.state}}</p>
-          </td>
-          <td>
-            <p class="fw-normal mb-1">{{factura.contract.contract }}</p>
-          </td>
-          <td>
-            <p class="fw-normal mb-1">{{factura.contract.request}}</p>
-          </td>
-          <!-- <td>
-            <span class="badge badge-success ">{{factura.providerName}}</span>
-          </td> -->
-          <td><button type="button" class="btn btn-secondary btn-sm btn-rounded"
-            (click)="detailExit(factura)">
+         <td>
+            <button type="button" class="btn btn-secondary btn-sm btn-rounded"
+            (click)="detailsEntry(entry)">
             Detalles
-          </button></td>
+          </button>
+          </td>
           <td> <button class="btn btn-secondary btn-sm btn-rounded"
-            (click)="downloadExit(factura)">
+            (click)="downloadEntry(entry)">
             Descargar PDF
           </button></td>
           <td>
-            <button type="button" class="btn btn-secondary btn-sm btn-rounded" (click)="editExit(factura)">
+            <button type="button" class="btn btn-secondary btn-sm btn-rounded" (click)="editEntry(entry)">
               Editar
             </button>
           </td>
           <td>
-            <button type="button" (click)="deleteExit(factura)" class="btn btn-secondary btn-sm btn-rounded text-danger">
+            <button type="button" (click)="deleteEntry(entry)" class="btn btn-secondary btn-sm btn-rounded text-danger">
               Eliminar
             </button>
           </td>

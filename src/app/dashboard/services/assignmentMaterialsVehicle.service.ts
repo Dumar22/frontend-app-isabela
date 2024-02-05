@@ -40,8 +40,11 @@ export class AssignmentMaterialsVehicleService {
   }
   
 
-downloadPDF(toolAssignment: MaterialVehicle): Observable<MaterialVehicle>{
-  return this.http.delete<MaterialVehicle>(`${this.baseUrl}/assignment-materials-vehicle/${toolAssignment.id}`,this.createHeaders.createHeaders());
-}
+  downloadPDF(id: string): Observable<ArrayBuffer> {
+    const url = `${this.baseUrl}/assignment-materials-vehicle/pdf/${id}`;
+    const headers = this.createHeaders.createHeaders();  // Asegúrate de incluir las cabeceras necesarias
+  
+    return this.http.get(url, { headers:headers.headers, responseType: 'arraybuffer' });
+  }
 
 }

@@ -30,9 +30,9 @@ export class ListWarehousesComponent implements OnInit {
    };
 
 
-  getListWarehouses(){
+  async getListWarehouses(){
     this.loading = true;
-    this.warehouseService.getWarehouses()
+   await this.warehouseService.getWarehouses()
     .subscribe((data:any) =>{
       this.warehouses = data;           
       this.warehouseTemp = data

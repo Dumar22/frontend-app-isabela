@@ -30,6 +30,7 @@ export class AddEditWarehouseComponent {
     ){
       this.form = this.fb.group({
         name: ['', Validators.required],
+        date: ['', Validators.required],
       });
       this.id = this.aRouter.snapshot.paramMap.get('id')?? '';
   }
@@ -49,10 +50,12 @@ export class AddEditWarehouseComponent {
   getWarehouse(id: string) {
     this.wareHousesService.getWarehouseById(id)
     .subscribe((data: Warehouse) => {
+      const formattedDate = new Date(data.date).toISOString().slice(0, 16); // Formatear la fecha y hora
       this.form.setValue({
         name: data.name,
+        date: formattedDate,
       });
-    });
+    }); 
   }
 
   addWarehouse() {
@@ -61,6 +64,7 @@ export class AddEditWarehouseComponent {
 
     const warehouse: Warehouse = {
       name: this.form.value.name,
+      date: this.form.value.date,
 
     };
 

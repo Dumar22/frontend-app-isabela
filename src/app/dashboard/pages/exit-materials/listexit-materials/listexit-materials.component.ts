@@ -37,7 +37,7 @@ export class ListexitMaterialsComponent {
   
       this.loading = true;
       this.exitService.getExit()
-      .subscribe((data:any) =>{       
+      .subscribe((data:Exit[]) =>{     
         this.exit = data;              
         this.exitTemp = data;
         this.loading = false;

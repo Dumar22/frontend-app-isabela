@@ -23,6 +23,7 @@
        <tr  >
          <th scope="col">#</th>
          <th scope="col">Bodega</th>
+         <th scope="col">Creada</th>
          <th scope="col"></th>
          <th scope="col"></th>
        </tr>
@@ -31,6 +32,7 @@
        <tr *ngFor="let item of warehouses; let i = index">
          <th scope="row">{{i + 1}}</th>
          <td>{{item.name}}</td>
+         <td>{{item.date | date: 'dd/MM/yyyy HH:mm:ss'}}</td>
 
          <td>  <button type="button"
            class="btn btn-secondary btn-sm btn-rounded text-primary"

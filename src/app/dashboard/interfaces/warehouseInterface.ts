@@ -9,6 +9,7 @@ export class WarehouseC{
 export interface Warehouse{
   id?: string,
   name: string
+  date: string
 }
 
 

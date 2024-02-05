@@ -39,7 +39,7 @@ export class ListAssignmentMaterialsVehicleComponent {
      getListToolAssignment(){
       this.loading = true;
        this.assignmentMaterialsVehicleService.getToolsAssignment()
-    .subscribe((data: any) => { 
+    .subscribe((data: MaterialVehicle[]) => { 
          
          
       this.assignmentMaterialsVehicle = data;
@@ -88,14 +88,22 @@ export class ListAssignmentMaterialsVehicleComponent {
     }
 
     downloadMaterialVehicle(asignmentMaterialVehicle: MaterialVehicle) {
-      console.log('dowload',asignmentMaterialVehicle.id);
-      
-      this.assignmentMaterialsVehicleService.downloadPDF(asignmentMaterialVehicle)
-      .subscribe(response => {
-        
-        
-  
-     });
+      const id = asignmentMaterialVehicle.id; // replace with your transfer ID
+    const vehicle =asignmentMaterialVehicle.vehicle.plate
+    this.assignmentMaterialsVehicleService.downloadPDF(id).subscribe((data: ArrayBuffer) => {
+      // Crea un Blob a partir del ArrayBuffer recibido
+      const blob = new Blob([data], { type: 'application/pdf' });
+    
+      // Crea una URL para el Blob y utiliza un enlace <a> para iniciar la descarga del archivo
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      document.body.appendChild(a);
+      a.href = url;
+      a.download = `Asignación_${vehicle}.pdf`;
+      a.click();
+      window.URL.revokeObjectURL(url);
+
+    });
     }
   
 

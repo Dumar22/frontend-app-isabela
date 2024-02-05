@@ -74,7 +74,7 @@ export class AddEditAssignmentMaterialsVehicleComponent {
         //  console.log(data);
          
       this.collaborator = data.filter((collaborator) => {
-        return collaborator.operation === 'CONDUCTOR';
+        return collaborator.operation === 'CONDUCTOR' || collaborator.operation === 'CONDUCTOR ' ;
       });
     });
   }

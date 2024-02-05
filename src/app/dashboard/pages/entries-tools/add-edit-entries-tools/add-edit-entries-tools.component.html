@@ -1,0 +1,50 @@
+
+
+<div class="container">
+    <h3 class="text-center mb-5">Agregar nueva entrada</h3>
+  
+    <form class="row" (ngSubmit)="addEntry()" autocomplete="off" [formGroup]="formEntry">
+      <div class="col-md-4 mb-3">
+        <label class="form-label">Fecha</label>
+        <input type="datetime-local" class="form-control" formControlName="date" />
+        <!-- <div *ngIf="isValidField('date')" class="form-text text-danger">La fecha es requerida</div> -->
+      </div>
+      <div class="col-md-4 mb-3">
+        <label class="form-label">Entrada N°</label>
+        <input type="text" class="form-control" formControlName="entryNumber" placeholder="0" />
+        <!-- <div *ngIf="isValidField('id_add')" class="form-text text-danger">El campo es requerido</div> -->
+      </div>
+      <div class="col-md-4 mb-3">
+        <label class="form-label">Origen</label>
+        <input type="text" class="form-control" formControlName="origin" placeholder="Ciudad origen" />
+        <!-- <div *ngIf="isValidField('invoiceorigin')" class="form-text text-danger">El campo es requerido</div> -->
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Proveedor</label>
+        <select class="form-select" aria-label="Default select example" formControlName="providerName" (change)="onProviderSelect()">
+          <option selected>--Seleccione--</option>
+          <option *ngFor="let provider of provider">{{ provider.name }}</option>
+        </select>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Nit</label>
+        <input type="number" class="form-control" formControlName="providerNit" placeholder="" />
+      </div>
+  
+      <tools-details-entries
+        [materials]="materials"
+        (materialsChange)="onMaterialsChange($event)"
+      ></tools-details-entries>
+  
+      <hr />
+  
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary">Guardar Entrada</button>
+      </div>
+  
+    </form>
+  
+  </div>
+  
+  
+  

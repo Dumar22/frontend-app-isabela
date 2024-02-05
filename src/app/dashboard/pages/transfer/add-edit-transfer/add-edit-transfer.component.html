@@ -6,30 +6,46 @@
     <form class="row" (ngSubmit)="addTransfer()" autocomplete="off" [formGroup]="formTransfer">
       <div class="col-md-6 mb-3">
         <label class="form-label">Fecha</label>
-        <input type="date" class="form-control" formControlName="date" />
+        <input type="datetime" class="form-control" formControlName="date" />
         <!-- <div *ngIf="isValidField('date')" class="form-text text-danger">La fecha es requerida</div> -->
       </div>
       <div class="col-md-6 mb-3">
         <label class="form-label">Traslado N°</label>
         <input type="text" class="form-control" formControlName="transferNumber" placeholder="0" />
         <!-- <div *ngIf="isValidField('id_add')" class="form-text text-danger">El campo es requerido</div> -->
-      </div>
-      
-      <div class="col-md-4 mb-3">
+      </div>      
+      <!-- <div class="col-md-4 mb-3">
         <label class="form-label">Origen</label>
         <input type="text" class="form-control" formControlName="origin" placeholder="" />
-        <!-- <div *ngIf="isValidField('invoiceorigin')" class="form-text text-danger">El campo es requerido</div> -->
+      </div> -->
+      <div class="col-md-4 mb-3">
+        <label class="form-label">Origen</label>
+        <select class="form-select" id="origin" aria-label="Default select example" formControlName="origin">
+          <option selected>--Seleccione--</option>
+          <option *ngFor="let w of warehouses" [value]="w.name">{{ w.name }}</option>
+        </select>
       </div>
       <div class="col-md-4 mb-3">
         <label class="form-label">Destino</label>
-        <input type="text" class="form-control" formControlName="destination" placeholder="" />
-        <!-- <div *ngIf="isValidField('invoiceorigin')" class="form-text text-danger">El campo es requerido</div> -->
+        <select class="form-select" id="destination" aria-label="Default select example" formControlName="destination">
+          <option selected>--Seleccione--</option>
+          <option *ngFor="let w of warehouses" [value]="w.name">{{ w.name }}</option>
+        </select>
       </div>
+      
+
       <div class="col-md-4 mb-3">
         <label class="form-label">Autoriza</label>
-        <input type="text" class="form-control" formControlName="autorization" placeholder="" />
-        <!-- <div *ngIf="isValidField('invoiceorigin')" class="form-text text-danger">El campo es requerido</div> -->
+        <select class="form-select" id="destination" aria-label="Default select example" formControlName="autorization">
+          <option selected>--Seleccione--</option>
+          <option *ngFor="let a of autorice" [value]="a.name">{{ a.name }}</option>
+        </select>
       </div>
+
+      <!-- <div class="col-md-4 mb-3">
+        <label class="form-label">Autoriza</label>
+        <input type="text" class="form-control" formControlName="autorization" placeholder="" />
+      </div> -->
 
       <div class="col-md-6 mb-3">
         <label class="form-label">Envia</label>

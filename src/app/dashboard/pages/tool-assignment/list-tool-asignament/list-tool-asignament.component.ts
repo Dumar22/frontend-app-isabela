@@ -119,13 +119,26 @@ export class ListToolAsignamentComponent {
     });
   }
 
-  downloadTransfer(toolAssignment: ToolAssignment) {
-    console.log('dowload', toolAssignment.id);
+  downloadExit(exit: ToolAssignment) {
+        
+    const id = exit.id; // replace with your transfer ID
+    const collaborator = exit.collaborator.name
+    this.toolAssignmentService.downloadPDF(id).subscribe((data: ArrayBuffer) => {
+      // Crea un Blob a partir del ArrayBuffer recibido
+      const blob = new Blob([data], { type: 'application/pdf' });
+    
+      // Crea una URL para el Blob y utiliza un enlace <a> para iniciar la descarga del archivo
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      document.body.appendChild(a);
+      a.href = url;
+      a.download = `Asignación_${collaborator}.pdf`;
+      a.click();
+      window.URL.revokeObjectURL(url);
 
-    this.toolAssignmentService
-      .downloadPDF(toolAssignment)
-      .subscribe((response) => {});
+    });
   }
+  
 
   detailsAssignmentTool(toolAssignment: ToolAssignment) {
     this.router.navigate([

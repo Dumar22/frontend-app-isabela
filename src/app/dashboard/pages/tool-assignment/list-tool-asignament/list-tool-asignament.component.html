@@ -40,10 +40,11 @@
         <th>Nombre</th>
         <th>Asignar herramienta</th>
         <th>Ver asignaciones</th>
+        <th>Descargar</th>
         </tr>
       </thead>
       <tbody>
-        <tr  *ngFor="let collaborator of toolAssignment | paginate
+        <tr  *ngFor="let assignment of toolAssignment | paginate
         : {
             itemsPerPage: tableSize,
             currentPage: page,
@@ -53,16 +54,20 @@
             <p class="fw-normal mb-1 text-primary">{{i+1}}.</p>
           </td>
           <td>
-            <p class="fw-normal mb-1">{{collaborator.collaborator.name}}</p>
+            <p class="fw-normal mb-1">{{assignment.collaborator.name}}</p>
           </td>
          
           <td><button type="button" class="btn btn-secondary btn-sm btn-rounded"
-            (click)="addToolAssignment(collaborator)">
+            (click)="addToolAssignment(assignment)">
             Asignar herramienta
           </button></td>
           <td><button type="button" class="btn btn-secondary btn-sm btn-rounded"
-            (click)="detailsAssignmentTool(collaborator)">
+            (click)="detailsAssignmentTool(assignment)">
             Ver Detalles
+          </button></td>
+          <td> <button class="btn btn-secondary btn-sm btn-rounded"
+            (click)="downloadExit(assignment)">
+            Descargar PDF
           </button></td>
          
         </tr>
