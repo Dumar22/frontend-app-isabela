@@ -42,6 +42,7 @@ import { AddEditProyectComponent } from './pages/proyects/addEditProyect/addEdit
 import { ListEntriesToolsComponent } from './pages/entries-tools/list-entries-tools/list-entries-tools.component';
 import { DetailsEnriesToolsComponent } from './pages/entries-tools/details-enries-tools/details-enries-tools.component';
 import { AddEditEntriesToolsComponent } from './pages/entries-tools/add-edit-entries-tools/add-edit-entries-tools.component';
+import { AddExitListComponent } from './pages/exit-materials/add-exit-list/add-exit-list.component';
 
 
 export const routes: Routes = [
@@ -98,12 +99,14 @@ export const routes: Routes = [
   {path: 'list-exit-materials',component:ListexitMaterialsComponent},
   {path: 'details-exit/:id',component:DetailsExitComponent},
   {path: 'add-exit-material',component:AddEditMaterialsComponent},
+  { path: 'add-list',component: AddExitListComponent},
   {path: 'edit-exit-material/:id',component:EditExitComponent},
   {path: 'load-file',component:LoadFilesComponent},
   {path: 'list-entries-tools',component:ListEntriesToolsComponent},
   {path: 'details-entries-tools/:id',component:DetailsEnriesToolsComponent},
   {path: 'add-entry-tools',component:AddEditEntriesToolsComponent},
   {path: 'edit-entry-tools/:id',component:AddEditEntriesToolsComponent},
+ 
 ]
 }
 ] 

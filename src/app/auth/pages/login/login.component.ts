@@ -24,8 +24,8 @@ export class LoginComponent {
 
 
   public formulario: FormGroup = this.fb.group({
-    user: ['', [Validators.required, Validators.minLength(5)]],
-    password: ['Adm12345', [Validators.required, Validators.minLength(6)]]   
+    user: ['Admin', [Validators.required, Validators.minLength(5)]],
+    password: ['Admin12345', [Validators.required, Validators.minLength(6)]]   
   });
 
 

@@ -104,11 +104,11 @@ export class ListProyectsComponent {
   }   
 
   updateTool(proyect: Proyect){
-    this.router.navigate(['dashboard/edit-tool/',proyect.id]);
+    this.router.navigate(['dashboard/editproyect/',proyect.id]);
   }
 
   addTool():void{
-    this.router.navigate(['dashboard/add-tool']);
+    this.router.navigate(['dashboard/addproyect']);
   }
 
 

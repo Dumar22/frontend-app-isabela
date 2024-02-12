@@ -24,7 +24,7 @@ export class ProyectsService {
 
 
   getProyectById(id:string):Observable<Proyect>{
-    return this.http.get<Proyect>(`${this.baseUrl}/proyect/${id}`,this.createHeaders.createHeaders())
+    return this.http.get<Proyect>(`${this.baseUrl}/proyects/${id}`,this.createHeaders.createHeaders())
   }
 
   saveProyect( proyect: Proyect): Observable<Proyect>{

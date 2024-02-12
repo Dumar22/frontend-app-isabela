@@ -112,6 +112,9 @@ export class ListexitMaterialsComponent {
 addExit(){
     this.router.navigate(['dashboard/add-exit-material']);
   }
+addExitList(){
+    this.router.navigate(['dashboard/add-list']);
+  }
   
 editExit(invoice: Invoice) {
   this.router.navigate(['dashboard/edit-exit-material/', invoice.id]);

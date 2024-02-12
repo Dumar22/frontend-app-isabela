@@ -57,7 +57,7 @@
     let i = index" [ngClass]="{'table-warning': item.name < limit}" >
           <th scope="row">{{i + 1}}</th>
           <td>{{item.name}}</td>
-          <td>{{item.initialize}}</td>
+          <td>{{item.initialize | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
           <td>{{item.obs}}</td>
           <td>  <button type="button"
             class="btn btn-secondary btn-sm btn-rounded text-primary"
