@@ -20,7 +20,7 @@ export interface Collaborator{
   code: string,
   name: string,
   operation: string,
-  document:number,
+  document:string,
   phone?:string,
   mail?:string,
   status?: boolean
