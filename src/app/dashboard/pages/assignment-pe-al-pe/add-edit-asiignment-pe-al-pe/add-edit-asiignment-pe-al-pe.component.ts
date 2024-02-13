@@ -1,33 +1,33 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { FormArray, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AddEdetDetailsAssignmentMaterialsVehicleComponent } from '../add-edet-details-assignment-materials-vehicle/add-edet-details-assignment-materials-vehicle.component';
+import { Component } from '@angular/core';
+import { FormArray, Validators, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CollaboratorService } from 'src/app/dashboard/services/collaborator.service';
-import { ValidatorsService } from 'src/app/dashboard/services/Validate.service';
-import { AssignmentMaterialsVehicleService } from 'src/app/dashboard/services/assignmentMaterialsVehicle.service';
+import { MaterialPeAlPe } from 'src/app/dashboard/interfaces/assignmentPeAlPinterface';
 import { Collaborator } from 'src/app/dashboard/interfaces/collaboratorInterface';
-import { VehicleService } from 'src/app/dashboard/services/vehicle.service';
-import { Vehicle } from 'src/app/dashboard/interfaces/vehiclesInterface';
 import { Material } from 'src/app/dashboard/interfaces/materialsInterface';
-import { MaterialVehicle } from '../../../interfaces/assignmentMaterialsVehicleInterface';
+import { AssignmentPeAlPeService } from 'src/app/dashboard/services/assignment-pe-al-pe.service';
+import { AssignmentMaterialsVehicleService } from 'src/app/dashboard/services/assignmentMaterialsVehicle.service';
+import { CollaboratorService } from 'src/app/dashboard/services/collaborator.service';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
+import { AddEditDetailsAssignmentPeAlPeComponent } from '../add-edit-details-assignment-pe-al-pe/add-edit-details-assignment-pe-al-pe.component';
 
 @Component({
-  selector: 'app-add-edit-assignment-materials-vehicle',
+  selector: 'app-add-edit-asiignment-pe-al-pe',
   standalone: true,
   imports: [
-    CommonModule,ReactiveFormsModule, AddEdetDetailsAssignmentMaterialsVehicleComponent
+    CommonModule, ReactiveFormsModule, AddEditDetailsAssignmentPeAlPeComponent
   ],
-  templateUrl: './add-edit-assignment-materials-vehicle.component.html' ,
-  styleUrls: ['./add-edit-assignment-materials-vehicle.component.css'],
-  
+  templateUrl: './add-edit-asiignment-pe-al-pe.component.html',
+  styles: [`
+    :host {
+      display: block;
+    }
+  `],
 })
-export class AddEditAssignmentMaterialsVehicleComponent { 
+export class AddEditAsiignmentPeAlPeComponent { 
 
   materials:any [] = [];
   collaborator: Collaborator[];
-  vehicles: Vehicle[];
   details: FormArray;
 
 
@@ -42,7 +42,6 @@ export class AddEditAssignmentMaterialsVehicleComponent {
     date: ['', Validators.required],
     reason: ['', Validators.required],
     collaboratorId: ['', Validators.required],
-    vehicleId: ['', Validators.required],
     observation: ['', Validators.required],   
     details: this.formBuilder.array([])
       });
@@ -52,16 +51,15 @@ export class AddEditAssignmentMaterialsVehicleComponent {
     private aRouter: ActivatedRoute,
     private router:Router,
     private collaboratorService: CollaboratorService,
-    private vehicleService: VehicleService,
-    private assignmentMaterialsVehicleService:AssignmentMaterialsVehicleService,
-     private validatorsService:ValidatorsService) { 
+    private assignmentMaterialsPeAlPeService:AssignmentPeAlPeService,
+    ) { 
       this.details = this.form.get('details') as FormArray;
      }
 
 
      ngOnInit(): void {
       this.getListCollaborator()
-      this. getListVehicles()
+    
     }
 
   onMaterialsChange(materials: Material[]) {
@@ -72,33 +70,25 @@ export class AddEditAssignmentMaterialsVehicleComponent {
     this.collaboratorService.getCollaborators()
     .subscribe((data:Collaborator[]) =>{   
         //  console.log(data);
-         
-      this.collaborator = data.filter((collaborator) => {
-        return collaborator.operation === 'CONDUCTOR' || collaborator.operation === 'CONDUCTOR ' ;
-      });
+        // filtara tecnicos
+      this.collaborator = data
+      // this.collaborator = data.filter((collaborator) => {
+      //   return collaborator.operation === 'CONDUCTOR' || collaborator.operation === 'CONDUCTOR ' ;
+      // });
     });
-  }
-  
-  getListVehicles(){
-    this.vehicleService.getVehicles()
-    .subscribe((data:Vehicle[]) =>{            
-      this.vehicles = data;
-      
-  });
   }
 
   add(){
 
-const newAddAssignment: MaterialVehicle = {
+const newAddAssignment: MaterialPeAlPe = {
   date: this.form.value.date,
   reason: this.form.value.reason,
   collaboratorId: this.form.value.collaboratorId,
-  vehicleId: this.form.value.vehicleId,
   observation: this.form.value.observation,
   details: this.materials,
 }
 
-this.assignmentMaterialsVehicleService.saveToolAssignment(newAddAssignment)
+this.assignmentMaterialsPeAlPeService.saveMaterialPeAlPe(newAddAssignment)
       .subscribe({
         next: () => {
           this.showNotification(
@@ -106,7 +96,7 @@ this.assignmentMaterialsVehicleService.saveToolAssignment(newAddAssignment)
             'Asignación Agregada con éxito:',
             'success'
           );
-          this.router.navigate(['dashboard/list-assignment-materials-vehicles']);
+          this.router.navigate(['dashboard/list-assignment-pe-al-pe']);
         },
         error: (error) => {
           this.handleError(error);
@@ -152,9 +142,4 @@ this.assignmentMaterialsVehicleService.saveToolAssignment(newAddAssignment)
         });
       }
       
-    }
-
-  
-
-
-
+}

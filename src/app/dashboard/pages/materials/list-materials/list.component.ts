@@ -43,10 +43,13 @@ export class ListComponent implements OnInit {
     this.loading = true;
     this.materialsService.getMaterials()
     .subscribe((data: any) =>{
-      this.total = data;
+     
       this.materials = data;     
       this.materials.sort((a, b) => a.name.localeCompare(b.name));
-      this.totalValue = this.materials.reduce((total, material) => total + material.total, 0);
+
+    this.totalValue = this.materials.reduce((total, material) => total + material.total, 0);
+    console.log(this.totalValue);
+    
       this.materialsTemp = data;
       this.loading = false;
     } );

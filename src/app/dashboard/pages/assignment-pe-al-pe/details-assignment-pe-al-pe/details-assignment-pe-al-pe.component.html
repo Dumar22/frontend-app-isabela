@@ -1,0 +1,50 @@
+<div class="container my-4" *ngIf=" assignmentMaterialPeAlPe">
+    <div class="card shadow-sm">
+      <div class="card-body" >
+        <h2 class="card-title mb-4">Detalles de la Asignación </h2>
+        <div class="space">
+          <p><strong>Fecha:</strong> {{  assignmentMaterialPeAlPe.date }}</p>
+          <p><strong>Tipo entrega:</strong> {{  assignmentMaterialPeAlPe.reason }}</p>
+        </div>
+        <div class="space">
+          <p ><strong>Nombre</strong> {{  assignmentMaterialPeAlPe.collaborator.name }}</p>
+          <p ><strong>Código:</strong> {{  assignmentMaterialPeAlPe.collaborator.code }}</p>
+      </div>
+      <div class="space">
+        <p><strong>Operación:</strong> {{  assignmentMaterialPeAlPe.collaborator.operation }}</p>
+    </div>
+    <p><strong>Observación:</strong> {{  assignmentMaterialPeAlPe.observation }}</p>
+        
+        <h4>Lista de materiales</h4>
+        <hr>
+        
+        <table class="table table-bordered table-striped mt-4">
+          <thead class="bg-light">
+            <tr>
+                <th scope="col">Código</th>
+              <th scope="col">Herramienta</th>
+              <th scope="col">Unidad</th>
+              <th scope="col">Cantidad asignada</th>
+              <th scope="col">Valor unidad</th>
+              <th scope="col">Total</th>
+            </tr>
+          </thead>         
+          <tbody>
+            <tr *ngFor="let material of  assignmentMaterialPeAlPe.details">
+                <td>{{ material.material.code }}</td>
+              <td>{{ material.material.name }}</td>
+              <td>{{ material.material.unity }}</td>
+              <td>{{ material.assignedQuantity }}</td>
+              <td>{{ material.material.price |  currency:'$' }}</td>
+              <td>{{ material.material.price * material.assignedQuantity |  currency:'$'}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card-footer">
+        <button type="button" class="btn btn-primary mr-2" (click)="editMaterialPeAlPe( assignmentMaterialPeAlPe)">Editar</button>
+        <button type="button" class="btn btn-secondary" (click)="prev()">Volver</button>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,88 @@
+
+<div class="container">
+    
+    <div class="bg-info.bg-gradient d-flex mt-4">
+      <button type="button" class="btn btn-primary " (click)="addMaterialPeAlPe()"  >Nueva Asignación</button>
+    
+    </div>
+     </div>
+    
+    <div class="row animated fadeIn fast"
+         *ngIf="loading">
+        <div class="col-12">
+            <div class="alert text-center">
+              <h4 class="alert-heading">Cargando</h4>
+              <i class="fa fa-spin fa-refresh fa-2x"></i>
+              <p class="mb-0">Por favor espere</p>
+            </div>
+    
+        </div>
+    </div>
+    <div >
+    
+      <table
+      class="table"
+    
+      >
+        <thead >
+          <tr>
+          <th>#</th>
+          <th>Fecha</th>
+          <th>Nombre</th>
+          <th>Vehículo</th>
+         
+          <th>Descargar</th>
+          <th>Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr  *ngFor="let assignamentMaterialPeAlPe of assignmentMaterialsPeAlPe | paginate
+          : {
+              itemsPerPage: tableSize,
+              currentPage: page,
+              totalItems: count
+            }; let i = index">
+            <td>
+              <p class="fw-normal mb-1 text-primary">{{i+1}}.</p>
+            </td>
+            <td>
+              <p class="fw-bold mb-1">{{assignamentMaterialPeAlPe.date | date: 'dd/MM/yyyy HH:mm:ss' }}</p>
+            </td>
+            <td>
+              <p class="fw-normal mb-1">{{assignamentMaterialPeAlPe.collaborator.name            }}</p>
+            </td>
+           
+            <td><button type="button" class="btn btn-secondary btn-sm btn-rounded"
+              (click)="detailMaterialPeAlPe(assignamentMaterialPeAlPe)">
+              Ver Detalles
+            </button></td>
+            <td> <button class="btn btn-secondary btn-sm btn-rounded"
+              (click)="downloadMaterialPeAlPe(assignamentMaterialPeAlPe)">
+              Descargar PDF
+            </button></td>
+            
+            <td>
+              <button type="button" (click)="deleteMaterialPeAlPe(assignamentMaterialPeAlPe)" class="btn btn-secondary btn-sm btn-rounded text-danger">
+                Eliminar
+              </button>
+            </td>
+          </tr>
+    
+        </tbody>
+      </table>
+      <div class="d-flex justify-content-center">
+        <pagination-controls
+          previousLabel="Anterior"
+          nextLabel="Siguiente"
+          (pageChange)="onTableDataChange($event)"
+        >
+        </pagination-controls>
+      </div>
+    
+    </div>
+    <div>
+    
+    </div>
+    
+    
+  

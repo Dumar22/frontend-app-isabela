@@ -1,0 +1,89 @@
+<div class="container">
+    <h4 class="text-center">Agregar Materiales</h4>
+    
+    
+    <div class="col-md-4 mb-3">
+      <label class="form-label">Seleccione lista de salida</label>
+      <select class="form-select"  (change)="getListMaterialsTableById($event)">
+          <option value="" selected>--Seleccione--</option>
+          <option *ngFor="let m of materialListTable" [value]="m.id">{{ m.nameList }}</option>
+      </select>
+  </div>
+   
+
+    <form class="row" [formGroup]="formMaterial" (ngSubmit)="addTool()">
+      <div class="col-md-4 mb-3">
+        <label for="materialId" class="form-label">Código de Material</label>
+        <select id="materialId" class="form-select" formControlName="materialId" (change)="updateMaterialName()">
+          <option value="" selected >--Seleccione--</option>
+          <option *ngFor="let m of material" [value]="m.id">{{ m.code }}</option>
+        </select>
+      </div>
+      <div class="col-md-4 mb-3">
+        <label for="materialName" class="form-label">Nombre del Material</label>
+        <input id="materialName" type="text" class="form-control" formControlName="materialName" readonly>
+      </div>
+      <div class="col-md-4 mb-3">
+        <label for="assignedQuantity" class="form-label">Cantidad Asignada</label>
+        <input id="assignedQuantity" type="number" class="form-control" formControlName="assignedQuantity">
+      </div>   
+
+      <hr>
+      
+      <div class="col-md-4 mb-3">
+        <label class="form-label">Serial del Medidor</label>
+        <select class="form-select" aria-label="Default select example" formControlName="meterId" (change)="updateMeterNameAndCode()">
+          <option value="" selected>--Seleccione--</option>
+          <option *ngFor="let m of meter" [value]="m.id">{{ m.serial }}</option>
+        </select>
+      </div>
+      
+      <div class="col-md-4 mb-3">
+        <label class="form-label">Nombre del Medidor</label>
+        <input type="text" class="form-control" formControlName="meterName" readonly />
+      </div>
+
+      <div class="col-md-4 mb-3">
+        <label class="form-label">Código del Medidor</label>
+        <input type="text" class="form-control" formControlName="meterCode" readonly />
+      </div>
+    
+
+      <div class="col-md-4 mb-3">
+        <label for="assignedQuantity" class="form-label">Cantidad Asignada</label>
+        <input id="assignedQuantity" type="number" class="form-control" formControlName="assignedQuantityMeter">
+      </div>
+      <button type="submit" class="btn btn-primary">Agregar Material</button>
+    </form>
+    
+  </div>
+  
+  <!-- Tabla para mostrar los materiales agregados -->
+  <table class="table mt-5 table-striped">
+    <thead class="table-primary">
+      <tr>
+        <th scope="col">Código</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Unidad</th>
+        <th scope="col">Cantidad</th>
+        <th scope="col">valor</th>
+        <th scope="col">Serial</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let material of materials">
+        <td>{{ getMaterialProperty(material.materialId, "code") }}{{ getMeterProperty(material.materialId, "code") }} </td>
+        <td>{{ getMaterialProperty(material.materialId, "name") }}{{ getMeterProperty(material.materialId, "name") }}</td>
+        <td>{{ getMaterialProperty(material.materialId, "unity") }}{{ getMeterProperty(material.materialId, "unity") }}</td>
+        <td>{{ material.assignedQuantity }}</td>
+        <td>{{ getMaterialProperty(material.materialId, "price") }}{{ getMeterProperty(material.materialId, "price") }}</td>
+        <td>{{ getMeterProperty(material.materialId, "serial") }}</td>
+        <td>
+          <button (click)="removeMaterial(material)" class="btn btn-danger">
+            Eliminar
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>

@@ -12,12 +12,15 @@ import { MaterialsService } from 'src/app/dashboard/services/materials.service';
 import { MetersService } from 'src/app/dashboard/services/meters.service';
 import { WorkRegisterService } from 'src/app/dashboard/services/work-install.service';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
+import { AddDetailsComponent } from '../add-details/add-details.component';
+import { DetailsExitListComponent } from '../details-exit-list/details-exit-list.component';
+import { ListExitMaterialsService } from 'src/app/dashboard/services/listExitMaterials.service';
 
 @Component({
   selector: 'add-exit-list',
   standalone: true,
   imports: [
-    CommonModule, ReactiveFormsModule
+    CommonModule, ReactiveFormsModule,DetailsExitListComponent
   ],
   templateUrl: './add-exit-list.component.html',
   styleUrls: ['./add-exit-list.component.css'],
@@ -28,28 +31,10 @@ export class AddExitListComponent {
   materials:any [] = [];
   detailsArray: FormArray;
   id: string ;
-  mode: string = 'Agregar '; 
-  public collaborator: Collaborator[];
-  public contract: Contract[];
-
-  typeAssinment = [
-    { name: 'Servicios adicionales'},
-    { name: 'Puesta en servicio'},
-    { name: 'Instalación'},
-  ]
-  stateAssinment = [
-    { name: 'Pendiente'},
-    { name: 'Completado'},
-    { name: 'Rechazada'},
-  ]
+ 
 
   public formExit = this.formBuilder.group({
-    date: ['', Validators.required],
-    type: ['', Validators.required],
-    state: ['', Validators.required],
-    observation: [''],
-    collaboratorId: ['', Validators.required],
-    contractId: ['', Validators.required],
+    nameList: ['', Validators.required],   
     details: this.formBuilder.array([ ]),
   });
 
@@ -58,39 +43,20 @@ export class AddExitListComponent {
     private formBuilder: FormBuilder,
     private aRouter: ActivatedRoute,
     private router:Router,
-    private collaboratorService: CollaboratorService,
-    private contractService: WorkRegisterService,
-    private exitService:ExitService,
-    private materialsService:MaterialsService,
-    private metersService:MetersService,
+   
+    private listMaterialsService:ListExitMaterialsService,
+    
      private validatorsService:ValidatorsService) { 
          // Inicializa detailsArray como un FormArray
     this.detailsArray = this.formExit.get('details') as FormArray;
         this.id = this.aRouter.snapshot.paramMap.get('id')?? '';
   }
 
-  ngOnInit(): void {
-    this.getListCollaborator()
-    this.getListContract()
-    
-  }
+  
   onMaterialsChange(materials: Material[]) {
     this.materials = materials;
   }
-
-  getListCollaborator(){
-    this.collaboratorService.getCollaborators()
-    .subscribe((data:any) =>{      
-      this.collaborator = data;
-      
-  });
-  }
-  getListContract(){
-    this.contractService.getWorkRegister()
-    .subscribe((data:any) =>{      
-      this.contract = data;      
-  });
-  }
+  
   
 
   isValidField(field: string) {
@@ -101,23 +67,18 @@ export class AddExitListComponent {
   addExit() {
    const newExit: any = {
 
-date: this.formExit.value.date,
-type: this.formExit.value.type,
-state: this.formExit.value.state,
-observation: this.formExit.value.observation,
-collaboratorId: this.formExit.value.collaboratorId,
-contractId: this.formExit.value.contractId,
+nameList: this.formExit.value.nameList,
 details: this.materials
    }
-   this.exitService.saveExit(newExit)
+   this.listMaterialsService.saveMaterial(newExit)
       .subscribe({
         next: () => {
           this.showNotification(
             '¡Éxito!',
-            'Asignación Agregada con éxito:',
+            'Lista de asignación Agregada con éxito:',
             'success'
           );
-          this.router.navigate(['dashboard/list-exit-materials']);
+          this.router.navigate(['dashboard/list-table-exit']);
         },
         error: (error) => {
           this.handleError(error);

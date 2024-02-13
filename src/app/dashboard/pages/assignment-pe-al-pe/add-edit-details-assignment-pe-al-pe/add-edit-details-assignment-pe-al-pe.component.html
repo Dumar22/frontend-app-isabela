@@ -2,26 +2,36 @@
 <div class="container">
     <h4 class="text-center">Agregar Materiales</h4>
     <form class="row" [formGroup]="formMaterial" (ngSubmit)="addTool()">
-      <div class="col-md-4 mb-3">
-        <label for="materialId" class="form-label">Código de Material</label>
-        <select id="materialId" class="form-select" formControlName="materialId" (change)="updateMaterialName()">
-          <option value="" selected >--Seleccione--</option>
-          <option *ngFor="let m of material" [value]="m.id">{{ m.code }}</option>
+      <div class="col-md-5 mb-4">
+        <label class="form-label">Material:</label>
+        <select
+          class="form-select"
+          aria-label="Default select example"
+          formControlName="materialId"
+        >
+          <option value="" selected>--Seleccione --</option>
+          <option *ngFor="let mat of material" [value]="mat.id">
+            {{ mat.name }}
+          </option>
         </select>
+  
+    
       </div>
-      <div class="col-md-4 mb-3">
-        <label for="materialName" class="form-label">Nombre del Material</label>
-        <input id="materialName" type="text" class="form-control" formControlName="materialName" readonly>
+      <div class="col-md-4 mb-4">
+        <label class="form-label">Cantidad:</label>
+        <input
+          type="number"
+          id="assignedQuantity"
+          formControlName="assignedQuantity"
+          class="form-control"
+          required
+        />
       </div>
-      <div class="col-md-4 mb-3">
-        <label for="assignedQuantity" class="form-label">Cantidad Asignada</label>
-        <input id="assignedQuantity" type="number" class="form-control" formControlName="assignedQuantity">
-      </div>   
-
-      <button type="submit" class="btn btn-primary">Agregar Material</button>
+      
+      
+        <button type="submit" class="btn btn-primary">Agregar Materiales</button>
       
     </form>
-    
   </div>
   
   <!-- Tabla para mostrar los materiales agregados -->
@@ -38,7 +48,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let material of materials">
-        <td>{{ getMaterialProperty(material.materialId, "code") }} </td>
+        <td>{{ getMaterialProperty(material.materialId, "code") }}</td>
         <td>{{ getMaterialProperty(material.materialId, "name") }}</td>
         <td>{{ getMaterialProperty(material.materialId, "unity") }}</td>
         <td>{{ material.assignedQuantity }}</td>
@@ -51,3 +61,4 @@
       </tr>
     </tbody>
   </table>
+  

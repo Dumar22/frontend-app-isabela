@@ -1,27 +1,28 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormArray, Validators, FormBuilder, ReactiveFormsModule, FormGroup } from '@angular/forms';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { FormArray, Validators, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UiModulesModule } from 'src/app/dashboard/components/ui-modules/ui-modules.module';
 import { Collaborator } from 'src/app/dashboard/interfaces/collaboratorInterface';
-import { Contract, Exit } from 'src/app/dashboard/interfaces/exitInterfaces';
+import { Contract } from 'src/app/dashboard/interfaces/exitInterfaces';
+import { Material } from 'src/app/dashboard/interfaces/materialsInterface';
+import { ValidatorsService } from 'src/app/dashboard/services/Validate.service';
 import { CollaboratorService } from 'src/app/dashboard/services/collaborator.service';
 import { ExitService } from 'src/app/dashboard/services/exit.service';
 import { WorkRegisterService } from 'src/app/dashboard/services/work-install.service';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
-import { AddDetailsComponent } from '../add-details/add-details.component';
-
+import { ExitForListDetailsComponent } from '../exit-for-list-details/exit-for-list-details.component';
 
 @Component({
-  selector: 'app-edit-exit',
+  selector: 'app-exit-for-list',
   standalone: true,
   imports: [
-    CommonModule, ReactiveFormsModule, UiModulesModule, AddDetailsComponent
+    CommonModule,ReactiveFormsModule,ExitForListDetailsComponent
   ],
-  templateUrl: './edit-exit.component.html',
-  styleUrls: ['./edit-exit.component.css'],
+  templateUrl: './exit-for-list.component.html',
+  styleUrls: ['./exit-for-list.component.css'],
+  
 })
-export class EditExitComponent { 
+export class ExitForListComponent {
 
   materials:any [] = [];
   detailsArray: FormArray;
@@ -48,7 +49,7 @@ export class EditExitComponent {
     observation: [''],
     collaboratorId: ['', Validators.required],
     contractId: ['', Validators.required],
-    details: this.formBuilder.array([]),
+    details: this.formBuilder.array([ ]),
   });
 
  
@@ -58,7 +59,8 @@ export class EditExitComponent {
     private router:Router,
     private collaboratorService: CollaboratorService,
     private contractService: WorkRegisterService,
-    private exitService:ExitService,) { 
+    private exitService:ExitService,
+    private validatorsService:ValidatorsService) { 
          // Inicializa detailsArray como un FormArray
     this.detailsArray = this.formExit.get('details') as FormArray;
         this.id = this.aRouter.snapshot.paramMap.get('id')?? '';
@@ -67,11 +69,10 @@ export class EditExitComponent {
   ngOnInit(): void {
     this.getListCollaborator()
     this.getListContract()
-    if (this.id != '') {
-      // Es editar
-     
-      this.getExit(this.id);
-    }    
+    
+  }
+  onMaterialsChange(materials: Material[]) {
+    this.materials = materials;
   }
 
   getListCollaborator(){
@@ -87,75 +88,25 @@ export class EditExitComponent {
       this.contract = data;      
   });
   }
+  
 
-  loadMaterialsDetails(exit: any) {
-    this.materials = exit.details; // Asegúrate de que exit.details tenga los datos necesarios
-    this.materials.forEach((detail: any, index: number) => {
-      this.addMaterialDetail(detail, index);
-    });
+  isValidField(field: string) {
+    return this.validatorsService.isValidField(this.formExit, field);
   }
-  
-  getExit(id: string){
-    if (id) {
-      // Carga los datos de la salida existente
-      this.exitService.getExitById(this.id).subscribe((exit: any) => {
-        // Llena el formulario con los datos existentes
-
-        // const formattedDate = moment(exit.date).format('YYYY-MM-DD');
-        const formattedDate = new Date(exit.date).toISOString().slice(0, 16); // Formatear la fecha y hora
-
-        this.formExit.patchValue({
-          date: formattedDate,
-          type: exit.type,
-          state: exit.state,
-          observation: exit.observation,
-          collaboratorId: exit.collaborator.id,
-          contractId: exit.contract.id,
-          
-        });
-        this.loadMaterialsDetails(exit);
-      });
-  }}
-
-  addMaterialDetail(detail: any, index: number) {
-    const materialDetail = this.formBuilder.group({
-      materialId: [detail.materialId],
-      assignedQuantity: [detail.assignedQuantity],
-      restore: [detail.restore],
-    });
-  
-    // Escucha los cambios en el control 'restore'
-    materialDetail.get('restore').valueChanges.subscribe((newValue) => {
-      // Actualiza el valor en el modelo
-      this.materials[index].restore = newValue;
-    });
-    materialDetail.get('assignedQuantity').valueChanges.subscribe((newValue) => {
-      // Actualiza el valor en el modelo
-      this.materials[index].assignedQuantity = newValue;
-    });
-  
-    this.detailsArray.push(materialDetail);
-  }
-
 
     
   addExit() {
+   const newExit: any = {
 
-    
-   const newExit:Exit = {
-     date: this.formExit.value.date,
-     type: this.formExit.value.type,
-     state: this.formExit.value.state,
-     observation: this.formExit.value.observation,
-     collaboratorId: this.formExit.value.collaboratorId,
-     contractId: this.formExit.value.contractId,
-     details: this.materials,
-
+date: this.formExit.value.date,
+type: this.formExit.value.type,
+state: this.formExit.value.state,
+observation: this.formExit.value.observation,
+collaboratorId: this.formExit.value.collaboratorId,
+contractId: this.formExit.value.contractId,
+details: this.materials
    }
-console.log(newExit);
-   
-   
-   this.exitService.updateExit(this.id, newExit)
+   this.exitService.saveExit(newExit)
       .subscribe({
         next: () => {
           this.showNotification(
@@ -173,10 +124,9 @@ console.log(newExit);
 
 
       handleError(error: any) {    
-       console.log(error);
+        // console.log(error);
     
         if (error.status === 0) {
-          
             // Error de conexión
             this.showNotification('¡Error!', 'Hubo un error de conexión con el servidor.', 'error');
         } else if (error.status === 500) {
@@ -209,5 +159,4 @@ console.log(newExit);
           text: message,
         });
       }
-
-}
+ }

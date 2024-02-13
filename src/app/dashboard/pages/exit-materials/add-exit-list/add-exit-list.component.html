@@ -5,59 +5,23 @@
   
     <form class="row" (ngSubmit)="addExit()" autocomplete="off" [formGroup]="formExit">
       <div class="col-md-4 mb-3">
-        <label class="form-label">Fecha</label>
-        <input type="date" class="form-control" formControlName="date" />
-        <!-- <div *ngIf="isValidField('date')" class="form-text text-danger">La fecha es requerida</div> -->
+        <label class="form-label">Nombre de lista</label>
+        <input type="text" class="form-control" formControlName="nameList" />
       </div>
       
-      <div class="col-md-4 mb-3">
-        <label class="form-label">Tipo de asignación</label>
-        <select class="form-select" aria-label="Default select example" formControlName="type" >
-          <option selected>--Seleccione--</option>
-          <option *ngFor="let type of typeAssinment">{{ type.name }}</option>
-        </select>
-      </div>
-      <div class="col-md-4 mb-3">
-        <label class="form-label">Estado de asignación</label>
-        <select class="form-select" aria-label="Default select example" formControlName="state" >
-          <option selected>--Seleccione--</option>
-          <option *ngFor="let type of stateAssinment">{{ type.name }}</option>
-        </select>
-      </div>
-
-      <div class="col-md-6 mb-3">
-        <label class="form-label">Móvil</label>
-        <select class="form-select" aria-label="Default select example" formControlName="collaboratorId">
-          <option selected>--Seleccione--</option>
-          <option *ngFor="let collaborator of collaborator" [value]="collaborator.id">{{ collaborator.code }} - {{ collaborator.name}}</option>
-        </select>
-      </div>
-
-      <div class="col-md-6 mb-3">
-        <label class="form-label">Contrato</label>
-        <select class="form-select" aria-label="Default select example" formControlName="contractId">
-          <option selected>--Seleccione--</option>
-          <option *ngFor="let c of contract" [value]="c.id">{{ c.ot }} - {{ c.contract}}</option>
-        </select>
-      </div>
-
-      <div class="col-md-12 mb-3">
-        <label class="form-label">Observación: </label>
-       <textarea id="observation" formControlName="observation" class="form-control"></textarea>
-      </div>
-
+      
 
       <hr />
-      <!-- <add-details
+      <details-exit-list
       [materials]="materials"
       (materialsChange)="onMaterialsChange($event)"
-    ></add-details> -->
+    ></details-exit-list>
 
     <hr />
 
       
       <div class="col-12">
-        <button type="submit" class="btn btn-primary">Guardar Entrada</button>
+        <button type="submit" class="btn btn-primary">Guardar lista</button>
       </div>
   
     </form>

@@ -65,9 +65,17 @@ export class SidenavComponent {
       ruta: 'list-exit-materials'
      },    
      {
-      texto: 'Salidas de almacén xlista',
-      ruta: 'add-list'
+      texto: 'Salidas de almacén x lista',
+      ruta: 'add-exit-material-list'
      },    
+     {
+      texto: 'Listas salida de almacen',
+      ruta: 'list-table-exit'
+     },    
+    {
+      texto: 'Asignación de Pe al pe',
+      ruta: 'list-assignment-pe-al-pe'
+     },
     {
       texto: 'Asignación de materiales a vehiculos',
       ruta: 'list-assignment-materials-vehicles'

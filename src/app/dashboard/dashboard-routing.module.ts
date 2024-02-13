@@ -43,6 +43,12 @@ import { ListEntriesToolsComponent } from './pages/entries-tools/list-entries-to
 import { DetailsEnriesToolsComponent } from './pages/entries-tools/details-enries-tools/details-enries-tools.component';
 import { AddEditEntriesToolsComponent } from './pages/entries-tools/add-edit-entries-tools/add-edit-entries-tools.component';
 import { AddExitListComponent } from './pages/exit-materials/add-exit-list/add-exit-list.component';
+import { TableListExistComponent } from './pages/exit-materials/tableListExist/tableListExist.component';
+import { DetailsTableListComponent } from './pages/exit-materials/details-table-list/details-table-list.component';
+import { ListAssignmentPealpeComponent } from './pages/assignment-pe-al-pe/list-assignment-pealpe/list-assignment-pealpe.component';
+import { AddEditAsiignmentPeAlPeComponent } from './pages/assignment-pe-al-pe/add-edit-asiignment-pe-al-pe/add-edit-asiignment-pe-al-pe.component';
+import { DetailsAssignmentPeAlPeComponent } from './pages/assignment-pe-al-pe/details-assignment-pe-al-pe/details-assignment-pe-al-pe.component';
+import { ExitForListComponent } from './pages/exit-materials/exit-for-list/exit-for-list.component';
 
 
 export const routes: Routes = [
@@ -95,11 +101,19 @@ export const routes: Routes = [
   {path: 'add-assignment-materials-vehicles',component:AddEditAssignmentMaterialsVehicleComponent},
   {path: 'edit-assignment-materials-vehicles/:id',component:AddEditAssignmentMaterialsVehicleComponent},
   {path: 'details-assignment-materials-vehicles/:id',component:DetailsAssignmentmaterialsVehicleComponent},
+  {path: 'list-assignment-pe-al-pe',component:ListAssignmentPealpeComponent},
+  {path: 'add-assignment-pe-al-pe',component:AddEditAsiignmentPeAlPeComponent},
+  {path: 'edit-assignment-pe-al-pe/:id',component:AddEditAsiignmentPeAlPeComponent},
+  {path: 'details-assignment-pe-al-pe/:id',component:DetailsAssignmentPeAlPeComponent},
   {path: 'details-transfer/:id',component:DetailsTransferComponent},
   {path: 'list-exit-materials',component:ListexitMaterialsComponent},
   {path: 'details-exit/:id',component:DetailsExitComponent},
   {path: 'add-exit-material',component:AddEditMaterialsComponent},
+  {path: 'add-exit-material-list',component:ExitForListComponent},
+  {path: 'add-exit-material-list:/id',component:ExitForListComponent},
   { path: 'add-list',component: AddExitListComponent},
+  { path: 'list-table-exit',component: TableListExistComponent},
+  { path: 'details-list-table-exit/:id',component: DetailsTableListComponent},
   {path: 'edit-exit-material/:id',component:EditExitComponent},
   {path: 'load-file',component:LoadFilesComponent},
   {path: 'list-entries-tools',component:ListEntriesToolsComponent},
