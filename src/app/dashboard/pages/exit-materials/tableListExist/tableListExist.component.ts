@@ -153,7 +153,7 @@ export class TableListExistComponent {
             this.getListExits();
             Swal.fire(
               'Lista Eliminada',
-              `Lista ${ exit.ExitNumber } fue eliminada correctamente`,
+              `Lista ${ exit.nameList } fue eliminada correctamente`,
               'success'
             );
 
