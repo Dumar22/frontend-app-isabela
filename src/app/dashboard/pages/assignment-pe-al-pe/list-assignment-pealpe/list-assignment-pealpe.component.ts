@@ -65,8 +65,8 @@ export class ListAssignmentPealpeComponent {
   
   
       Swal.fire({
-        title: '¿Borrar asignación de herramienta?',
-        text: `Esta a punto de borrar asignación de herramienta ${ assignmentMaterialPeAlPe.id}`,
+        title: '¿Borrar asignación de pe al pe?',
+        text: `Esta a punto de borrar asignación de pe al pe ${ assignmentMaterialPeAlPe.id}`,
         icon: 'question',
         showCancelButton: true,
         confirmButtonText: 'Si, borrar'

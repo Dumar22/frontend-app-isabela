@@ -11,7 +11,7 @@
       >
         <option value="" selected>--Seleccione --</option>
         <option *ngFor="let mat of material" [value]="mat.id">
-          {{ mat.name }}
+          {{ mat.code }} - {{ mat.name }}
         </option>
       </select>
 

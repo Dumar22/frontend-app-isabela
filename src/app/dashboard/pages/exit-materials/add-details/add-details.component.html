@@ -6,7 +6,7 @@
         <label for="materialId" class="form-label">Código de Material</label>
         <select id="materialId" class="form-select" formControlName="materialId" (change)="updateMaterialName()">
           <option value="" selected >--Seleccione--</option>
-          <option *ngFor="let m of material" [value]="m.id">{{ m.code }}</option>
+          <option *ngFor="let m of material" [value]="m.id">{{ m.code }} - {{ m.name}}</option>
         </select>
       </div>
       <div class="col-md-4 mb-3">

@@ -72,6 +72,7 @@ export class AddEditAsiignmentPeAlPeComponent {
         //  console.log(data);
         // filtara tecnicos
       this.collaborator = data
+      this.collaborator.sort((a, b) => a.name.localeCompare(b.name));
       // this.collaborator = data.filter((collaborator) => {
       //   return collaborator.operation === 'CONDUCTOR' || collaborator.operation === 'CONDUCTOR ' ;
       // });

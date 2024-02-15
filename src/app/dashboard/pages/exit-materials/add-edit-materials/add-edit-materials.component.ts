@@ -74,6 +74,7 @@ export class AddEditMaterialsComponent {
     this.collaboratorService.getCollaborators()
     .subscribe((data:any) =>{      
       this.collaborator = data;
+      this.collaborator.sort((a, b) => a.name.localeCompare(b.name));  
       
   });
   }
@@ -101,6 +102,7 @@ collaboratorId: this.formExit.value.collaboratorId,
 contractId: this.formExit.value.contractId,
 details: this.materials
    }
+   console.log(newExit)
    this.exitService.saveExit(newExit)
       .subscribe({
         next: () => {

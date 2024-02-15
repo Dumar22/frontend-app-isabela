@@ -58,7 +58,8 @@ export class AddDetailsComponent {
 
   getListMaterials() {
     this.materialService.getMaterials().subscribe((data: Material[]) => {
-      this.material = data;
+      this.material = data.filter(material => material.quantity >= 1);
+      this.material.sort((a, b) => a.name.localeCompare(b.name));
     });
   }
   getListMeters() {
