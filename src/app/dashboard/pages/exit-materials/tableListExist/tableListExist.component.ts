@@ -45,9 +45,8 @@ import Swal from 'sweetalert2';
       <thead class="bg-light">
         <tr>
         <th>#</th>
-        <th>Fecha</th>        
+        <th>Lista</th>        
         <th>Detalles</th>
-        <th>Editar</th>
         <th>Eliminar</th>
         </tr>
       </thead>
