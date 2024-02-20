@@ -64,7 +64,7 @@ export class AddDetailsComponent {
   }
   getListMeters() {
     this.meterService.getMeters().subscribe((data: Meter[]) => {
-      this.meter = data;
+      this.meter = data.filter(meter => meter.quantity >= 1);
     });
   }
 
@@ -94,6 +94,8 @@ export class AddDetailsComponent {
     const selectedTool = this.material.find(
       (material) => material.id === materialId
     );
+    console.log(selectedTool);
+    
     return selectedTool ? selectedTool[propertyName] : null;
   }
 

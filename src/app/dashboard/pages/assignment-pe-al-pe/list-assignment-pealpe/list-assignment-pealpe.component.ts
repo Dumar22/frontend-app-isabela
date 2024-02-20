@@ -42,14 +42,20 @@ export class ListAssignmentPealpeComponent {
       this.loading = true;
        this.assignmentMaterialPeAlPeService.getMaterialPeAlPe()
     .subscribe((data: MaterialPeAlPe[]) => { 
-         
-         
       this.assignmentMaterialsPeAlPe = data;
      
       this.assignmentMaterialPeAlPeTemp = data;  
       this.loading = false;
       } );
      }
+
+     getTotalAssignedQuantity(details: any[]): number {
+      return details.reduce((total, detail) => total + detail.assignedQuantity, 0);
+    }
+    
+    getTotalUsedQuantity(details: any[]): number {
+      return details.reduce((total, detail) => total + detail.used, 0);
+    }
   
      onTableDataChange(event: any) {
       this.page = event;

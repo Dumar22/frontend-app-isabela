@@ -18,7 +18,8 @@ import Swal from 'sweetalert2';
 })
 export class DetailsToolAssignmentComponent { 
 
-  toolAssignment: ToolAssignment[] = [];
+  toolAssignment: ToolAssignment;
+  details: any[]
   collaborator: Collaborator
   loading: boolean;
 
@@ -40,8 +41,13 @@ ngOnInit(): void{
   const collaboratorId = this.route.snapshot.paramMap.get('id'); 
     
   this.toolAssignmentService.getToolsAssignment()
- .subscribe((data: ToolAssignment[]) => {        
-   this.toolAssignment = data.filter((assignment) => assignment.collaborator.id === collaboratorId);      
+ .subscribe((data: any) => {      
+    
+   this.toolAssignment = data
+   console.log(data.details);
+   
+   
+   
   });
 this.collaboratorService.getCollaboratorById(collaboratorId)
 .subscribe(( data: Collaborator) => {

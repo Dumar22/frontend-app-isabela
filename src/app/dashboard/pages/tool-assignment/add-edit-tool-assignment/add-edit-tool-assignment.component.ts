@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {  Component } from '@angular/core';
-import {  FormBuilder,  ReactiveFormsModule, Validators } from '@angular/forms';
+import {  FormArray, FormBuilder,  ReactiveFormsModule, Validators } from '@angular/forms';
 import {  Tool, ToolAssignment} from 'src/app/dashboard/interfaces/tool-assignmentInterface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToolAssignmentService } from 'src/app/dashboard/services/toolAssignment.service';
@@ -8,6 +8,8 @@ import { ValidatorsService } from 'src/app/dashboard/services/Validate.service';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { AddEditDetailsToolAssignmentComponent } from "../add-edit-details-tool-assignment/add-edit-details-tool-assignment.component";
 import { ToolsService } from 'src/app/dashboard/services/tools.service';
+import { Collaborator } from 'src/app/dashboard/interfaces/collaboratorInterface';
+import { CollaboratorService } from 'src/app/dashboard/services/collaborator.service';
 
 @Component({
     selector: 'app-add-edit-tool-assignment',
@@ -22,49 +24,53 @@ import { ToolsService } from 'src/app/dashboard/services/tools.service';
 export class AddEditToolAssignmentComponent { 
 
  
-  tool:Tool[] = [];
+  tools:any[] = [];
+  public collaborator: Collaborator[];
+  detailsArray: FormArray;
   id: string ;
   mode: string = 'Agregar '; 
 
   types = [
-    {value: 'Nueva entrga', name: 'Nueva entrga' },
+    {value: 'Nueva entrega', name: 'Nueva entrga' },
     {value: 'Entrega por desgaste', name: 'Entrega por desgaste' },
     {value: 'Entrega por perdida', name: 'Entrega por perdida' },
     {value: 'Entrega controlada', name: 'Entrega controlada' },
   ]
 
-   public toolAssignmentForm = this.formBuilder.group({
-   
-    assignedAt: ['', Validators.required],    
+   public toolAssignmentForm = this.formBuilder.group({       
     reason: ['', Validators.required],
-    collaboratorId: ['', ],    
-    toolId: ['', Validators.required],    
-    assignedQuantity: [0, Validators.required],    
-    observation: [''],    
+    collaboratorId: ['', ],       
+    observation: [''],
+    details: this.formBuilder.array([ ]),    
       });
 
     
   constructor(
     private formBuilder: FormBuilder,
     private aRouter: ActivatedRoute,
-    private router:Router,
-    private toolService: ToolsService,
+    private router:Router,   
+    private collaboratorService: CollaboratorService, 
     private toolAssignmentService:ToolAssignmentService,
-     private validatorsService:ValidatorsService) { 
+     private validatorsService:ValidatorsService) {
+      this.detailsArray = this.toolAssignmentForm.get('details') as FormArray;
         this.id = this.aRouter.snapshot.paramMap.get('id')?? '';
   }
 
   ngOnInit(): void {
-    this.getListTools();    
+    this.getListCollaborator()    
   }
 
-  getListTools(){
-    this.toolService.getTools()
-    .subscribe((data:Tool[]) =>{       
-      this.tool = data;      
+  onToolsChange(tools: Tool[]) {
+    this.tools = tools;
+  }
+  getListCollaborator(){
+    this.collaboratorService.getCollaborators()
+    .subscribe((data:any) =>{      
+      this.collaborator = data;
+      this.collaborator.sort((a, b) => a.name.localeCompare(b.name));  
+      
   });
-  }
-
+}
   isValidField(field: string) {
     return this.validatorsService.isValidField(this.toolAssignmentForm, field);
   }
@@ -75,10 +81,8 @@ export class AddEditToolAssignmentComponent {
       const newToolAssignment: ToolAssignment = {
         reason:this.toolAssignmentForm.value.reason,
         collaboratorId:this.id,
-        toolId:this.toolAssignmentForm.value.toolId,
-        assignedQuantity:this.toolAssignmentForm.value.assignedQuantity,
         observation:this.toolAssignmentForm.value.observation,
-        assignedAt:this.toolAssignmentForm.value.assignedAt,
+        details: this.tools
       };
 
         this.toolAssignmentService.saveToolAssignment(newToolAssignment)

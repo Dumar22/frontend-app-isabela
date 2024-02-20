@@ -3,11 +3,8 @@ export interface ToolAssignment {
     reason:         string;
     collaboratorId: string;
     collaborator?:   Collaborator;
-    toolId?:           string;
-    tool?:             Tool;   
-    assignedQuantity: number;
     observation?:      string;
-    assignedAt:      string;
+    details: any[];
 }
 
 export interface Collaborator {
@@ -23,6 +20,11 @@ export interface Collaborator {
     updatedAt: Date;
     deletedBy: null;
     deletedAt: null;
+}
+
+export interface DetailsTools{
+    tooId: Tool
+    assignedQuantity: number;
 }
 
 export interface Tool {

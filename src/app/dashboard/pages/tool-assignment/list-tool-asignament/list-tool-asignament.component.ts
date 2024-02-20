@@ -39,7 +39,9 @@ export class ListToolAsignamentComponent {
   getAssignedCollaborators() {
     
     this.toolAssignmentService
-      .getToolsAssignment().subscribe((data: any[]) => {
+      .getToolsAssignment().subscribe((data: ToolAssignment[] ) => {
+        console.log(data);
+        
       // Filtra la lista para mostrar solo un registro por colaborador.
       this.collaboratorsList = this.filterUniqueCollaborators(data);
     });

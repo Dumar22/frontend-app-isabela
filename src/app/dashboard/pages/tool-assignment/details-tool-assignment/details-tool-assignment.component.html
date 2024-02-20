@@ -35,26 +35,26 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let tool of toolAssignment">
-            <td>{{ tool.tool?.code }}</td>
-            <td>{{ tool.tool.name }}</td>
-            <td>{{ tool.tool.unity }}</td>
-            <td>{{ tool.assignedQuantity }}</td>
-            <td>{{ tool.reason }}</td>
-            <td>{{ tool.assignedAt }}</td>
-            <td>{{ tool.tool.observation }}</td>
-            <td>{{ tool.tool.price | currency : "$" }}</td>
+          <tr *ngFor="let t of toolAssignment[0]?.details">
+            <td>{{ t.tool.code }}</td>
+            <td>{{ t.tool.name }}</td>
+            <td>{{ t.tool.unity }}</td>
+            <td>{{ t.assignedQuantity }}</td>
+            <td>{{ toolAssignment[0]?.reason }}</td>
+            <td>{{ toolAssignment[0]?.assignedAt }}</td>
+            <td>{{ t.observation }}</td>
+            <td>{{ t.tool.price | currency : "$" }}</td>
             <td>
-              {{ tool.tool.price * tool.assignedQuantity | currency : "$" }}
+              {{ t.tool.price * t.assignedQuantity | currency : "$" }}
             </td>
             <td>
-              {{ tool.tool.price * tool.assignedQuantity | currency : "$" }}
+              {{ t.tool.price * t.assignedQuantity | currency : "$" }}
             </td>
             <td>
               <button
                 type="button"
                 class="btn btn-danger btn-sm btn-rounded"
-                (click)="remove(tool)"
+                (click)="remove(toolAssignment)"
               >
                 Eliminar
               </button>

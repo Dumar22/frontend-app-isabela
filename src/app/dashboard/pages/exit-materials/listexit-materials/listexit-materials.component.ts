@@ -60,6 +60,8 @@ export class ListexitMaterialsComponent {
 
   downloadExit(exit: Exit) {
     const id = exit.id; // replace with your transfer ID
+    console.log(id);
+    
     const exitnumber = exit.ExitNumber
     this.exitService.downloadPDF(id).subscribe((data: ArrayBuffer) => {
       // Crea un Blob a partir del ArrayBuffer recibido

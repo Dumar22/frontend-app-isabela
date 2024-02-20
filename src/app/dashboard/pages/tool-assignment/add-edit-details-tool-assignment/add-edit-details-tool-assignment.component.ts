@@ -27,8 +27,6 @@ export class AddEditDetailsToolAssignmentComponent {
            this.toolForm = this.formBuilder.group({
             toolId: ['', Validators.required],
             assignedQuantity: [0, [Validators.required, Validators.min(1)]],
-            durabilityTool: ['', Validators.required],
-            assignedAt: ['', Validators.required],
             observation: ['']
          });
      }
@@ -57,8 +55,6 @@ export class AddEditDetailsToolAssignmentComponent {
         const newTool = {
             toolId: this.toolForm.value.toolId,
             assignedQuantity: this.toolForm.value.assignedQuantity,
-            durabilityTool: this.toolForm.value.durabilityTool,
-            assignedAt: this.toolForm.value.assignedAt,
             observation: this.toolForm.value.observation,
            
         };

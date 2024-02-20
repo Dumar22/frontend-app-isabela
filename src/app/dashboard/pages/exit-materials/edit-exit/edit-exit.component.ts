@@ -10,6 +10,7 @@ import { ExitService } from 'src/app/dashboard/services/exit.service';
 import { WorkRegisterService } from 'src/app/dashboard/services/work-install.service';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { AddDetailsComponent } from '../add-details/add-details.component';
+import { Material } from 'src/app/dashboard/interfaces/materialsInterface';
 
 
 @Component({
@@ -72,6 +73,10 @@ export class EditExitComponent {
      
       this.getExit(this.id);
     }    
+  }
+
+  onMaterialsChange(materials: Material[]) {    
+    this.materials.push(materials);
   }
 
   getListCollaborator(){
@@ -152,8 +157,6 @@ export class EditExitComponent {
      details: this.materials,
 
    }
-console.log(newExit);
-   
    
    this.exitService.updateExit(this.id, newExit)
       .subscribe({
