@@ -20,6 +20,13 @@ export class AddEditWorkRegisterComponent {
   public warehouses : string ;
   operation: string = 'Agregar ';
 
+  typeUnities = [
+    { id: 'PENDIENTE', value: 'PENDIENTE' },
+    { id: 'RECHAZADA', value: 'RECHAZADA' },
+    { id: 'COMPLETA', value: 'COMPLETA' },
+    
+  ];
+
  
   constructor(
     private fb: FormBuilder,
@@ -33,6 +40,7 @@ export class AddEditWorkRegisterComponent {
       name: ['', Validators.required],
       ot: [ '' , Validators.required],      
       request: [ '' , Validators.required],      
+      status: [ '' , Validators.required],      
       municipality: [ '' , Validators.required],      
       neighborhood: [ '' , Validators.required],      
       addres: ['', Validators.required],
@@ -69,6 +77,7 @@ export class AddEditWorkRegisterComponent {
         contract: data.contract,
         ot: data.ot,        
         request: data.request,        
+        status: data.status,        
         municipality: data.municipality,        
         neighborhood: data.neighborhood,        
         date: data.date,        
@@ -86,6 +95,7 @@ export class AddEditWorkRegisterComponent {
       contract: this.form.value.contract,
       ot: this.form.value.ot,     
       request: this.form.value.request,     
+      status: this.form.value.status,     
       municipality: this.form.value.municipality,     
       neighborhood: this.form.value.neighborhood,     
       date: this.form.value.date,     

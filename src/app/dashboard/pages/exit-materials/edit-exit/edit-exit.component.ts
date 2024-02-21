@@ -82,7 +82,8 @@ export class EditExitComponent {
   getListCollaborator(){
     this.collaboratorService.getCollaborators()
     .subscribe((data:any) =>{      
-      this.collaborator = data;
+      this.collaborator = data.filter(collaborator => collaborator.status === true);
+      this.collaborator.sort((a, b) => a.name.localeCompare(b.name));
       
   });
   }

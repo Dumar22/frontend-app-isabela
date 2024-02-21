@@ -5,6 +5,7 @@ export interface WorkRegister{
     contract: string,
     ot: string,
     request: string,
+    status: string,
     municipality: string,
     neighborhood: string,
     date: string,

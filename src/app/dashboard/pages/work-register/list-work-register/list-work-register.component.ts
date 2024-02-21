@@ -98,6 +98,10 @@ export class ListWorkRegisterComponent {
 
   }   
 
+  tracking(workRegister: WorkRegister){
+    alert('Estamos trabajando en este componente...')
+    // this.router.navigate(['dashboard/edit-work-register/',workRegister.id]);
+  }
   updateMaterial(workRegister: WorkRegister){
     this.router.navigate(['dashboard/edit-work-register/',workRegister.id]);
   }

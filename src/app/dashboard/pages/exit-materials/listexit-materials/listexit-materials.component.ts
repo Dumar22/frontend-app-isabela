@@ -55,6 +55,7 @@ export class ListexitMaterialsComponent {
    this.exitService.searchExit( term )
         .subscribe( resp => {
           this.exit = resp;
+          this.exit.sort((a, b) => a.ExitNumber.localeCompare(b.ExitNumber));
         });
   }
 

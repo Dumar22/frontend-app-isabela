@@ -25,6 +25,13 @@
           <label for="name">Solicitu</label>
           <input type="text" id="request"  class="form-control" formControlName="request">
         </div>
+        <div class="col-md-12">
+          <label class="form-label">Unidad</label>
+           <select class="form-select mb-2" aria-label="Default select example" formControlName="status" >
+             <option value="" selected >--Seleccione--</option>
+             <option *ngFor="let v of typeUnities" [value]="v.value" >{{ v.id }}</option>
+           </select> 
+         </div>
         <div class="form-group mb-2">
           <label for="name">Municipio</label>
           <input type="text" id="municipality"  class="form-control" formControlName="municipality">

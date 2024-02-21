@@ -47,7 +47,8 @@
           <th scope="col">Teléfono</th>
           <th scope="col">Fecha de asignación</th>
           <th scope="col">Observación</th>
-          <!-- <th scope="col">Estado</th> -->
+          <th scope="col">Estado</th>
+          <th scope="col">Seguimiento</th>
           <th scope="col">Actualizar</th>
           <th scope="col">Eliminar</th>
         </tr>
@@ -71,10 +72,17 @@
           <td>{{item.phone}}</td>
           <td>{{item.date}}</td>
           <td>{{item.observation}}</td>
+          <td>{{item.status}}</td>
           <!-- <td>
             <span [ngClass]="item.available ? 'badge badge-success' : 'badge badge-danger'">
               {{ item.available ? 'Disponible' : 'No disponible' }}</span>
            </td> -->
+          <td>  <button type="button"
+            class="btn btn-secondary btn-sm btn-rounded text-primary"
+            (click)="tracking(item)">
+            Seguimiento
+          </button>
+        </td>
           <td>  <button type="button"
             class="btn btn-secondary btn-sm btn-rounded text-primary"
             (click)=" updateMaterial(item)">
