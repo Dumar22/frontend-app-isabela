@@ -20,7 +20,7 @@ export class UsersService {
     private createHeaders: WarehousesService) { }
 
    getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.baseUrl}/auth`);
+    return this.http.get<User[]>(`${this.baseUrl}/auth/private3`);
   }
 
 
