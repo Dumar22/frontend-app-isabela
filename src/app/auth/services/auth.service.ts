@@ -86,9 +86,11 @@ private setAuthentication(user: Userlog, token:string): boolean {
 
   logout() {
     localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
     this._currentUser.set(null);
     this._authStatus.set( AuthStatus.notAuthenticated );
     localStorage.clear();
+    sessionStorage.clear();
 
   }
    

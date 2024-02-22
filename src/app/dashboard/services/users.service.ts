@@ -20,12 +20,15 @@ export class UsersService {
     private createHeaders: WarehousesService) { }
 
    getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.baseUrl}/auth/private3`,this.createHeaders.createHeaders());
+    return this.http.get<User[]>(`${this.baseUrl}/auth`, this.createHeaders.createHeaders());
+  }
+   getUserPrivate(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.baseUrl}/auth/private3`, this.createHeaders.createHeaders());
   }
 
 
  getUserById(id:string): Observable<UserForm> {
-    return this.http.get<UserForm>(`${this.baseUrl}/auth/${id}`,this.createHeaders.createHeaders());
+    return this.http.get<UserForm>(`${this.baseUrl}/auth/${id}`, this.createHeaders.createHeaders());
   }
 
 

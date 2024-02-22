@@ -31,6 +31,8 @@ export class ListUsersComponent implements OnInit {
     this.loading = true;
     this.userService.getUsers()
     .subscribe( (users: User[])  => {
+      console.log(users);
+      
       this.users = users;
       this.usersTemp = users;
       this.loading = false;
