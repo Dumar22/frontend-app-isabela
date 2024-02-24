@@ -42,8 +42,7 @@ export class ListComponent implements OnInit {
 
     this.loading = true;
     this.materialsService.getMaterials()
-    .subscribe((data: any) =>{
-     
+    .subscribe((data: Material[]) => {     
       this.materials = data.filter(material => material.quantity >= 1);   
       this.materials.sort((a, b) => a.name.localeCompare(b.name));
 
@@ -51,6 +50,7 @@ export class ListComponent implements OnInit {
     console.log(this.totalValue);
     
       this.materialsTemp = data;
+      this.materialsTemp.sort((a, b) => a.name.localeCompare(b.name));
       this.loading = false;
     } );
    }
@@ -74,11 +74,13 @@ export class ListComponent implements OnInit {
 
   if ( term.length === 0 ) {
     this.materials = this.materialsTemp;
+    this.materials.sort((a, b) => a.name.localeCompare(b.name));
     return ;
   }
    this.materialsService.searchMaterial( term )
         .subscribe( resp => {
           this.materials = resp ;
+          this.materials.sort((a, b) => a.name.localeCompare(b.name));
         });
   }
 
