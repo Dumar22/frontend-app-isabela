@@ -4,11 +4,11 @@
       <h2 class="card-title mb-4">Detalles de la Asignación</h2>
 
       <div class="space">
-        <p><strong>Nombre</strong> {{ toolAssignment[0]?.collaborator.name}} </p>
+        <p><strong>Nombre</strong> {{ toolAssignment.collaborator.name}} </p>
         <p>
-          <strong>Código:</strong> {{ toolAssignment[0]?.collaborator.code}}</p>
+          <strong>Código:</strong> {{ toolAssignment.collaborator.code}}</p>
           <p>
-          <strong>Operación:</strong> {{toolAssignment[0]?.collaborator.operation}}
+          <strong>Operación:</strong> {{toolAssignment.collaborator.operation}}
           
         </p>
       </div>
@@ -29,36 +29,22 @@
             <th scope="col">Fecha de asignación</th>
             <th scope="col">obsevación</th>
             <th scope="col">Valor unidad</th>
-            <th scope="col">Total</th>
-            <th scope="col">devolucion de heramientas Asignación</th>
-            <th scope="col">Eliminar Asignación</th>
+            
+            
+            
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let t of toolAssignment[0]?.details">
+          <tr *ngFor="let t of toolAssignment.details">
             <td>{{ t.tool.code }}</td>
             <td>{{ t.tool.name }}</td>
             <td>{{ t.tool.unity }}</td>
             <td>{{ t.assignedQuantity }}</td>
-            <td>{{ toolAssignment[0]?.reason }}</td>
-            <td>{{ toolAssignment[0]?.assignedAt }}</td>
+            <td>{{ toolAssignment.reason }}</td>
+            <td>{{ toolAssignment.assignedAt }}</td>
             <td>{{ t.observation }}</td>
-            <td>{{ t.tool.price | currency : "$" }}</td>
-            <td>
-              {{ t.tool.price * t.assignedQuantity | currency : "$" }}
-            </td>
-            <td>
-              {{ t.tool.price * t.assignedQuantity | currency : "$" }}
-            </td>
-            <td>
-              <button
-                type="button"
-                class="btn btn-danger btn-sm btn-rounded"
-                (click)="remove(toolAssignment)"
-              >
-                Eliminar
-              </button>
-            </td>
+            <td>{{ t.tool.price | currency : "$" }}</td>           
+            
           </tr>
         </tbody>
       </table>

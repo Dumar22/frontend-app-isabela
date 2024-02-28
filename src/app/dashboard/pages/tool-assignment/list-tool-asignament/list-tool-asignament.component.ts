@@ -39,9 +39,7 @@ export class ListToolAsignamentComponent {
   getAssignedCollaborators() {
     
     this.toolAssignmentService
-      .getToolsAssignment().subscribe((data: ToolAssignment[] ) => {
-        console.log(data);
-        
+      .getToolsAssignment().subscribe((data: ToolAssignment[] ) => {        
       // Filtra la lista para mostrar solo un registro por colaborador.
       this.collaboratorsList = this.filterUniqueCollaborators(data);
     });
@@ -144,9 +142,7 @@ export class ListToolAsignamentComponent {
 
   detailsAssignmentTool(toolAssignment: ToolAssignment) {
     this.router.navigate([
-      'dashboard/details-tools-assignment',
-      toolAssignment.collaborator.id,
-    ]);
+      'dashboard/details-tools-assignment',toolAssignment.id]);
   }
 
   addToolAssignment(toolAssignment: ToolAssignment) {

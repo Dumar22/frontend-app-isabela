@@ -2,9 +2,10 @@ export interface ToolAssignment {
     id?: string,
     reason:         string;
     collaboratorId: string;
-    collaborator?:   Collaborator;
-    observation?:      string;
-    details: any[];
+    collaborator?:  Collaborator;
+    observation?:   string;
+    assignedAt?:     Date;
+    details:        any[];
 }
 
 export interface Collaborator {

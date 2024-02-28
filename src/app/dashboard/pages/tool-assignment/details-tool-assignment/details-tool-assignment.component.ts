@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Collaborator } from 'src/app/dashboard/interfaces/collaboratorInterface';
-import { ToolAssignment } from 'src/app/dashboard/interfaces/tool-assignmentInterface';
+import { Tool, ToolAssignment } from 'src/app/dashboard/interfaces/tool-assignmentInterface';
 import { CollaboratorService } from 'src/app/dashboard/services/collaborator.service';
 import { ToolAssignmentService } from 'src/app/dashboard/services/toolAssignment.service';
 import Swal from 'sweetalert2';
@@ -19,7 +19,7 @@ import Swal from 'sweetalert2';
 export class DetailsToolAssignmentComponent { 
 
   toolAssignment: ToolAssignment;
-  details: any[]
+  details: Tool[]
   collaborator: Collaborator
   loading: boolean;
 
@@ -31,29 +31,24 @@ export class DetailsToolAssignmentComponent {
   ) { }
 
 ngOnInit(): void{
+
+  const assignmentId = this.route.snapshot.paramMap.get('id'); 
     
-  this.getListToolAssignment()
+  this.toolAssignmentService.getToolAssignmentById(assignmentId).
+  subscribe((data: ToolAssignment) => {      
+     
+    this.toolAssignment = data
+  
+   });
+ 
   }
 
 
- getListToolAssignment(){
-  //tomar el id del colaborador
-  const collaboratorId = this.route.snapshot.paramMap.get('id'); 
+ getListToolAssignment( assisment: ToolAssignment){
+  //tomar el id de la asignación
+  
     
-  this.toolAssignmentService.getToolsAssignment()
- .subscribe((data: any) => {      
-    
-   this.toolAssignment = data
-   console.log(data.details);
-   
-   
-   
-  });
-this.collaboratorService.getCollaboratorById(collaboratorId)
-.subscribe(( data: Collaborator) => {
-  this.collaborator = data
-})
-
+  
  }
 
 
@@ -69,7 +64,7 @@ this.collaboratorService.getCollaboratorById(collaboratorId)
         this.toolAssignmentService
           .deleteToolAssignment(toolAssignment)
           .subscribe((resp) => {
-            this.getListToolAssignment()
+
             Swal.fire(
               'Asignación de herramienta borrada',
               `asignación de herramienta ${toolAssignment.id} fue eliminada correctamente`,
