@@ -40,7 +40,7 @@ export class ListWorkRegisterComponent {
            
       this.total = data.total;        
       this.workRegister = data;
-      this.workRegister.sort((a, b) => a.name.localeCompare(b.name));
+      this.workRegister.sort((a, b) => a.contractNumber.localeCompare(b.contractNumber));
       this.workRegisterTemp = data;
       this.loading = false;
     } );

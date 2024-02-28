@@ -58,13 +58,14 @@ export class AddDetailsComponent {
 
   getListMaterials() {
     this.materialService.getMaterials().subscribe((data: Material[]) => {
-      this.material = data.filter(material => material.quantity >= 1);
+     // this.material = data.filter(material => material.quantity >= 1);
+     this.material = data
       this.material.sort((a, b) => a.name.localeCompare(b.name));
     });
   }
   getListMeters() {
     this.meterService.getMeters().subscribe((data: Meter[]) => {
-      this.meter = data.filter(meter => meter.quantity >= 1);
+      this.meter = data
     });
   }
 
