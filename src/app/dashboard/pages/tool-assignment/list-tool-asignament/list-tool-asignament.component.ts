@@ -68,8 +68,9 @@ export class ListToolAsignamentComponent {
       .getToolsAssignment()
       .subscribe((data: ToolAssignment[]) => {
         this.toolAssignment = data;
+        this.toolAssignment.sort((a, b) => a.assignmentNumber.localeCompare(b.assignmentNumber));
         this.toolAssignmentTemp = data;
-
+        
         this.loading = false;
       });
   }
@@ -87,12 +88,15 @@ export class ListToolAsignamentComponent {
   search(term: string) {
     if (term.length === 0) {
       this.toolAssignment = this.toolAssignmentTemp;
+      this.toolAssignment.sort((a, b) => a.assignmentNumber.localeCompare(b.assignmentNumber));
       return;
     }
     this.toolAssignmentService.searchToolAssignment(term)
     .subscribe(resp => {
            
       this.toolAssignment = resp;
+      this.toolAssignment.sort((a, b) => a.assignmentNumber.localeCompare(b.assignmentNumber));
+
     });
   }
 

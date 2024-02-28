@@ -2,6 +2,7 @@ export interface ToolAssignment {
     id?: string,
     reason:         string;
     collaboratorId: string;
+    assignmentNumber?: number;
     collaborator?:  Collaborator;
     observation?:   string;
     assignedAt?:     Date;
