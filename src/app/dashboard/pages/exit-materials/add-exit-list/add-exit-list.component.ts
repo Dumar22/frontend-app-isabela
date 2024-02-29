@@ -2,17 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormArray, Validators, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Collaborator } from 'src/app/dashboard/interfaces/collaboratorInterface';
-import { Contract } from 'src/app/dashboard/interfaces/exitInterfaces';
 import { Material } from 'src/app/dashboard/interfaces/materialsInterface';
 import { ValidatorsService } from 'src/app/dashboard/services/Validate.service';
-import { CollaboratorService } from 'src/app/dashboard/services/collaborator.service';
-import { ExitService } from 'src/app/dashboard/services/exit.service';
-import { MaterialsService } from 'src/app/dashboard/services/materials.service';
-import { MetersService } from 'src/app/dashboard/services/meters.service';
-import { WorkRegisterService } from 'src/app/dashboard/services/work-install.service';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
-import { AddDetailsComponent } from '../add-details/add-details.component';
 import { DetailsExitListComponent } from '../details-exit-list/details-exit-list.component';
 import { ListExitMaterialsService } from 'src/app/dashboard/services/listExitMaterials.service';
 

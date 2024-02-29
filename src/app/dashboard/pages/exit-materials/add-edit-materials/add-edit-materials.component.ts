@@ -9,16 +9,17 @@ import { ExitService } from 'src/app/dashboard/services/exit.service';
 import { Collaborator } from 'src/app/dashboard/interfaces/collaboratorInterface';
 import { CollaboratorService } from 'src/app/dashboard/services/collaborator.service';
 import { WorkRegisterService } from 'src/app/dashboard/services/work-install.service';
-import { AddDetailsComponent } from '../add-details/add-details.component';
+import { AddDetailsExitComponent } from '../add-details/add-details.component';
 import { Material } from 'src/app/dashboard/interfaces/materialsInterface';
 
 @Component({
+  selector: 'add-exit-material',
   standalone: true,
-  imports: [CommonModule,ReactiveFormsModule, AddDetailsComponent, ],
+  imports: [CommonModule,ReactiveFormsModule, AddDetailsExitComponent, ],
   templateUrl: './add-edit-materials.component.html',
   styleUrls: ['./add-edit-materials.component.css']
 })
-export class AddEditMaterialsComponent {
+export class AddMaterialsComponent {
   materials:any [] = [];
   detailsArray: FormArray;
   id: string ;

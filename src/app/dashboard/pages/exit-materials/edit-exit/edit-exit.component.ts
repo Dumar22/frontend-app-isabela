@@ -9,15 +9,15 @@ import { CollaboratorService } from 'src/app/dashboard/services/collaborator.ser
 import { ExitService } from 'src/app/dashboard/services/exit.service';
 import { WorkRegisterService } from 'src/app/dashboard/services/work-install.service';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
-import { AddDetailsComponent } from '../add-details/add-details.component';
 import { Material } from 'src/app/dashboard/interfaces/materialsInterface';
+import { DetailsEditExitComponent } from '../details-edit-exit/details-edit-exit.component';
 
 
 @Component({
   selector: 'app-edit-exit',
   standalone: true,
   imports: [
-    CommonModule, ReactiveFormsModule, UiModulesModule, AddDetailsComponent
+    CommonModule, ReactiveFormsModule, UiModulesModule, DetailsEditExitComponent
   ],
   templateUrl: './edit-exit.component.html',
   styleUrls: ['./edit-exit.component.css'],
@@ -26,6 +26,7 @@ export class EditExitComponent {
 
   materials:any [] = [];
   detailsArray: FormArray;
+  newMaterials: any[] = [];
   id: string ;
   mode: string = 'Agregar '; 
   public collaborator: Collaborator[];
@@ -69,15 +70,11 @@ export class EditExitComponent {
     this.getListCollaborator()
     this.getListContract()
     if (this.id != '') {
-      // Es editar
-     
+  
       this.getExit(this.id);
     }    
   }
 
-  onMaterialsChange(materials: Material[]) {    
-    this.materials.push(materials);
-  }
 
   getListCollaborator(){
     this.collaboratorService.getCollaborators()
@@ -128,6 +125,7 @@ export class EditExitComponent {
       materialId: [detail.materialId],
       assignedQuantity: [detail.assignedQuantity],
       restore: [detail.restore],
+      
     });
   
     // Escucha los cambios en el control 'restore'
@@ -139,7 +137,7 @@ export class EditExitComponent {
       // Actualiza el valor en el modelo
       this.materials[index].assignedQuantity = newValue;
     });
-  
+   
     this.detailsArray.push(materialDetail);
   }
 
@@ -156,6 +154,7 @@ export class EditExitComponent {
      collaboratorId: this.formExit.value.collaboratorId,
      contractId: this.formExit.value.contractId,
      details: this.materials,
+     newDetails:this.newMaterials
 
    }
    
@@ -164,7 +163,7 @@ export class EditExitComponent {
         next: () => {
           this.showNotification(
             '¡Éxito!',
-            'Asignación Agregada con éxito:',
+            'Salida editada con éxito:',
             'success'
           );
           this.router.navigate(['dashboard/list-exit-materials']);

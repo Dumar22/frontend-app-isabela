@@ -1,32 +1,28 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Material } from 'src/app/dashboard/interfaces/materialsInterface';
 import { Meter } from 'src/app/dashboard/interfaces/metersInterface';
 import { MaterialsService } from 'src/app/dashboard/services/materials.service';
 import { MetersService } from 'src/app/dashboard/services/meters.service';
 
 @Component({
-  selector: 'add-details',
+  selector: 'details-edit-exit',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './add-details.component.html',
-  styleUrls: ['./add-details.component.css'],
+  imports: [
+    CommonModule, ReactiveFormsModule
+  ],
+  templateUrl: './details-edit-exit.component.html',
+  styles: [`
+    :host {
+      display: block;
+    }
+  `],
 })
-export class AddDetailsExitComponent {
-  @Input() materials: any[] = [];
-  @Output() materialsChange = new EventEmitter<any[]>();
+export class DetailsEditExitComponent { 
+
+  @Input() newMaterials: any[] = [];
+  @Output() newMaterialsChange = new EventEmitter<any[]>();
 
   formMaterial: FormGroup;
   material: Material[] = [];
@@ -93,8 +89,8 @@ export class AddDetailsExitComponent {
 
   getMaterialProperty(materialId: string, propertyName: string): any {
     const selectedTool = this.material.find(
-      (material) => material.id === materialId
-    );
+      (material) => material.id === materialId   );
+    
     
     return selectedTool ? selectedTool[propertyName] : null;
   }
@@ -112,19 +108,17 @@ export class AddDetailsExitComponent {
       restore: 0,
       assignedAt: this.formMaterial.value.assignedAt,
     };
-
-    this.materials.push(newTool);
-
-    this.materialsChange.emit(this.materials);
+    
+    this.newMaterials.push(newTool);   
     
     this.formMaterial.reset();
   }
 
   removeMaterial(material: any) {
-    const index = this.materials.indexOf(material);
+    const index = this.newMaterials.indexOf(material);
     if (index !== -1) {
-      this.materials.splice(index, 1);
-      this.materialsChange.emit(this.materials);
+      this.newMaterials.splice(index, 1);
+      this.newMaterialsChange.emit(this.newMaterials);
     }
   }
 }

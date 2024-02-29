@@ -17,7 +17,7 @@ import { UiModulesModule } from 'src/app/dashboard/components/ui-modules/ui-modu
 })
 export class ListComponent implements OnInit {
 
-  public materials: any[] = [];
+  public materials: Material[] = [];
   public materialsTemp: Material[] = [];
   public total: number; 
   public loading: boolean = true;
@@ -47,8 +47,7 @@ export class ListComponent implements OnInit {
       this.materials.sort((a, b) => a.name.localeCompare(b.name));
 
     this.totalValue = this.materials.reduce((total, material) => total + material.total, 0);
-    console.log(this.totalValue);
-    
+       
       this.materialsTemp = data;
       this.materialsTemp.sort((a, b) => a.name.localeCompare(b.name));
       this.loading = false;

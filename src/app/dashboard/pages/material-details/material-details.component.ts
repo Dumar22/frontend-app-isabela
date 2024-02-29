@@ -28,6 +28,7 @@ export class MaterialDetailsComponent {
             code: ['', Validators.required],
             name: ['', Validators.required],
             quantity: [0, [Validators.required, Validators.min(1)]],
+            price: ['',],            
             serial: [''],
            observations: ['']
          });
@@ -44,6 +45,7 @@ export class MaterialDetailsComponent {
     this.materialService.getMaterials()
     .subscribe((data:Material[]) =>{                
       this.material = data;
+      this.material.sort((a, b) => a.name.localeCompare(b.name));
       
   });
   }
@@ -56,6 +58,17 @@ export class MaterialDetailsComponent {
             name: selectedMaterial.name
         });
     }
+    this.priceMaterialSelect()
+}
+
+  priceMaterialSelect() {
+    const selectedMaterial = this.material.find(material => material.code === this.materialForm.value.code);
+    
+    if (selectedMaterial) {
+        this.materialForm.patchValue({
+            price: selectedMaterial.price
+        });
+    }
 }
 
 onMaterialSelectCode() {
@@ -65,6 +78,7 @@ onMaterialSelectCode() {
           code: selectedMaterial.code
       });
   }
+  this.priceMaterialSelect()
 }
 
   addMaterial() {
@@ -76,10 +90,11 @@ onMaterialSelectCode() {
             code: selectedMaterial.code,
             name: this.materialForm.value.name,
             quantity: this.materialForm.value.quantity,
+            price: this.materialForm.value.price,
             serial: this.materialForm.value.serial,
             observations: this.materialForm.value.observations,
             unity: selectedMaterial.unity, // Ajusta esta línea según la propiedad correspondiente en tu objeto de material
-            price: selectedMaterial.price, // Ajusta esta línea según la propiedad correspondiente en tu objeto de material
+            
         };
 
         this.materials.push(newMaterial);

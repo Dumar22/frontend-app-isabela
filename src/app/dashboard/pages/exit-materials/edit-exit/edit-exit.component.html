@@ -4,7 +4,7 @@
     <form class="row" (ngSubmit)="addExit()" autocomplete="off" [formGroup]="formExit">
       <div class="col-md-4 mb-3">
         <label class="form-label">Fecha</label>
-        <input type="date" class="form-control" formControlName="date" />
+        <input type="datetime-local" class="form-control" formControlName="date" />
       </div>
       
       <div class="col-md-4 mb-3">
@@ -39,12 +39,12 @@
       </div>
 
       <hr />
-      <!-- <add-details
-      [materials]="materials"
-      (materialsChange)="onMaterialsChange($event)"
-    ></add-details>
+     <details-edit-exit
+      [newMaterials]="newMaterials"
+      
+    ></details-edit-exit>
 
-    <hr /> -->
+    <hr /> 
       <table class="table table-bordered table-striped mt-4">
         <thead class="bg-light">
           <tr>
@@ -83,7 +83,7 @@
 
       
       <div class="col-12">
-        <button type="submit" class="btn btn-primary">Guardar Entrada</button>
+        <button type="submit" class="btn btn-primary">Guardar Salida</button>
       </div>
   
     </form>

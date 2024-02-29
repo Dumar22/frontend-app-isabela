@@ -20,7 +20,7 @@ import { MeterListComponent } from './pages/materials/meter-list/meter-list.comp
 import { AddEditMeterComponent } from './pages/materials/add-edit-meter/add-edit-meter.component';
 import { DetailsEntriesComponent } from './pages/entries/details-entries/details-entries.component';
 import { AddEditTransferComponent } from './pages/transfer/add-edit-transfer/add-edit-transfer.component';
-import { AddEditMaterialsComponent } from './pages/exit-materials/add-edit-materials/add-edit-materials.component';
+import { AddMaterialsComponent } from './pages/exit-materials/add-edit-materials/add-edit-materials.component';
 import { LoadFilesComponent } from './pages/load-files/load-files.component';
 import { DetailsExitComponent } from './pages/exit-materials/details-exit/details-exit.component';
 import { ListWorkRegisterComponent } from './pages/work-register/list-work-register/list-work-register.component';
@@ -108,7 +108,7 @@ export const routes: Routes = [
   {path: 'details-transfer/:id',component:DetailsTransferComponent},
   {path: 'list-exit-materials',component:ListexitMaterialsComponent},
   {path: 'details-exit/:id',component:DetailsExitComponent},
-  {path: 'add-exit-material',component:AddEditMaterialsComponent},
+  {path: 'add-exit-material',component:AddMaterialsComponent},
   {path: 'add-exit-material-list',component:ExitForListComponent},
   {path: 'add-exit-material-list:/id',component:ExitForListComponent},
   { path: 'add-list',component: AddExitListComponent},

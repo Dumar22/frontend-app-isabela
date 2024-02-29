@@ -86,10 +86,11 @@ export class AddEditEntriesComponent {
   getEntry(id: string) {
     this.entryService.getEntryById(id)
     .subscribe((data: Entries) => {
+      const formattedDate = new Date(data.date).toISOString().slice(0, 16); 
       const entry = data;
       this.materials = entry.details;
       this.formEntry.patchValue({
-        date: entry.date,
+        date: formattedDate,
         entryNumber: entry.entryNumber,
         origin: entry.origin,
         providerName: entry.providerName,
@@ -126,7 +127,9 @@ export class AddEditEntriesComponent {
       if (this.id != '') {
          newEntry.id = this.id;
         //editar
-      const { id, ...rest} =  newEntry      
+      const { id, ...rest} =  newEntry    
+      console.log(rest);
+        
         this.entryService.updateEntry(id, rest)
         .subscribe({
           next: () => {

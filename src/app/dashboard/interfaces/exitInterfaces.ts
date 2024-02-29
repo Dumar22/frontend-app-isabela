@@ -10,6 +10,7 @@ export interface Exit {
   contractId?:     string;
   state:     string;
   details?:      any[];
+  newDetails?:      any[];
  
 }
 
