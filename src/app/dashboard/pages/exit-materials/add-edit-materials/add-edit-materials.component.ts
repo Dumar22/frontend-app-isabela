@@ -31,6 +31,7 @@ export class AddMaterialsComponent {
     { name: 'Servicios adicionales'},
     { name: 'Puesta en servicio'},
     { name: 'Instalación'},
+    { name: 'Retail'},
   ]
   stateAssinment = [
     { name: 'Pendiente'},

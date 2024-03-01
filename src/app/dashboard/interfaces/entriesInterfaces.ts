@@ -5,8 +5,9 @@ export interface Entries{
     origin:string,
     providerName: string,
     providerNit: string,
-    createDetailDto: Material[],
+    createDetailDto?: Material[],
     details?: Material[],
+    file?:File
 }
 
 export interface Material{

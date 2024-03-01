@@ -111,10 +111,13 @@ export class ListEntriesComponent {
 
   }
 
-addEntry(){
-    this.router.navigate(['dashboard/add-entry']);
-  }
   
+  addEntry(){
+      this.router.navigate(['dashboard/add-entry']);
+    }
+  addEntryXls(){
+      this.router.navigate(['dashboard/add-entry-xls']);
+    }
 editEntry(entry: Entries) {
   this.router.navigate(['dashboard/edit-entry', entry.id]);
 }

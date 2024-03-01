@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Invoice } from 'src/app/dashboard/interfaces/invoiceInterface';
 import { Router } from '@angular/router';
-import Swal from 'sweetalert2';
+import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { Exit } from 'src/app/dashboard/interfaces/exitInterfaces';
 import { ExitService } from 'src/app/dashboard/services/exit.service';
 
@@ -38,7 +38,8 @@ export class ListexitMaterialsComponent {
       this.loading = true;
       this.exitService.getExit()
       .subscribe((data:Exit[]) =>{     
-        this.exit = data;              
+        this.exit = data; 
+        this.exit.sort((a, b) => b.ExitNumber.toString().localeCompare(a.ExitNumber.toString()));             
         this.exitTemp = data;
         this.loading = false;
       } );
@@ -55,7 +56,9 @@ export class ListexitMaterialsComponent {
    this.exitService.searchExit( term )
         .subscribe( resp => {
           this.exit = resp;
-          this.exit.sort((a, b) => a.ExitNumber.localeCompare(b.ExitNumber));
+          console.log(resp);
+          
+          this.exit.sort((a, b) => b.ExitNumber.toString().localeCompare(a.ExitNumber.toString()));
         });
   }
 
@@ -120,8 +123,36 @@ addExitList(){
   }
   
 editExit(invoice: Invoice) {
-  this.router.navigate(['dashboard/edit-exit-material/', invoice.id]);
+
+  const typeExit = this.exitService.getExitById(invoice.id)
+  .subscribe((data:Exit) =>{     
+    const typeExit = data.state;   
+    
+    if(typeExit != 'Completado'){
+      this.router.navigate(['dashboard/edit-exit-material', invoice.id]);
+    }else{
+      this.showNotification(
+        '¡Error!',
+        'Para ésta salida el estado es completada, contacte al administrador',
+        'error'
+      );
+
+    }
+    
+  } );
+
+
+  
+ // this.router.navigate(['dashboard/edit-exit-material/', invoice.id]);
 }
 
+
+showNotification(title: string, message: string, icon: string) {
+  Swal.fire({
+    icon: icon as SweetAlertIcon, // Convertimos el parámetro "icon" a un tipo SweetAlertIcon
+    title: title,
+    text: message,
+  });
+}
 
 }

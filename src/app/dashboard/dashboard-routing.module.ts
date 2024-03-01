@@ -49,6 +49,7 @@ import { ListAssignmentPealpeComponent } from './pages/assignment-pe-al-pe/list-
 import { AddEditAsiignmentPeAlPeComponent } from './pages/assignment-pe-al-pe/add-edit-asiignment-pe-al-pe/add-edit-asiignment-pe-al-pe.component';
 import { DetailsAssignmentPeAlPeComponent } from './pages/assignment-pe-al-pe/details-assignment-pe-al-pe/details-assignment-pe-al-pe.component';
 import { ExitForListComponent } from './pages/exit-materials/exit-for-list/exit-for-list.component';
+import { EntriFileComponent } from './pages/entries/entriFile/entriFile.component';
 
 
 export const routes: Routes = [
@@ -88,6 +89,7 @@ export const routes: Routes = [
   {path: 'list-entries',component:ListEntriesComponent},
   {path: 'details-entries/:id',component:DetailsEntriesComponent},
   {path: 'add-entry',component:AddEditEntriesComponent},
+  {path: 'add-entry-xls',component:EntriFileComponent},
   {path: 'edit-entry/:id',component:AddEditEntriesComponent},
   {path: 'list-trasfers',component:ListTransferComponent},
   {path: 'add-transfer',component:AddEditTransferComponent},

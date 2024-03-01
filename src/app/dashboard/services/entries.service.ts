@@ -37,6 +37,22 @@ export class EntriesService {
    return this.http.post<Entries>(`${this.baseUrl}/entries`, entry,this.createHeaders.createHeaders())
   }
 
+  saveEntryFile(entry: Entries, file: File): Observable<Entries> {
+    const formData = new FormData();
+    const url = `${this.baseUrl}/entries/upload-excel`;
+    const headers = this.createHeaders.createHeaders();
+    formData.append('date', entry.date); // Ajusta esto según los campos de tu interfaz Entries
+    formData.append('entryNumber', entry.entryNumber);
+    formData.append('origin', entry.origin);
+    formData.append('providerName', entry.providerName);
+    formData.append('providerNit', entry.providerNit);
+    formData.append('file', file); // Agrega el archivo al formData
+
+    return this.http.post<Entries>(url, formData,{headers:headers.headers} )
+      // Asegúrate de configurar correctamente cualquier otra opción que necesites para la solicitud
+    };
+ 
+
   updateEntry(id:string, entry:Entries): Observable<void>{
     return this.http.patch<void>(`${this.baseUrl}/entries/${id}`, entry, this.createHeaders.createHeaders())
   }

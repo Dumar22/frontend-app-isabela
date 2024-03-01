@@ -20,7 +20,7 @@ import Swal from 'sweetalert2';
   `],
 })
 export class ListAssignmentPealpeComponent {
-  public assignmentMaterialsPeAlPe: any[] = [];  
+  public assignmentMaterialsPeAlPe: MaterialPeAlPe[] = [];  
   public assignmentMaterialPeAlPeTemp: MaterialPeAlPe[] = [];
   public loading: boolean = true;  
   public assignmentMaterialPeAlPeCount: number = 0;
@@ -43,6 +43,7 @@ export class ListAssignmentPealpeComponent {
        this.assignmentMaterialPeAlPeService.getMaterialPeAlPe()
     .subscribe((data: MaterialPeAlPe[]) => { 
       this.assignmentMaterialsPeAlPe = data;
+      this.assignmentMaterialsPeAlPe.sort((a, b) => a.collaborator.name.localeCompare(b.collaborator.name));
      
       this.assignmentMaterialPeAlPeTemp = data;  
       this.loading = false;
