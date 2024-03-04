@@ -33,6 +33,10 @@ import { Material } from '../../interfaces/materialsInterface';
         <label class="form-label">Cantidad:</label>
         <input type="number" id="quantity" formControlName="quantity" class="form-control" required>
       </div>
+      <div class="col-md-2">
+      <label class="form-label">Precio unidad:</label>
+      <input type="number" id="price" formControlName="price" class="form-control" required>
+    </div>
       <div class="col-md-3 mb-1">
         <label class="form-label">Serie:</label>
         <input type="text" id="serial" formControlName="serial" class="form-control">
@@ -95,6 +99,7 @@ export class ToolsDetailsEntriesComponent {
             code: ['', Validators.required],
             name: ['', Validators.required],
             quantity: [0, [Validators.required, Validators.min(1)]],
+            price: ['',], 
             serial: [''],
            observations: ['']
          });
@@ -123,6 +128,7 @@ export class ToolsDetailsEntriesComponent {
             name: selectedMaterial.name
         });
     }
+    this.priceMaterialSelect()
 }
 
 onMaterialSelectCode() {
@@ -130,6 +136,17 @@ onMaterialSelectCode() {
   if (selectedMaterial) {
       this.materialForm.patchValue({
           code: selectedMaterial.code
+      });
+  }
+  this.priceMaterialSelect()
+}
+
+priceMaterialSelect() {
+  const selectedMaterial = this.material.find(material => material.code === this.materialForm.value.code);
+  
+  if (selectedMaterial) {
+      this.materialForm.patchValue({
+          price: selectedMaterial.price
       });
   }
 }
@@ -144,9 +161,10 @@ onMaterialSelectCode() {
             name: this.materialForm.value.name,
             quantity: this.materialForm.value.quantity,
             serial: this.materialForm.value.serial,
+            price: this.materialForm.value.price,
             observations: this.materialForm.value.observations,
             unity: selectedMaterial.unity, // Ajusta esta línea según la propiedad correspondiente en tu objeto de material
-            price: selectedMaterial.price, // Ajusta esta línea según la propiedad correspondiente en tu objeto de material
+             // Ajusta esta línea según la propiedad correspondiente en tu objeto de material
         };
 
         this.materials.push(newMaterial);
