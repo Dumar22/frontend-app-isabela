@@ -30,7 +30,7 @@ export class DetailsExitComponent {
   }
 
   editExit(exit: Exit) {
-    this.router.navigate(['dashboard/edit-exit-material', exit.id]);
+    
 
     const typeExit = this.exitService.getExitById(exit.id)
     .subscribe((data:Exit) =>{     
