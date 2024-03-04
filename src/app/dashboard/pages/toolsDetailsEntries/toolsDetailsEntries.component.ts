@@ -19,7 +19,7 @@ import { Material } from '../../interfaces/materialsInterface';
       <label for="code" class="form-label">Código:</label>
   <select id="code" class="form-select" aria-label="Default select example" formControlName="code" (change)="onMaterialSelect()">
           <option value="" selected >--Seleccione un código--</option>
-          <option *ngFor="let materialItem of material" [ngValue]="materialItem.code">{{ materialItem.code }}</option>        
+          <option *ngFor="let materialItem of material" [ngValue]="materialItem.code">{{ materialItem.code }} - {{materialItem.name}}</option>        
       </select>
   </div>
   <div class="col-md-4">
@@ -111,7 +111,7 @@ export class ToolsDetailsEntriesComponent {
     this.materialService.getTools()
     .subscribe((data:Material[]) =>{                
       this.material = data;
-      
+      this.material.sort((a, b) => a.name.localeCompare(b.name));
   });
   }
 
