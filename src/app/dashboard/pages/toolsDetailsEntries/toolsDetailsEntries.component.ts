@@ -19,7 +19,7 @@ import { Material } from '../../interfaces/materialsInterface';
       <label for="code" class="form-label">Código:</label>
   <select id="code" class="form-select" aria-label="Default select example" formControlName="code" (change)="onMaterialSelect()">
           <option value="" selected >--Seleccione un código--</option>
-          <option *ngFor="let materialItem of material" [ngValue]="materialItem.code">{{ materialItem.code }}</option>        
+          <option *ngFor="let materialItem of material" [ngValue]="materialItem.code">{{ materialItem.code }} - {{ materialItem.name }}</option>        
       </select>
   </div>
   <div class="col-md-4">
@@ -127,8 +127,9 @@ export class ToolsDetailsEntriesComponent {
         this.materialForm.patchValue({
             name: selectedMaterial.name
         });
+        this.priceMaterialSelect()
     }
-    this.priceMaterialSelect()
+    
 }
 
 onMaterialSelectCode() {
@@ -162,6 +163,7 @@ priceMaterialSelect() {
             quantity: this.materialForm.value.quantity,
             serial: this.materialForm.value.serial,
             price: this.materialForm.value.price,
+            total: this.materialForm.value.quantity * this.materialForm.value.price,
             observations: this.materialForm.value.observations,
             unity: selectedMaterial.unity, // Ajusta esta línea según la propiedad correspondiente en tu objeto de material
              // Ajusta esta línea según la propiedad correspondiente en tu objeto de material
