@@ -60,6 +60,7 @@ export class ListComponent implements OnInit {
     this.page = event;
     this.getListMaterials();
   }
+  
   onTableSizeChange(event: any): void {
     this.tableSize = event.target.value;
     this.page = 1;

@@ -12,6 +12,7 @@ import { Entries } from 'src/app/dashboard/interfaces/entriesInterfaces';
 })
 export class DetailsEntriesComponent {
   entrada: Entries;
+  totalMat: number = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -22,7 +23,9 @@ export class DetailsEntriesComponent {
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     this.entryService.getEntryById(id).subscribe((data: any) => {
-      this.entrada = data;     
+      this.entrada = data;   
+
+      this.totalMat = data.details.reduce((acc, detail) => acc + (detail.total), 0);
     });
   }
 

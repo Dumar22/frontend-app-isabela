@@ -17,7 +17,7 @@ import { EntriesToolsService } from 'src/app/dashboard/services/entries-tools.se
 export class DetailsEnriesToolsComponent { 
 
   entrada: Entries;
-
+  totalMat: number = 0;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -27,7 +27,9 @@ export class DetailsEnriesToolsComponent {
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     this.entryService.getEntryById(id).subscribe((data: any) => {
-      this.entrada = data;     
+      this.entrada = data;  
+      
+      this.totalMat = data.details.reduce((acc, detail) => acc + (detail.total), 0);   
     });
   }
 

@@ -22,11 +22,12 @@ export class AddEditToolsComponent implements OnInit {
   operation: string = 'Agregar ';
 
   typeUnities = [
-    { id: 'UNIDAD', value: 'UNIDAD' },
-    { id: 'METRO', value: 'METRO' },
-    { id: 'METRO 3(m3)', value: 'METRO 3(m3)' },
-    { id: 'KILOGRAMO', value: 'KILOGRAMO' },
-    { id: 'LITRO', value: 'LITRO' }
+    { id: 'UND', value: 'UND' },
+    { id: 'MT', value: 'MT' },
+    { id: 'MT 3(m3)', value: 'MT 3(m3)' },
+    { id: 'KG', value: 'KG' },
+    { id: 'LT', value: 'LT' },
+    { id: 'RLL', value: 'RLL' }
   ];
 
   options = [

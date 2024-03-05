@@ -36,7 +36,7 @@ export class AddEditMeterComponent {
     this.form = this.fb.group({
       name: ['', Validators.required],
       code: ['', Validators.required],
-      unity: ['UNIDAD', Validators.required],      
+      unity: ['UND', Validators.required],      
       quantity: ['', Validators.required],
       price: ['', Validators.required],     
       serial: ['', Validators.required],     
