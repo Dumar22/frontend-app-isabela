@@ -94,7 +94,7 @@ onMaterialSelectCode() {
             serial: this.materialForm.value.serial,
             observations: this.materialForm.value.observations,
             unity: selectedMaterial.unity, // Ajusta esta línea según la propiedad correspondiente en tu objeto de material
-            
+            total: this.materialForm.value.quantity * this.materialForm.value.price,
         };
 
         this.materials.push(newMaterial);
