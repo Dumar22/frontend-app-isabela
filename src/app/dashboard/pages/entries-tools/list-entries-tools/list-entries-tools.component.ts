@@ -101,7 +101,7 @@ export class ListEntriesToolsComponent {
 
             this.getListEntries();
             Swal.fire(
-              'Usuario borrado',
+              'Entrada borrada',
               `${ entry.entryNumber } fue eliminado correctamente`,
               'success'
             );
