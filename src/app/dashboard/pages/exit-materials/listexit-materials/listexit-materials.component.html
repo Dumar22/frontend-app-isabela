@@ -50,6 +50,7 @@
         <th>Número de Factura</th>
         <th>Tipo de salida</th>
         <th>Estado de salida</th>
+        <th>Movil</th>
         <th>Contrato</th>
         <th>Solicitud</th>
         <th>Detalles</th>
@@ -74,6 +75,9 @@
           </td>
           <td>
             <p class="fw-normal mb-1">{{factura.state}}</p>
+          </td>
+          <td>
+            <p class="fw-normal mb-1">{{factura.collaborator.name}}</p>
           </td>
           <td>
             <p class="fw-normal mb-1">{{factura.contract.contract }}</p>

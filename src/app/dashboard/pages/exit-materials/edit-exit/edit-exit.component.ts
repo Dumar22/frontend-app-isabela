@@ -36,11 +36,13 @@ export class EditExitComponent {
     { name: 'Servicios adicionales'},
     { name: 'Puesta en servicio'},
     { name: 'Instalación'},
+    { name: 'Retail'},
   ]
   stateAssinment = [
     { name: 'Pendiente'},
     { name: 'Completado'},
     { name: 'Rechazada'},
+    { name: 'Retail'},
   ]
 
   public formExit = this.formBuilder.group({

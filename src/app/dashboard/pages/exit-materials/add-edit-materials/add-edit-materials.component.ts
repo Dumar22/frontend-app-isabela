@@ -37,6 +37,7 @@ export class AddMaterialsComponent {
     { name: 'Pendiente'},
     { name: 'Completado'},
     { name: 'Rechazada'},
+    { name: 'Retail'},
   ]
 
   public formExit = this.formBuilder.group({
