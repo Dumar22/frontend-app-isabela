@@ -24,7 +24,8 @@ export class DetailsEntriesComponent {
     const id = this.route.snapshot.paramMap.get('id');
     this.entryService.getEntryById(id).subscribe((data: any) => {
       this.entrada = data;   
-
+       
+       
       this.totalMat = data.details.reduce((acc, detail) => acc + (detail.total), 0);
     });
   }

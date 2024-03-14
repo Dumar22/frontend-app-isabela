@@ -27,7 +27,7 @@ export class MaterialDetailsComponent {
            this.materialForm = this.formBuilder.group({
             code: ['', Validators.required],
             name: ['', Validators.required],
-            quantity: [0, [Validators.required, Validators.min(1)]],
+            quantity: ['', [Validators.required, Validators.min(1)]],
             price: ['',],            
             serial: [''],
            observations: ['']
