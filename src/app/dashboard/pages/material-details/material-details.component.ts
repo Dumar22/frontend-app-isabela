@@ -28,7 +28,8 @@ export class MaterialDetailsComponent {
             code: ['', Validators.required],
             name: ['', Validators.required],
             quantity: ['', [Validators.required, Validators.min(1)]],
-            price: ['',],            
+            price: ['',], 
+            iva:['1,19'],         
             serial: [''],
            observations: ['']
          });
@@ -83,6 +84,8 @@ onMaterialSelectCode() {
 
   addMaterial() {
     const selectedMaterial = this.material.find(material => material.name === this.materialForm.value.name);
+
+    const total = this.materialForm.value.quantity * this.materialForm.value.price;
    
     if (selectedMaterial) {
         const newMaterial = {
@@ -91,10 +94,12 @@ onMaterialSelectCode() {
             name: this.materialForm.value.name,
             quantity: this.materialForm.value.quantity,
             price: this.materialForm.value.price,
+            iva: this.materialForm.value.iva,
             serial: this.materialForm.value.serial,
             observations: this.materialForm.value.observations,
             unity: selectedMaterial.unity, // Ajusta esta línea según la propiedad correspondiente en tu objeto de material
-            total: this.materialForm.value.quantity * this.materialForm.value.price,
+            total: total,
+            total_iva: total * this.materialForm.value.iva,
         };
 
         this.materials.push(newMaterial);
