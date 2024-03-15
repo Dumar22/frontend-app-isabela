@@ -39,6 +39,8 @@ export class AddEditDetailsToolAssignmentComponent {
     this.toolService.getTools()
     .subscribe((data:Tool[]) =>{             
       this.tool = data;      
+      this.tool.sort((a, b) => a.name.localeCompare(b.name));
+
   });
   }
 
