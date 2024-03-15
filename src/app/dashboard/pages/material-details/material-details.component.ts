@@ -60,6 +60,7 @@ export class MaterialDetailsComponent {
         });
     }
     this.priceMaterialSelect()
+    this.ivaMaterialSelect()
 }
 
   priceMaterialSelect() {
@@ -89,6 +90,7 @@ onMaterialSelectCode() {
       });
   }
   this.priceMaterialSelect()
+  this.ivaMaterialSelect()
 }
 
   addMaterial() {
