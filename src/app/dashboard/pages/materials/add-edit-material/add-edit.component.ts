@@ -94,6 +94,8 @@ export class AddEditComponent implements OnInit {
         unity: data.unity,
         quantity: data.quantity,
         price: data.price,
+        iva: data.iva,
+        total_iva: data.total_iva,
         available: data.available,
       });
     });
@@ -106,6 +108,8 @@ export class AddEditComponent implements OnInit {
       unity: this.form.value.unity,
       quantity: this.form.value.quantity,
       price: this.form.value.price,
+      iva: this.form.value.iva,
+      total_iva: this.form.value.price * this.form.value.iva,
       available: this.form.value.available,
     };
 
