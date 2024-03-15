@@ -29,7 +29,7 @@ export class MaterialDetailsComponent {
             name: ['', Validators.required],
             quantity: ['', [Validators.required, Validators.min(1)]],
             price: ['',], 
-            iva:['1,19'],         
+            iva:['',],         
             serial: [''],
            observations: ['']
          });
@@ -72,6 +72,15 @@ export class MaterialDetailsComponent {
     }
 }
 
+ivaMaterialSelect() {
+  const selectedMaterial = this.material.find(material => material.code === this.materialForm.value.code);
+  
+  if (selectedMaterial) {
+      this.materialForm.patchValue({
+          iva:  1.19
+      });
+  }
+}
 onMaterialSelectCode() {
   const selectedMaterial = this.material.find(material => material.name === this.materialForm.value.name);
   if (selectedMaterial) {

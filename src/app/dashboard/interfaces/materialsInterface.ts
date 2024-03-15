@@ -5,6 +5,8 @@ export interface Material{
   unity: string,
   serial?:string,
   quantity: number,
+  iva: number,
+  total_iva: number,
   price: number,  
   available: boolean,
   total?: number,
