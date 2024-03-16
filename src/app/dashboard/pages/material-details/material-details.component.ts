@@ -97,6 +97,10 @@ onMaterialSelectCode() {
     const selectedMaterial = this.material.find(material => material.name === this.materialForm.value.name);
 
     const total = this.materialForm.value.quantity * this.materialForm.value.price;
+    const total_iva = total * this.materialForm.value.iva;
+    if (total_iva<=0) {
+      total_iva===total
+    }
    
     if (selectedMaterial) {
         const newMaterial = {
