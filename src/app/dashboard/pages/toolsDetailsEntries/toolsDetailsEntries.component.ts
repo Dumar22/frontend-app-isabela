@@ -38,6 +38,10 @@ import { Tools } from '../../interfaces/toolsInterface';
       <label class="form-label">Precio unidad:</label>
       <input type="number" id="price" formControlName="price" class="form-control" required>
     </div>
+    <div class="col-md-2">
+    <label class="form-label">IVA:</label>
+    <input type="number" id="iva" formControlName="iva" class="form-control" required>
+  </div>
       <div class="col-md-3 mb-1">
         <label class="form-label">Serie:</label>
         <input type="text" id="serial" formControlName="serial" class="form-control">
@@ -61,7 +65,10 @@ import { Tools } from '../../interfaces/toolsInterface';
           <th scope="col" >Unidad</th>
           <th scope="col" >Cantidad</th>
           <th scope="col" >Serie</th>
-          <th scope="col" >valor</th>
+          <th scope="col" >valor/und</th>
+          <th scope="col" >Total bruto</th>
+          <th scope="col" >IVA</th>
+          <th scope="col" >Total IVA</th>
           <th scope="col" >Observaciones</th>
           <th scope="col" >Acciones</th>
         </tr>
@@ -74,6 +81,9 @@ import { Tools } from '../../interfaces/toolsInterface';
           <td>{{ material.quantity }}</td>
           <td>{{ material.serial }}</td>
           <td>{{ material.price }}</td>
+          <td>{{ material.total }}</td>
+        <td>{{ material.iva }}</td>
+        <td>{{ material.total_iva }}</td>
           <td>{{ material.obs }}</td>
           <td><button (click)="removeMaterial(material)" class="btn btn-danger">Eliminar</button></td>
         </tr>
@@ -100,7 +110,8 @@ export class ToolsDetailsEntriesComponent {
             code: ['', Validators.required],
             name: ['', Validators.required],
             quantity: [0, [Validators.required, Validators.min(1)]],
-            price: ['',], 
+            price: ['',],
+            iva:['',],  
             serial: [''],
            observations: ['']
          });
@@ -156,6 +167,11 @@ priceMaterialSelect() {
   addMaterial() {
     const selectedMaterial = this.material.find(material => material.name === this.materialForm.value.name);
    
+    const total = this.materialForm.value.quantity * this.materialForm.value.price;
+    const total_iva = total * this.materialForm.value.iva;
+    if (total_iva<=0) {
+      total_iva===total
+    }
     if (selectedMaterial) {
         const newMaterial = {
             id: selectedMaterial.id,
@@ -164,7 +180,9 @@ priceMaterialSelect() {
             quantity: this.materialForm.value.quantity,
             serial: this.materialForm.value.serial,
             price: this.materialForm.value.price,
-            total: this.materialForm.value.quantity * this.materialForm.value.price,
+            iva: this.materialForm.value.iva,
+            total: total,
+            total_iva: total * this.materialForm.value.iva,
             observations: this.materialForm.value.observations,
             unity: selectedMaterial.unity, // Ajusta esta línea según la propiedad correspondiente en tu objeto de material
              // Ajusta esta línea según la propiedad correspondiente en tu objeto de material

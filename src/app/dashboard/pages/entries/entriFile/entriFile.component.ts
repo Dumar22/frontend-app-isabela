@@ -110,6 +110,7 @@ export class EntriFileComponent {
     this.providerService.getProviders()
     .subscribe((data:any) =>{      
       this.provider = data;
+      this.provider.sort((a, b) => a.name.localeCompare(b.name));
   });
   }
 
