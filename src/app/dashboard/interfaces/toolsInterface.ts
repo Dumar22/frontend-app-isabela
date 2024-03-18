@@ -3,6 +3,8 @@ export interface Tools{
     name: string,
     code: string,
     unity: string,
+    iva?: number,
+    total_iva?: number,
     quantity: number,
     price: number,      
     available: boolean,

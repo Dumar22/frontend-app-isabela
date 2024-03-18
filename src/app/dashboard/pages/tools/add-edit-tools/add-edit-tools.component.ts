@@ -46,18 +46,18 @@ export class AddEditToolsComponent implements OnInit {
       name: ['', Validators.required],
       code: ['', Validators.required],
       unity: ['', Validators.required],      
-      quantity: ['', Validators.required],
+      quantity: [0, Validators.required],
       price: ['', Validators.required],    
       available: [false],
     });
     this.id = this.aRouter.snapshot.paramMap.get('id')?? '';
-    this.form.get('quantity').valueChanges.subscribe((value) => {
+    /* this.form.get('quantity').valueChanges.subscribe((value) => {
       if (value >= 1) {
         this.form.get('available').setValue(true);
       } else{
         this.form.get('available').setValue(false);
       }
-    });  
+    });  */ 
   }
 
   nonNegativeValidator(control: AbstractControl): {[key: string]: any} | null {

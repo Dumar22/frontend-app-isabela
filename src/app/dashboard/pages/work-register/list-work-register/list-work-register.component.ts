@@ -36,11 +36,10 @@ export class ListWorkRegisterComponent {
 
     this.loading = true;
     this.workRegisterService.getWorkRegister()
-    .subscribe((data: any) =>{
-           
+    .subscribe((data: any) =>{           
       this.total = data.total;        
-      this.workRegister = data;
-      this.workRegister.sort((a, b) => a.contractNumber.localeCompare(b.contractNumber));
+      this.workRegister = data;      
+      this.workRegister.sort((a, b) => b.contractNumber - a.contractNumber);
       this.workRegisterTemp = data;
       this.loading = false;
     } );

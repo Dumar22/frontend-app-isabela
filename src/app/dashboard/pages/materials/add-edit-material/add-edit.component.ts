@@ -51,8 +51,9 @@ export class AddEditComponent implements OnInit {
       name: ['', Validators.required],
       code: ['', Validators.required],
       unity: ['', Validators.required],
-      quantity: ['', Validators.required],
+      quantity: [0, ],
       price: ['', Validators.required],
+      iva:['',],       
       available: [false],
     });
     this.id = this.aRouter.snapshot.paramMap.get('id') ?? '';
@@ -102,14 +103,21 @@ export class AddEditComponent implements OnInit {
   }
 
   addMaterial() {
+
+    const total = this.form.value.quantity * this.form.value.price;
+    const total_iva = total * this.form.value.iva;
+    if (total_iva<=0) {
+      total_iva===total
+    }
     const material: Material = {
       name: this.form.value.name,
       code: this.form.value.code,
-      unity: this.form.value.unity,
-      quantity: this.form.value.quantity,
+      unity: this.form.value.unity,      
       price: this.form.value.price,
+      //quantity:this.form.value.quantity,
       iva: this.form.value.iva,
-      total_iva: this.form.value.price * this.form.value.iva,
+      //total: total,
+      total_iva: total * this.form.value.iva,
       available: this.form.value.available,
     };
 

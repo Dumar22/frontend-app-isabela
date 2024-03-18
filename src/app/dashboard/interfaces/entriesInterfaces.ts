@@ -19,7 +19,10 @@ export interface Material{
     brand?: number,
     quantity: number,
     price: number,       
-    total?: number,       
+    total?: number, 
+    iva?:number,
+    total_iva?: number,
+    available: boolean,
     observation: string,       
   }
   

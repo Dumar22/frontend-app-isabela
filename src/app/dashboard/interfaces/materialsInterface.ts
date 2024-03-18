@@ -4,7 +4,7 @@ export interface Material{
   code: string,
   unity: string,
   serial?:string,
-  quantity: number,
+  quantity?: number,
   iva: number,
   total_iva: number,
   price: number,  

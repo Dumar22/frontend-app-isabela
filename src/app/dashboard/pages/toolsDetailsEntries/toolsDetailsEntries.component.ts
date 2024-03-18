@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import { ToolsService } from '../../services/tools.service';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Material } from '../../interfaces/materialsInterface';
+import { Tools } from '../../interfaces/toolsInterface';
 
 @Component({
   selector: 'tools-details-entries',
@@ -91,7 +92,7 @@ export class ToolsDetailsEntriesComponent {
   @Output() materialsChange = new EventEmitter<any[]>();
 
   materialForm: FormGroup;
-  material:Material[] = [];
+  material:Tools[] = [];
   constructor(private formBuilder: FormBuilder, 
           private materialService: ToolsService) {
 
@@ -114,7 +115,7 @@ export class ToolsDetailsEntriesComponent {
  
   getListMaterials(){
     this.materialService.getTools()
-    .subscribe((data:Material[]) =>{                
+    .subscribe((data:Tools[]) =>{                
       this.material = data;
       this.material.sort((a, b) => a.name.localeCompare(b.name));
   });

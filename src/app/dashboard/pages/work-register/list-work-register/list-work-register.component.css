@@ -17,3 +17,28 @@
 .custom-table td:nth-child(3) {
   width: 500px; /* Establece el ancho de la tercera columna (Observaciones) en 500px */
 }
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 300px; /* Ancho del tooltip */
+  background-color: #f1f1f1;
+  color: #000;
+  text-align: left;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%; /* Posición del tooltip */
+  left: 0;
+  margin-left: -150px; /* Alinear el tooltip al centro */
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}

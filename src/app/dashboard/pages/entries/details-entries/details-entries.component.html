@@ -15,6 +15,8 @@
               <th scope="col">Valor unitario</th>
               <th scope="col">Serial</th>
               <th scope="col">Total</th>
+              <th scope="col">IVA</th>
+              <th scope="col">Total/IVA</th>
             </tr>
           </thead>
           <tbody>
@@ -26,11 +28,23 @@
               <td>{{ material.price }}</td>
               <td>{{ material.serial }}</td>
               <td>{{ material.total | currency:'$'  }}</td>
+              <td>{{ material.iva }}</td>
+              <td>{{ material.total_iva | currency:'$'  }}</td>
             </tr>
               <tr>
                 <td colspan="5"></td>
                 <td><strong>Total:</strong></td>
                 <td><strong>{{ totalMat | currency:'$' }}</strong></td> <!-- Asegúrate de tener una función calcularTotal() en tu componente que sume los totales -->
+              </tr>
+              <tr>
+                <td colspan="5"></td>
+                <td><strong>IVA</strong></td>
+                <td><strong>{{ iva | currency:'$' }}</strong></td> <!-- Asegúrate de tener una función calcularTotal() en tu componente que sume los totales -->
+              </tr>
+              <tr>
+                <td colspan="5"></td>
+                <td><strong>Total+iva:</strong></td>
+                <td><strong>{{ totalMatIva | currency:'$' }}</strong></td> <!-- Asegúrate de tener una función calcularTotal() en tu componente que sume los totales -->
               </tr>
             
           </tbody>

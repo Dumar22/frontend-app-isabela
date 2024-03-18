@@ -40,6 +40,7 @@ export class ListCollaboratorsComponent implements OnInit {
     .subscribe((data: any) =>{
       this.total = data;
       this.collaborators = data;     
+      this.collaborators.sort((a, b) => a.name.localeCompare(b.name));
       this.collaboratorTemp = data;
       this.loading = false;
     } );

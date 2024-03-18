@@ -45,6 +45,7 @@ export class ListComponent implements OnInit {
     .subscribe((data: Material[]) => {     
      // this.materials = data.filter(material => material.quantity >= 1);  
      this.materials = data 
+          
       this.materials.sort((a, b) => a.name.localeCompare(b.name));
 
     this.totalValue = this.materials.reduce((total, material) => total + material.total, 0);
