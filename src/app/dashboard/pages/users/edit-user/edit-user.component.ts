@@ -74,7 +74,7 @@ options = [
 
     getUser(id: string) {
 
-      this.loading = true;
+      //this.loading = true;
       this.userService.getUserById(id)
       .subscribe((data:any ) => { 
       

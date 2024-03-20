@@ -36,6 +36,8 @@ export interface Tool {
     unity:       string;
     quantity:    number;
     price:       number;
+    iva: number;
+    total_iva: number;
     available:   boolean;
     total:       number;
     observation?: null;

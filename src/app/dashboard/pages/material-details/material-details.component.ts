@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 
 import { MaterialsService } from '../../services/materials.service';
 import { Material } from '../../interfaces/materialsInterface';
+import { ToolsService } from '../../services/tools.service';
+import { Tool } from '../../interfaces/tool-assignmentInterface';
 
 
 @Component({
@@ -21,8 +23,12 @@ export class MaterialDetailsComponent {
 
   materialForm: FormGroup;
   material:Material[] = [];
+  tool:Tool[] = [];
+
   constructor(private formBuilder: FormBuilder, 
-          private materialService: MaterialsService) {
+          private materialService: MaterialsService,
+          private toolService: ToolsService
+          ) {
 
            this.materialForm = this.formBuilder.group({
             code: ['', Validators.required],
@@ -31,7 +37,7 @@ export class MaterialDetailsComponent {
             price: ['',], 
             iva:['',],         
             serial: [''],
-           observations: ['']
+           observation: ['']
          });
      }
 
@@ -48,9 +54,23 @@ export class MaterialDetailsComponent {
       this.material = data;
       this.material.sort((a, b) => a.name.localeCompare(b.name));
       
+      this.toolService.getTools()
+      .subscribe((data:Tool[]) =>{                
+        this.tool = data;
+        this.tool.sort((a, b) => a.name.localeCompare(b.name));
+
+          // Agregar las herramientas al arreglo de materiales
+     this.material.push(...this.tool);
+
+     // Opcional: Ordenar el arreglo combinado por nombre
+     this.material.sort((a, b) => a.name.localeCompare(b.name));
+        
+    });
+
+   
   });
   }
-
+ 
   onMaterialSelect() {
     const selectedMaterial = this.material.find(material => material.code === this.materialForm.value.code);
     
@@ -61,6 +81,7 @@ export class MaterialDetailsComponent {
     }
     this.priceMaterialSelect()
     this.ivaMaterialSelect()
+    this.observationMaterialSelect()
 }
 
   priceMaterialSelect() {
@@ -82,6 +103,16 @@ ivaMaterialSelect() {
       });
   }
 }
+
+observationMaterialSelect() {
+  const selectedMaterial = this.material.find(material => material.code === this.materialForm.value.code);
+  
+  if (selectedMaterial) {
+      this.materialForm.patchValue({
+        observation: selectedMaterial.observation
+  });
+}
+}
 onMaterialSelectCode() {
   const selectedMaterial = this.material.find(material => material.name === this.materialForm.value.name);
   if (selectedMaterial) {
@@ -91,6 +122,7 @@ onMaterialSelectCode() {
   }
   this.priceMaterialSelect()
   this.ivaMaterialSelect()
+  this.observationMaterialSelect()
 }
 
   addMaterial() {
@@ -111,7 +143,7 @@ onMaterialSelectCode() {
             price: this.materialForm.value.price,
             iva: this.materialForm.value.iva,
             serial: this.materialForm.value.serial,
-            observations: this.materialForm.value.observations,
+            observation: this.materialForm.value.observation,
             unity: selectedMaterial.unity, // Ajusta esta línea según la propiedad correspondiente en tu objeto de material
             total: total,
             total_iva: total * this.materialForm.value.iva,

@@ -6,7 +6,7 @@ export interface Material{
   serial?:string,
   quantity?: number,
   iva: number,
-  total_iva: number,
+  total_iva?: number,
   price: number,  
   available: boolean,
   total?: number,

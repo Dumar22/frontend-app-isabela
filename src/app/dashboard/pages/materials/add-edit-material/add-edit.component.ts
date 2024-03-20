@@ -55,15 +55,16 @@ export class AddEditComponent implements OnInit {
       price: ['', Validators.required],
       iva:['',],       
       available: [false],
+      observation: ['MATERIAL'],
     });
     this.id = this.aRouter.snapshot.paramMap.get('id') ?? '';
-    this.form.get('quantity').valueChanges.subscribe((value) => {
+    /* this.form.get('quantity').valueChanges.subscribe((value) => {
       if (value >= 1) {
         this.form.get('available').setValue(true);
       } else {
         this.form.get('available').setValue(false);
       }
-    });
+    }); */
   }
 
   nonNegativeValidator(
@@ -84,11 +85,16 @@ export class AddEditComponent implements OnInit {
       // Es editar
       this.operation = 'Editar ';
       this.getMaterial(this.id);
+     
+      
     }
   }
 
   getMaterial(id: string) {
-    this.materialService.getMaterialById(id).subscribe((data: Material) => {
+
+    this.materialService.getMaterialById(id)
+    .subscribe((data: Material) => {
+      
       this.form.setValue({
         name: data.name,
         code: data.code,
@@ -96,8 +102,9 @@ export class AddEditComponent implements OnInit {
         quantity: data.quantity,
         price: data.price,
         iva: data.iva,
-        total_iva: data.total_iva,
+        //total_iva: data.total_iva,
         available: data.available,
+        observation: data.observation,
       });
     });
   }
@@ -119,6 +126,7 @@ export class AddEditComponent implements OnInit {
       //total: total,
       total_iva: total * this.form.value.iva,
       available: this.form.value.available,
+      observation: this.form.value.observation,
     };
 
     if (this.id !== '') {

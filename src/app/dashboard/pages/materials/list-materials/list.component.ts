@@ -121,7 +121,9 @@ export class ListComponent implements OnInit {
   }   
 
   updateMaterial(material: Material){
-    this.router.navigate(['dashboard/edit/',material.id]);
+    this.router.navigate(['dashboard/edit/', material.id]);
+   
+    
   }
 
   addMaterial():void{

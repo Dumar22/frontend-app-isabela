@@ -53,21 +53,21 @@ export class SidenavComponent {
   templateMenu2: MenuItem[] = [
 
     {
-     texto: 'Entradas de materiales',
+     texto: 'Entradas al almacén',
      ruta: 'list-entries'
     },    
-    {
+    /* {
      texto: 'Entradas de heramientas',
      ruta: 'list-entries-tools'
-    },    
+    },  */   
      {
       texto: 'Salidas de almacén',
       ruta: 'list-exit-materials'
      },    
-     {
+     /* {
       texto: 'Listas salida de almacén',
       ruta: 'list-table-exit'
-     },    
+     },   */  
     {
       texto: 'Asignación de Pe al pe',
       ruta: 'list-assignment-pe-al-pe'
