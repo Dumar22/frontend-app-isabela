@@ -15,7 +15,7 @@ import { UiModulesModule } from 'src/app/dashboard/components/ui-modules/ui-modu
 export class MeterListComponent {
 
 
-  public meters: any[] = [];
+  public meters: Meter[] = [];
   public metersTemp: Meter[] = [];
   public total: number; 
   public loading: boolean = true;
@@ -37,9 +37,9 @@ export class MeterListComponent {
 
     this.loading = true;
     this.metersService.getMeters()
-    .subscribe((data: any) =>{
-      this.total = data.total;
-      this.meters = data;
+    .subscribe((data: Meter[]) =>{
+      //this.total = data.total;
+      this.meters = data; 
       this.metersTemp = data;
       this.loading = false;
     } );

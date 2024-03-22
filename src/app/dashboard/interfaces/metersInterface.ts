@@ -7,6 +7,9 @@ export interface Meter{
     price: number,  
     serial: string,
     brand: string,
+    total?: number,
+    iva?: number,
+    total_iva?:number,
     available: boolean,
    
   }
