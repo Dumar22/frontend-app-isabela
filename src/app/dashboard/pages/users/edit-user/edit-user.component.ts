@@ -42,9 +42,10 @@ options = [
      this.formulario = this.fb.group({
       fullName: ['', [Validators.required, Validators.minLength(5), Validators.pattern(/^[a-zA-ZáéíóúñÁÉÍÓÚüÜ\s]+ [a-zA-ZáéíóúñÁÉÍÓÚüÜ\s]+$/)]],
       user: ['', [Validators.required, Validators.minLength(5)]],
+      password: ['', [Validators.required, Validators.minLength(5)]],
       rol: [[], Validators.required],     
       warehouseIds: [[], Validators.required],
-      // isActive: ['', [Validators.required, Validators.minLength(5)]],
+      isActive: ['', [Validators.required, Validators.minLength(4)]],
     })
     this.id = String(route.snapshot.paramMap.get('id'));
     }
@@ -77,13 +78,12 @@ options = [
       //this.loading = true;
       this.userService.getUserById(id)
       .subscribe((data:any ) => { 
-      
-              
           this.formulario.setValue({
             fullName: data.fullName,
             user: data.user,
-            rol: data.rol[0],            
-            // isActive: data.isActive,
+            rol: data.rol[0],  
+            password:'',          
+            isActive: data.isActive,
             warehouseIds: data.warehouses[0].id,
            })
           })
@@ -99,9 +99,10 @@ options = [
     const user: UserForm = {
       fullName: this.formulario.value.fullName,
             user: this.formulario.value.user,
-            rol: rolesArray,            
+            rol: rolesArray,  
+            password: this.formulario.value.password,
             warehouseIds: warehouseArray,
-            // isActive: this.formulario.value.isActive
+            isActive: this.formulario.value.isActive
            
     };
    

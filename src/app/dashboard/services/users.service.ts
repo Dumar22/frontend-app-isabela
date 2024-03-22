@@ -61,7 +61,7 @@ export class UsersService {
   }
 
   updateUser(id: string, user: UserForm): Observable<void> {
-    return this.http.patch<void>(`${this.baseUrl}/auth/${id}`, user);
+    return this.http.patch<void>(`${this.baseUrl}/auth/${id}`, user, this.createHeaders.createHeaders());
   }
 
 

@@ -22,6 +22,14 @@
         <input mdbInput type="text" class="form-control" formControlName="user"
         placeholder="*"  required/>
         <label mdbLabel class="form-label" for="form1Example1">Usuario</label>
+
+        
+      </mdb-form-control>
+
+      <mdb-form-control class="mb-4">
+        <input mdbInput type="password" class="form-control" formControlName="password"
+        placeholder="*"  required/>
+        <label mdbLabel class="form-label" for="form1Example1">Contraseña</label>
         
       </mdb-form-control>
       <!-- Rol input -->
@@ -39,12 +47,13 @@
      
     </select>
      <!-- Status input -->
-<!-- <div class="form-group">
+<div class="form-group">
   <div *ngFor="let option of options" class="form-check">
     <input mdbRadio class="form-check-input" type="radio" formControlName="isActive" [id]="option.id" [value]="option.value" [name]="'isActive'" [checked]="formulario.get('isActive').value === option.value">
     <label class="form-check-label" [for]="option.id">{{ option.label }}</label>
   </div>
-</div> -->
+</div>
+
 
       <!-- Submit button -->
       <input type="submit"
