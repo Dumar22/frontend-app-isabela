@@ -39,7 +39,7 @@ export class ListexitMaterialsComponent {
       this.exitService.getExit()
       .subscribe((data:Exit[]) =>{     
         this.exit = data; 
-        this.exit.sort((a, b) => b.ExitNumber.toString().localeCompare(a.ExitNumber.toString()));             
+        //this.exit.sort((a, b) => b.ExitNumber.toString().localeCompare(a.ExitNumber.toString()));             
         this.exitTemp = data;
         this.loading = false;
       } );
@@ -55,10 +55,9 @@ export class ListexitMaterialsComponent {
   }
    this.exitService.searchExit( term )
         .subscribe( resp => {
-          this.exit = resp;
           console.log(resp);
           
-          this.exit.sort((a, b) => b.ExitNumber.toString().localeCompare(a.ExitNumber.toString()));
+          this.exit = resp;
         });
   }
 
