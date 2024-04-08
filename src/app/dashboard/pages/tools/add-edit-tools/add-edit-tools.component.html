@@ -19,17 +19,22 @@
              <option *ngFor="let v of typeUnities" [value]="v.value" >{{ v.id }}</option>
            </select> 
          </div>    
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label for="quantity">Cantidad</label>
           <input type="number" id="quantity" class="form-control" formControlName="quantity">
           <div *ngIf="form.get('quantity').invalid && (form.get('quantity').dirty || form.get('quantity').touched)" class="text-danger mt-1">
             La cantidad debe ser mayor o igual a cero.
           </div>
-        </div>
+        </div> -->
         <div class="form-group mb-2">
           <label for="price">Valor</label>
           <input type="number" id="price" class="form-control" formControlName="price">
-        </div>          
+        </div>    
+             
+        <div class="col-md-2">
+          <label class="form-label">IVA:</label>
+          <input type="number" id="iva" formControlName="iva" class="form-control" required>
+        </div> 
         <div class="form-group mb-4">
           <div class="form-group">
             <div *ngFor="let option of options" class="form-check form-check-inline">

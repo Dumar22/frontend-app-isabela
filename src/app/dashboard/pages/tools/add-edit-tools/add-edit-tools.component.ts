@@ -46,9 +46,11 @@ export class AddEditToolsComponent implements OnInit {
       name: ['', Validators.required],
       code: ['', Validators.required],
       unity: ['', Validators.required],      
-      quantity: [0, Validators.required],
-      price: ['', Validators.required],    
+      quantity: [0, ],
+      price: ['', Validators.required],  
+      iva:['',],  
       available: [false],
+      observation: ['HERRAMIENTA'],
     });
     this.id = this.aRouter.snapshot.paramMap.get('id')?? '';
     /* this.form.get('quantity').valueChanges.subscribe((value) => {
@@ -87,22 +89,36 @@ export class AddEditToolsComponent implements OnInit {
         code: data.code,
         unity: data.unity,        
         quantity: data.quantity,
-        price: data.price,       
-        available: data.available,       
+        price: data.price,     
+        iva: data.iva,  
+        available: data.available,      
+        observation: data.observation, 
       });
     });
   }
 
   addTool() {
+
+    const total = this.form.value.quantity * this.form.value.price;
+    const total_iva = total * this.form.value.iva;
+    if (total_iva<=0) {
+      total_iva===total
+    }
     
     const tool: Tools = {
       name: this.form.value.name,
       code: this.form.value.code,
       unity: this.form.value.unity,     
-      quantity: this.form.value.quantity,
+      //quantity: this.form.value.quantity,
       price: this.form.value.price, 
+      iva: this.form.value.iva,
+      total_iva: total * this.form.value.iva,
       available: this.form.value.available,
+      observation: this.form.value.observation,
     };
+
+    console.log(tool);
+    
 
     if (this.id !== '') {
       // Es editar

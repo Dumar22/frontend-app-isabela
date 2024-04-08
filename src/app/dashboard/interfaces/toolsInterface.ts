@@ -5,9 +5,11 @@ export interface Tools{
     unity: string,
     iva?: number,
     total_iva?: number,
-    quantity: number,
-    price: number,      
+    quantity?: number,
+    price: number, 
+    total?: number,     
     available: boolean,
+    observation?: string,
    
   }
   
