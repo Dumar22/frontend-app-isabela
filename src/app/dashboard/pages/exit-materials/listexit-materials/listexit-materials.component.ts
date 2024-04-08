@@ -17,10 +17,11 @@ export class ListexitMaterialsComponent {
 
   route: [] = [];
 
-  public exit: any[] = [];
+  public exit: Exit[] = [];
   public factura : Exit;
   public exitTemp: Exit[] = [];
   public loading: boolean = true;
+ 
 
   constructor(private exitService: ExitService,
     
@@ -39,27 +40,56 @@ export class ListexitMaterialsComponent {
       this.exitService.getExit()
       .subscribe((data:Exit[]) =>{     
         this.exit = data; 
-        //this.exit.sort((a, b) => b.ExitNumber.toString().localeCompare(a.ExitNumber.toString()));             
+        this.exit.sort((a, b) => b.ExitNumber.toString().localeCompare(a.ExitNumber.toString()));             
         this.exitTemp = data;
+        this.exit.forEach(salida => {
+          salida.details.forEach(detail => {
+            if (detail.meter) {
+              
+            }
+          });
+        });
         this.loading = false;
       } );
      }
 
+     tieneMedidor(details: any[]): boolean {
+      return details.some(detalle => !!detalle.meter);
+    }
+  
+    obtenerSerialMedidor(details: any[]): string {
+      const detalleConMedidor = details.find(detalle => !!detalle.meter);
+      return detalleConMedidor ? detalleConMedidor.meter.serial : '';
+    }
+  
+
+     
 
     // Buscar
- search (term: string ) {
-
-  if ( term.length === 0 ) {
-    this.exit = this.exitTemp;
-    return ;
-  }
-   this.exitService.searchExit( term )
-        .subscribe( resp => {
-          console.log(resp);
-          
-          this.exit = resp;
+    search(term: string) {
+      if (term.length === 0) {
+        this.exit = this.exitTemp;
+        return;
+      }
+    
+      this.exitService.searchExit(term).subscribe((resp: any[]) => {
+        // Recorrer los resultados de la búsqueda y preservar el serial del medidor
+        resp.forEach(salida => {
+          salida.details.forEach(detail => {
+            if (detail.meter) {
+              // Obtener el serial del medidor original
+              const originalSerial = this.obtenerSerialMedidor(this.exit.find(e => e.id === salida.id).details);
+              // Si el serial del medidor original existe, asignarlo al resultado de la búsqueda
+              if (originalSerial) {
+                detail.meter.serial = originalSerial;
+              }
+            }
+          });
         });
-  }
+    
+        this.exit = resp;
+      });
+    }
 
   downloadExit(exit: Exit) {
     const id = exit.id; // replace with your transfer ID
@@ -121,7 +151,7 @@ addExitList(){
     this.router.navigate(['dashboard/add-list']);
   }
   
-editExit(invoice: Invoice) {
+editExit(invoice: Exit) {
 
   const typeExit = this.exitService.getExitById(invoice.id)
   .subscribe((data:Exit) =>{     

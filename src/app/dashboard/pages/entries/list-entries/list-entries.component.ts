@@ -36,8 +36,7 @@ export class ListEntriesComponent {
       this.loading = true;
       this.entryService.getEntries()
       .subscribe((data:any) =>{        
-        this.entry = data;
-        //console.log(data);        
+        this.entry = data;      
         this.entryTemp = data;
         this.loading = false;
       } );
