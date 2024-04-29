@@ -22,7 +22,6 @@ export interface UserForm {
   
 }
 
-
 export interface LoadUser {
   total: number;
   users: User[];

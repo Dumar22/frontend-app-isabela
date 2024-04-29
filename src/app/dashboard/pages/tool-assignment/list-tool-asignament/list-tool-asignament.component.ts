@@ -68,7 +68,8 @@ export class ListToolAsignamentComponent {
       .getToolsAssignment()
       .subscribe((data: ToolAssignment[]) => {
         this.toolAssignment = data;
-        this.toolAssignment.sort((a, b) => a.assignmentNumber.localeCompare(b.assignmentNumber));
+        this.toolAssignment.sort((a, b) => b.assignmentNumber - a.assignmentNumber);
+        //this.toolAssignment.sort((a, b) => b.assignmentNumber.toString().localeCompare(a.assignmentNumber.toString()));  
         this.toolAssignmentTemp = data;
         
         this.loading = false;

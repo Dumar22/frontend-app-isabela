@@ -37,6 +37,7 @@
       <thead >
         <tr>
         <th>#</th>
+        <th>Fecha asignación</th>
         <th>Nombre</th>
         <th>Asignar herramienta</th>
         <th>Ver asignaciones</th>
@@ -52,6 +53,9 @@
           }; let i = index">
           <td>
             <p class="fw-normal mb-1 text-primary">{{assignment.assignmentNumber}}.</p>
+          </td>
+          <td>
+            <p class="fw-normal mb-1">{{assignment.collaborator.assignedAt}}</p>
           </td>
           <td>
             <p class="fw-normal mb-1">{{assignment.collaborator.name}}</p>

@@ -39,8 +39,8 @@ export class ListexitMaterialsComponent {
       this.loading = true;
       this.exitService.getExit()
       .subscribe((data:Exit[]) =>{     
-        this.exit = data; 
-        this.exit.sort((a, b) => b.ExitNumber.toString().localeCompare(a.ExitNumber.toString()));             
+        this.exit = data;   
+        this.exit.sort((a, b) => b.ExitNumber - a.ExitNumber);          
         this.exitTemp = data;
         this.exit.forEach(salida => {
           salida.details.forEach(detail => {

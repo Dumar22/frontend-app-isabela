@@ -11,6 +11,8 @@ import { Material, Transfers } from 'src/app/dashboard/interfaces/transferInterf
 import { MaterialDetailsComponent } from '../../material-details/material-details.component';
 import { WarehousesService } from 'src/app/dashboard/services/warehouses.service';
 import { Warehouse } from 'src/app/dashboard/interfaces/warehouseInterface';
+import { UsersService } from 'src/app/dashboard/services/users.service';
+import { User } from 'src/app/dashboard/interfaces/usersInterface';
 
 @Component({
   standalone: true,
@@ -25,6 +27,7 @@ export class AddEditTransferComponent {
   createDetailTransferDto: FormArray;
   mode: string = 'Agregar '; 
   public collaborator: Collaborator[];
+  public users: User[];
   public warehouses: Warehouse[];
   public autorice = [
     {name: 'Juan Felipe Hoyos'},
@@ -51,6 +54,7 @@ export class AddEditTransferComponent {
     private formBuilder: FormBuilder,
     private aRouter: ActivatedRoute,
     private router:Router,
+    private userService: UsersService,
     private collaboratorService: CollaboratorService,
     private warehouseService: WarehousesService,
     private transferService:TransferServiceService,
@@ -61,6 +65,7 @@ export class AddEditTransferComponent {
 
   ngOnInit(): void {
     this.getListCollaborator()
+    this.getListUsers()
     this.getListWarehouses()
     if (this.id != '') {
       // Es editar
@@ -74,6 +79,12 @@ export class AddEditTransferComponent {
     .subscribe((data:any) =>{      
       this.collaborator = data;
       
+  });
+  }
+  getListUsers(){
+    this.userService.getUsers()
+    .subscribe((data:User[]) =>{      
+      this.users = data;     
   });
   }
   getListWarehouses(){
