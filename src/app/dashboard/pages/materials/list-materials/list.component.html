@@ -21,6 +21,10 @@
    class="btn btn-primary"
     (click)="addMaterial()">Nuevo material</button>
 
+  <button type="button"
+   class="btn btn-success"
+    (click)="downloadExcel()">Descargar Excel</button>
+
     <div class="total-box">
       <p><strong>Valor Total de Materiales: </strong> {{ totalValue | currency:'$' }}</p>
     </div>
@@ -37,7 +41,7 @@
 </div>
 </div>
 <div>
-  <table class="table">
+  <table class="table" id="table-data">
     <thead>
       <tr  >
         <th scope="col">#</th>

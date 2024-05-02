@@ -5,6 +5,8 @@ import { Material } from 'src/app/dashboard/interfaces/materialsInterface';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { UiModulesModule } from 'src/app/dashboard/components/ui-modules/ui-modules.module';
+import * as XLSX from 'xlsx';
+
 
 
 
@@ -21,6 +23,7 @@ export class ListComponent implements OnInit {
   public materialsTemp: Material[] = [];
   public total: number; 
   public loading: boolean = true;
+  
   totalValue: number = 0;
   limit = 20; // Establecer el límite de unidades para marcar en amarillo
   page: number = 1;
@@ -87,7 +90,23 @@ export class ListComponent implements OnInit {
   }
 
 
+  fileName = 'ListaMateriales.xlsx';
 
+downloadExcel(){
+  const tableData = this.getAllTableData();
+
+  const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(tableData);
+  const wb: XLSX.WorkBook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+  // Descargar el archivo de Excel
+  XLSX.writeFile(wb, this.fileName);
+}
+
+
+getAllTableData(): Material[] {
+  return this.materials;
+}
 
 
    deleteMaterial(material:Material) {

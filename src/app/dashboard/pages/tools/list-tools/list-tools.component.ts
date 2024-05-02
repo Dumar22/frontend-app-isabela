@@ -5,7 +5,7 @@ import { ToolsService } from 'src/app/dashboard/services/tools.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { UiModulesModule } from 'src/app/dashboard/components/ui-modules/ui-modules.module';
-
+import * as XLSX from 'xlsx';
 @Component({
   standalone: true,
   imports: [CommonModule,UiModulesModule],
@@ -101,6 +101,22 @@ export class ListToolsComponent implements OnInit {
 
   }   
 
+  fileName = 'ListaHerramientas.xlsx';
+  downloadExcel(){
+    const tableData = this.getAllTableData();
+  
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(tableData);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+  
+    // Descargar el archivo de Excel
+    XLSX.writeFile(wb, this.fileName);
+  }
+  
+  
+  getAllTableData(): Tools[] {
+    return this.tools;
+  }
   updateTool(tool: Tools){
     this.router.navigate(['dashboard/edit-tool/',tool.id]);
   }

@@ -23,6 +23,7 @@ import { NgxFileDropModule } from 'ngx-file-drop';
 @NgModule({
   declarations: [],
   imports: [
+    
     MdbAccordionModule,
     MdbCarouselModule,
     MdbCheckboxModule,
@@ -44,6 +45,7 @@ import { NgxFileDropModule } from 'ngx-file-drop';
     NgxFileDropModule,
   ],
   exports: [
+   
     MdbAccordionModule,
     MdbCarouselModule,
     MdbCheckboxModule,
