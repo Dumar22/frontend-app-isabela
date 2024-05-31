@@ -8,7 +8,7 @@ export interface Material{
   iva: number,
   total_iva?: number,
   price: number,  
-  available: boolean,
+  available?: boolean,
   total?: number,
   observation?: string, 
 }

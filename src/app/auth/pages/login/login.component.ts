@@ -44,6 +44,7 @@ export class LoginComponent {
     .subscribe( {
          next: () => {
           this.router.navigate(['/dashboard']);
+          
         },
          error: (error) => {        
           this.handleError(error);

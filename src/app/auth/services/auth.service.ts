@@ -15,7 +15,7 @@ import { CheckTokenResponse } from '../interfaces/chek-token.response';
 
 export class AuthService {  
   private readonly baseUrl = environment.base_url
-  private http = inject( HttpClient ) ;
+  private http = inject( HttpClient );
   
   private _currentUser = signal<Userlog | null>(null);
   private _authStatus  = signal<AuthStatus>(AuthStatus.checking);

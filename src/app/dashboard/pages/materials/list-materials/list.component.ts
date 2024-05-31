@@ -31,8 +31,7 @@ export class ListComponent implements OnInit {
   tableSize: number = 7;
   tableSizes: any = [3, 6, 9, 12];
 
-  constructor(private materialsService: MaterialsService,
-    
+  constructor(private materialsService: MaterialsService,    
     private router: Router) { }
 
   ngOnInit(): void{

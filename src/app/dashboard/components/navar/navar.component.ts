@@ -1,10 +1,8 @@
-import { Component, OnInit, computed, inject } from '@angular/core';
+import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { HttpClient } from '@angular/common/http';
-import { User } from '../../interfaces/usersInterface';
 import { interval } from 'rxjs';
-import { map } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-navar',
@@ -13,20 +11,25 @@ import { map } from 'rxjs/operators';
   templateUrl: './navar.component.html',
   styleUrls: ['./navar.component.css']
 })
-export class NavarComponent implements OnInit{
+export class NavarComponent implements AfterViewInit{
   username: string;
   currentTime: Date;
   elapsedTime: number;
   
-  private authService = inject( AuthService );
+  constructor(private authService: AuthService){}
+  ngAfterViewInit(): void {
+    this.getCurrentUser();
+    this.startTimeInterval();
+  }
  
-  //public user = computed(() => this.authService.currentUser() );
  
-  ngOnInit() {
- const  user = this.authService.currentUser() ;
+   getCurrentUser(){
+    this.username = this.authService.currentUser().fullName
+    console.log(this.username);
+    
+  }
 
-    this.username =  user.fullName
- 
+  startTimeInterval(): void {
     this.currentTime = new Date();
     interval(1000).subscribe(() => {
       this.currentTime = new Date();
@@ -37,7 +40,7 @@ export class NavarComponent implements OnInit{
     this.authService.logout()     
   }
 
-
+  
   }
 
 

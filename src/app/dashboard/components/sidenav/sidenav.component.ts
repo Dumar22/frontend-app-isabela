@@ -28,6 +28,7 @@ export class SidenavComponent {
  
  ngOnInit() {
  const  user =  this.authService.currentUser() ;
+ 
   
     this.userRole = user.rol
     const userID = this.userService.getUserById(user.id).subscribe((user:any) => {

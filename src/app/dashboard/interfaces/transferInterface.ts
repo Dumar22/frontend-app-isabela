@@ -26,6 +26,6 @@ export interface Material{
     price: number;
     observation?: string;       
     total: number,  
-    available: boolean,    
+    available?: boolean,    
     obs?: string,       
   }

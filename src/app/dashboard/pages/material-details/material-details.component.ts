@@ -24,6 +24,9 @@ export class MaterialDetailsComponent {
   materialForm: FormGroup;
   material:Material[] = [];
   tool:Tool[] = [];
+  totalB:number = 0; 
+  totalI:number = 0; 
+ 
 
   constructor(private formBuilder: FormBuilder, 
           private materialService: MaterialsService,
@@ -44,8 +47,10 @@ export class MaterialDetailsComponent {
   ngOnInit(): void {
  
     this.getListMaterials();
-   
+  
   }
+
+  
 
  
   getListMaterials(){
@@ -145,16 +150,27 @@ onMaterialSelectCode() {
             serial: this.materialForm.value.serial,
             observation: this.materialForm.value.observation,
             unity: selectedMaterial.unity, // Ajusta esta línea según la propiedad correspondiente en tu objeto de material
-            total: total,
-            total_iva: total * this.materialForm.value.iva,
-        };
+            total: Math.round(total),
+            total_iva: Math.round(total * this.materialForm.value.iva),
 
+        };
+        
         this.materials.push(newMaterial);
         
         
         this.materialsChange.emit(this.materials);
         this.materialForm.reset();
+        this.operations();
+        
     }
+  }
+
+  operations(){
+    
+    
+    this.totalB = this.materials.reduce((acc, detail) => acc + (detail.total), 0);
+    this.totalI = this.materials.reduce((acc, detail) => acc + (detail.total_iva), 0);
+    
   }
 
   removeMaterial(material: any) {
@@ -163,6 +179,7 @@ onMaterialSelectCode() {
       this.materials.splice(index, 1);
       this.materialsChange.emit(this.materials);
     }
+    this.operations();
   }
 
  

@@ -22,7 +22,7 @@ import { User } from 'src/app/dashboard/interfaces/usersInterface';
 })
 export class AddEditTransferComponent {
 
-  materials:Material [] = [];
+  materials:Material[] = [];
   id: string ;
   createDetailTransferDto: FormArray;
   mode: string = 'Agregar '; 

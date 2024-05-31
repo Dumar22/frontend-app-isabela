@@ -24,6 +24,7 @@ export class AddEditEntriesComponent {
   createDetailDto: FormArray;
   mode: string = 'Agregar '; 
   public provider: Provider[];
+  
 
 
  
@@ -53,6 +54,8 @@ export class AddEditEntriesComponent {
      this.mode = 'Editar ';
       this.getEntry(this.id);
     }
+
+    
   }
 
   getListProvider(){
@@ -62,6 +65,8 @@ export class AddEditEntriesComponent {
       this.provider.sort((a, b) => a.name.localeCompare(b.name));
     });
   }
+
+
 
   isValidField(field: string) {
     return this.validatorsService.isValidField(this.formEntry, field);

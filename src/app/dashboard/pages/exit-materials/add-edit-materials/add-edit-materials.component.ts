@@ -22,10 +22,12 @@ import { Material } from 'src/app/dashboard/interfaces/materialsInterface';
 export class AddMaterialsComponent {
   materials:any [] = [];
   detailsArray: FormArray;
+  type: string;
   id: string ;
   mode: string = 'Agregar '; 
   public collaborator: Collaborator[];
   public contract: Contract[];
+  public contractPost: Contract[];
 
   typeAssinment = [
     { name: 'Servicios adicionales'},
@@ -67,6 +69,7 @@ export class AddMaterialsComponent {
   ngOnInit(): void {
     this.getListCollaborator()
     this.getListContract()
+    this.getListContractPostSerice()
     
   }
   onMaterialsChange(materials: Material[]) {
@@ -85,7 +88,18 @@ export class AddMaterialsComponent {
     this.contractService.getWorkRegister()
     .subscribe((data:any) =>{      
       this.contract = data;      
+      this.contract.sort((a, b) => b.contractNumber - a.contractNumber);     
   });
+  }
+  getListContractPostSerice(){
+    this.contractService.getWorkRegisterPostService()
+    .subscribe((data:any) =>{      
+      this.contractPost = data; 
+      this.contractPost.sort((a, b) => b.contractNumber - a.contractNumber);      
+  });
+  }
+  onTypeChange(event: any) {
+    this.type = event.target.value;
   }
   
 

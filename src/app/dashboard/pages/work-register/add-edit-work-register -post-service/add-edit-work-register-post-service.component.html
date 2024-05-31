@@ -1,0 +1,64 @@
+
+<!-- Crea la estructura HTML del formulario -->
+<div class="container d-flex justify-content-center">
+
+
+    <div class="col-md-6">
+      <form [formGroup]="form" (ngSubmit)="addWorkRegister()">
+        <div class="justify-content-center text-center mb-4">
+  
+          <h2 >{{ operation }} Matrícula </h2>
+        </div>
+        <div class="form-group mb-2">
+          <label for="name">Nombre suscriptor</label>
+          <input type="text" id="name" class="form-control" formControlName="name">
+        </div>
+        <div class="form-group mb-2">
+          <label for="name">Contrato</label>
+          <input type="text" id="registration"  class="form-control" formControlName="contract">
+        </div>
+        <div class="form-group mb-2">
+          <label for="name">Orden de trabajo</label>
+          <input type="text" id="ot"  class="form-control" formControlName="ot">
+        </div>
+        <div class="form-group mb-2">
+          <label for="name">Solicitud</label>
+          <input type="text" id="request"  class="form-control" formControlName="request">
+        </div>
+        <div class="col-md-12">
+          <label class="form-label">Unidad</label>
+           <select class="form-select mb-2" aria-label="Default select example" formControlName="status" >
+             <option value="" selected >--Seleccione--</option>
+             <option *ngFor="let v of typeUnities" [value]="v.value" >{{ v.id }}</option>
+           </select> 
+         </div>
+        <div class="form-group mb-2">
+          <label for="name">Municipio</label>
+          <input type="text" id="municipality"  class="form-control" formControlName="municipality">
+        </div>
+        <div class="form-group mb-2">
+          <label for="name">Barrio</label>
+          <input type="text" id="neighborhood"  class="form-control" formControlName="neighborhood">
+        </div>
+        <div class="form-group mb-2">
+          <label for="name">Dirección</label>
+          <input type="text" id="addres" class="form-control" formControlName="addres">
+        </div>
+        <div class="form-group mb-2">
+          <label for="name">Fecha Asignación</label>
+          <input type="datetime-local" id="date" class="form-control" formControlName="date">
+        </div>
+        <div class="form-group mb-2">
+          <label for="name">Teléfono</label>
+          <input type="tel" id="phone" p class="form-control" formControlName="phone">
+        </div>
+        
+       
+        
+      
+  
+        <button type="submit" class="btn btn-primary ">{{ operation }} contrato</button>
+      </form>
+    </div>
+  </div>
+  

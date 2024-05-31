@@ -25,7 +25,7 @@
               <td>{{ material.code }}</td>
               <td>{{ material.unity }}</td>
               <td>{{ material.quantity }}</td>
-              <td>{{ material.price }}</td>
+              <td>{{ material.price | currency:'$' }}</td>
               <td>{{ material.serial }}</td>
               <td>{{ material.total | currency:'$'  }}</td>
               <td>{{ material.iva }}</td>

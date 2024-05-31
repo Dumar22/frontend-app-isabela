@@ -34,6 +34,7 @@ export interface Contract {
   contract: string;
   name:         string;
   ot:           string;
+  contractNumber?: number,
   request:       string;
   addres:       string;
   phone:        string;

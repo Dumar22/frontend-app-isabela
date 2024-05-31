@@ -4,11 +4,12 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Entries } from 'src/app/dashboard/interfaces/entriesInterfaces';
 import { EntriesService } from 'src/app/dashboard/services/entries.service';
+import { UiModulesModule } from 'src/app/dashboard/components/ui-modules/ui-modules.module';
 
 @Component({
   selector: 'app-list-innvoice',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, UiModulesModule],
   templateUrl: './list-entries.component.html',
   styleUrls: ['./list-entries.component.css']
 })
@@ -20,6 +21,13 @@ export class ListEntriesComponent {
   public factura : Entries;
   public entryTemp: Entries[] = [];
   public loading: boolean = true;
+
+  totalValue: number = 0;
+  limit = 20; // Establecer el límite de unidades para marcar en amarillo
+  page: number = 1;
+  count: number = 0;
+  tableSize: number = 10;
+  tableSizes: any = [3, 6, 9, 12];
 
   constructor(private entryService: EntriesService,
     private router: Router) { }
@@ -42,6 +50,17 @@ export class ListEntriesComponent {
       } );
      }
 
+
+   onTableDataChange(event: any) {
+    this.page = event;
+    this.getListEntries();
+  }
+  
+  onTableSizeChange(event: any): void {
+    this.tableSize = event.target.value;
+    this.page = 1;
+    this.getListEntries();
+  }
 
      //Buscar
  search (term: string ) {

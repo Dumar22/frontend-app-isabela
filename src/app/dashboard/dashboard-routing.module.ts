@@ -52,10 +52,12 @@ import { ExitForListComponent } from './pages/exit-materials/exit-for-list/exit-
 import { EntriFileComponent } from './pages/entries/entriFile/entriFile.component';
 
 
+
 export const routes: Routes = [
   { path: '', component: HomeComponent,
    children:[    
   
+ 
   { path: 'list-users', component: ListUsersComponent },
   { path: 'add-user', component: AddUserComponent },
   { path: 'edit-user/:id', component: EditUserComponent},

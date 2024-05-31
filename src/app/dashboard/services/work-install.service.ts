@@ -23,6 +23,10 @@ export class WorkRegisterService {
     return this.http.get<WorkRegister[]>(`${this.baseUrl}/contract`, this.createHeaders.createHeaders())
 
     }
+  getWorkRegisterPostService():Observable<WorkRegister[]> {
+    return this.http.get<WorkRegister[]>(`${this.baseUrl}/contract/post-service`, this.createHeaders.createHeaders())
+
+    }
 
    getWorkRegisterById(id:string):Observable<WorkRegister>{
      return this.http.get<WorkRegister>(`${this.baseUrl}/contract/${id}`, this.createHeaders.createHeaders())
@@ -30,6 +34,9 @@ export class WorkRegisterService {
 
    saveWorkRegister( contract: WorkRegister): Observable<WorkRegister>{
     return this.http.post<WorkRegister>(`${this.baseUrl}/contract`, contract,  this.createHeaders.createHeaders())
+   }
+   saveWorkRegisterPostService( contract: WorkRegister): Observable<WorkRegister>{
+    return this.http.post<WorkRegister>(`${this.baseUrl}/contract/post-service`, contract,  this.createHeaders.createHeaders())
    }
 
    updateWorkRegister(id:string, contract:WorkRegister): Observable<void>{
@@ -50,6 +57,18 @@ export class WorkRegisterService {
     formData.append('file', file, file.name);
     const headers = this.createHeaders.createHeaders();
     return this.http.post(`${this.baseUrl}/contract/upload-excel`, formData, {
+      headers: headers.headers,
+      reportProgress: true,
+      observe: 'events' // Agrega esta línea para especificar el tipo de observación
+    }).pipe(
+      map((event: HttpEvent<any>) => this.calculateUploadProgress(event))
+    );
+  }
+   loadWorkRegisterpostService(file: File): Observable<number> {
+    const formData = new FormData();
+    formData.append('file', file, file.name);
+    const headers = this.createHeaders.createHeaders();
+    return this.http.post(`${this.baseUrl}/contract/upload-excel-post-service`, formData, {
       headers: headers.headers,
       reportProgress: true,
       observe: 'events' // Agrega esta línea para especificar el tipo de observación

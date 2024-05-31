@@ -69,12 +69,24 @@
         <td>{{ material.unity }}</td>
         <td>{{ material.quantity }}</td>
         <td>{{ material.serial }}</td>
-        <td>{{ material.price }}</td>
-        <td>{{ material.total }}</td>
+        <td>{{ material.price | currency:'$'}}</td>
+        <td>{{ material.total | currency:'$'}}</td>
         <td>{{ material.iva }}</td>
-        <td>{{ material.total_iva }}</td>
+        <td>{{ material.total_iva | currency:'$'}}</td>
         <td>{{ material.obs }}</td>
         <td><button (click)="removeMaterial(material)" class="btn btn-danger">Eliminar</button></td>
+      </tr>
+      <tr>
+        <td colspan="5"></td>
+        <td><strong>Total:</strong></td>
+        <td><strong>{{ totalB | currency:'$' }}</strong></td> 
+        <td><strong>Total+iva:</strong></td>
+        <td><strong>{{ totalI | currency:'$' }}</strong></td><!-- Asegúrate de tener una función calcularTotal() en tu componente que sume los totales -->
+      </tr>
+      
+      <tr>
+        <td colspan="5"></td>
+         <!-- Asegúrate de tener una función calcularTotal() en tu componente que sume los totales -->
       </tr>
     </tbody>
   </table>

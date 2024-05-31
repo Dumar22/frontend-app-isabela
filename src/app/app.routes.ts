@@ -20,7 +20,6 @@ export const routes: Routes = [
     canActivate: [ isAuthenticatedChildGuard ],
     loadChildren: () =>
       import('./dashboard/dashboard-routing.module').then( module => module.DashboardRoutingModule )
-
   },
   {
     path:'**',

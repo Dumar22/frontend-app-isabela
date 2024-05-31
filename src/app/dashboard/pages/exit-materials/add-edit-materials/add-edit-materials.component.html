@@ -12,7 +12,7 @@
       
       <div class="col-md-4 mb-3">
         <label class="form-label">Tipo de asignación</label>
-        <select class="form-select" aria-label="Default select example" formControlName="type" >
+        <select class="form-select" aria-label="Default select example" formControlName="type" (change)="onTypeChange($event)" >
           <option selected>--Seleccione--</option>
           <option *ngFor="let type of typeAssinment">{{ type.name }}</option>
         </select>
@@ -33,13 +33,27 @@
         </select>
       </div>
 
-      <div class="col-md-4 mb-3">
-        <label class="form-label">Contrato</label>
-        <select class="form-select" aria-label="Default select example" formControlName="contractId">
-          <option selected>--Seleccione--</option>
-          <option *ngFor="let c of contract" [value]="c.id"> {{ c.contract }} - {{c.request }}</option>
-        </select>
-      </div>
+     
+    
+        <div class="col-md-4 mb-3" *ngIf="type === 'Servicios adicionales'">
+          <label class="form-label">Contrato Servicios adicionales</label>
+          <select class="form-select" aria-label="Default select example" formControlName="contractId">
+            <option selected>--Seleccione--</option>
+            <option *ngFor="let c of contractPost" [value]="c.id"> {{ c.contract }} - {{c.request }}</option>
+          </select>
+        </div>
+      
+      
+    
+        <div class="col-md-4 mb-3" *ngIf="type !== 'Servicios adicionales'">
+          <label class="form-label">Contrato</label>
+          <select class="form-select" aria-label="Default select example" formControlName="contractId">
+            <option selected>--Seleccione--</option>
+            <option *ngFor="let c of contract" [value]="c.id"> {{ c.contract }} - {{ c.request }}</option>
+          </select>
+        </div>
+     
+      
 
       <div class="col-md-12 mb-3">
         <label class="form-label">Observación: </label>

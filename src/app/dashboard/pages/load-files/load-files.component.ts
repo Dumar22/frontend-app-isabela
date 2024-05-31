@@ -134,6 +134,8 @@ export class LoadFilesComponent {
 
             }
           }, error: error => {
+            console.log(error);
+            
             clearTimeout(progressTimeoutm);
             this.loading = false;
             this.progress = 0; // Reinicializamos el progreso
@@ -216,6 +218,32 @@ export class LoadFilesComponent {
             },
             error: error => {
               clearTimeout(progressTimeoutma);
+              this.loading = false;
+              this.progress = 50; // Reinicializamos el progreso
+              this.handleError(error); // Handle errors
+            }
+          });
+          // console.log('mat',archivo);
+          break;
+
+        case 'matriculas-post-service':
+          this.progress = 0; // Reinicializamos el progreso
+          const progressTimeoutps = setTimeout(() => {
+            this.handleProgressAndSuccess(progressTimeout);
+          }, 3);
+  
+          this.loadRegsitartion.loadWorkRegisterpostService(archivo).subscribe({
+            next: progress => {
+              this.progress = progress;
+              if (progress === 100) {
+                this.showNotification('¡Éxito!', 'Archivo cargado exitosamente.', 'success');
+                clearTimeout(progressTimeoutps);
+                this.loading = false;
+                this.progress = 0; // Reinicializamos el progreso
+              }
+            },
+            error: error => {
+              clearTimeout(progressTimeoutps);
               this.loading = false;
               this.progress = 50; // Reinicializamos el progreso
               this.handleError(error); // Handle errors
