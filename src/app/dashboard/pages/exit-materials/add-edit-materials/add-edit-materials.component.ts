@@ -30,7 +30,7 @@ export class AddMaterialsComponent {
   public contractPost: Contract[];
 
   typeAssinment = [
-    { name: 'Servicios adicionales'},
+    //{ name: 'Servicios adicionales'},
     { name: 'Puesta en servicio'},
     { name: 'Instalación'},
     { name: 'Retail'},
