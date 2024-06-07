@@ -75,7 +75,8 @@
               "browserTarget": "AppIsabela:build:production"
             },
             "development": {
-              "browserTarget": "AppIsabela:build:development"
+              "browserTarget": "AppIsabela:build:development",
+              "proxyConfig": "src/proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
