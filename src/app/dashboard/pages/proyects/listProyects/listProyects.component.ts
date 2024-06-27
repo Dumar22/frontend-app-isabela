@@ -107,10 +107,17 @@ export class ListProyectsComponent {
     this.router.navigate(['dashboard/editproyect/',proyect.id]);
   }
 
-  addTool():void{
+  addProyect():void{
     this.router.navigate(['dashboard/addproyect']);
   }
 
+  proyection(proyect: Proyect){
+    this.router.navigate(['dashboard/addproyection/',proyect.id]);
+  }
+
+  proyectionDetail(proyect: Proyect){
+    this.router.navigate(['dashboard/proyection-detail/',proyect.id]);
+  }
 
 
 

@@ -1,0 +1,91 @@
+<div class="container">
+    <h3 class="text-center mb-5">Editar salida</h3>
+  
+    <form class="row" (ngSubmit)="addExit()" autocomplete="off" [formGroup]="formExit">
+      <div class="col-md-4 mb-3">
+        <label class="form-label">Fecha</label>
+        <input type="datetime-local" class="form-control" formControlName="date" />
+      </div>
+      
+      <div class="col-md-4 mb-3">
+        <label class="form-label">Tipo de asignación</label>
+        <select class="form-select" aria-label="Default select example" formControlName="type" >
+          <option selected>--Seleccione--</option>
+          <option *ngFor="let type of typeAssinment">{{ type.name }}</option>
+        </select>
+      </div>
+      <div class="col-md-4 mb-3">
+        <label class="form-label">Estado de asignación</label>
+        <select class="form-select" aria-label="Default select example" formControlName="state" >
+          <option selected>--Seleccione--</option>
+          <option *ngFor="let type of stateAssinment">{{ type.name }}</option>
+        </select>
+      </div>
+
+      <div class="col-md-4 mb-3">
+        <label class="form-label">Móvil</label>
+        <select class="form-select" aria-label="Default select example" formControlName="collaboratorId">
+          <option selected>--Seleccione--</option>
+          <option *ngFor="let collaborator of collaborator" [value]="collaborator.id">{{ collaborator.code }} - {{ collaborator.name}}</option>
+        </select>
+      </div>
+
+      <div class="col-md-4 mb-3">
+        <label class="form-label">Contrato</label>
+        <select class="form-select" aria-label="Default select example" formControlName="contractId">
+          <option selected>--Seleccione--</option>
+          <option *ngFor="let c of contract" [value]="c.id">{{ c.contract }} - {{c.request }}</option>
+        </select>
+      </div>
+
+      <hr />
+     <details-edit-exit
+      [newMaterials]="newMaterials"
+      
+    ></details-edit-exit>
+
+    <hr /> 
+      <table class="table table-bordered table-striped mt-4">
+        <thead class="bg-light">
+          <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">Código</th>
+            <th scope="col">Unidad</th>
+            <th scope="col">Cantidad Asignada</th>
+            <th scope="col">Devolución</th>
+            <th scope="col">Valor unitario</th>
+            <th scope="col">Serial</th>
+            <th scope="col">Total</th>
+          </tr>
+        </thead>
+        <tbody formArrayName="details">
+          <tr *ngFor="let detail of materials; let i = index" [formGroupName]="i">
+            <td>{{ detail.meter ? detail.meter.name : detail.material.name }}</td>
+            <td>{{ detail.meter ? detail.meter.code : detail.material.code }}</td>
+            <td>{{ detail.meter ? detail.meter.unity : detail.material.unity }}</td>
+            <!-- <td>{{ detail.meter ? 'Medidor' : 'Material' }}</td> -->
+            
+            <td>
+              <input type="number" formControlName="assignedQuantity" class="form-control">
+            </td>
+            <td>
+              <input type="number" formControlName="restore" class="form-control">
+            </td>
+            <!-- <td>{{ detail.value }}</td> -->
+            <td>{{ detail.meter ? detail.meter.price : detail.material.price }}</td>
+            <td>{{ detail.meter ? detail.meter.serial : detail.material.serial }}</td>
+            <td>{{ detail.total }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+    <hr />
+
+      
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary">Guardar Salida</button>
+      </div>
+  
+    </form>
+  
+  </div>

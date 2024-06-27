@@ -41,6 +41,7 @@ options = [
 
      this.formulario = this.fb.group({
       fullName: ['', [Validators.required, Validators.minLength(5), Validators.pattern(/^[a-zA-ZáéíóúñÁÉÍÓÚüÜ\s]+ [a-zA-ZáéíóúñÁÉÍÓÚüÜ\s]+$/)]],
+      document: ['', [Validators.required, Validators.minLength(5)]],
       user: ['', [Validators.required, Validators.minLength(5)]],
       password: ['', [Validators.required, Validators.minLength(5)]],
       rol: [[], Validators.required],     
@@ -80,6 +81,7 @@ options = [
       .subscribe((data:any ) => { 
           this.formulario.setValue({
             fullName: data.fullName,
+            document: data.document,
             user: data.user,
             rol: data.rol[0],  
             password:'',          
@@ -98,7 +100,8 @@ options = [
 
     const user: UserForm = {
       fullName: this.formulario.value.fullName,
-            user: this.formulario.value.user,
+           user: this.formulario.value.user,
+            document: this.formulario.value.document,
             rol: rolesArray,  
             password: this.formulario.value.password,
             warehouseIds: warehouseArray,

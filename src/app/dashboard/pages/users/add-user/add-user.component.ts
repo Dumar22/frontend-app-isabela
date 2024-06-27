@@ -30,6 +30,7 @@ export class  AddUserComponent  {
 
   public userForm: FormGroup = this.formBuilder.group({
     fullName: ['', [Validators.required, Validators.minLength(5)]],
+    document: ['', [Validators.required, Validators.minLength(5)]],
     user: ['', [Validators.required, Validators.minLength(5)]],
     password: ['', [Validators.required, Validators.minLength(5)]],
     rol: [[], Validators.required],
@@ -67,6 +68,7 @@ export class  AddUserComponent  {
 
     const user: UserForm = {
       fullName: this.userForm.value.fullName,
+      document: this.userForm.value.document,
             user: this.userForm.value.user,
             rol: rolesArray,
             password: this.userForm.value.password,

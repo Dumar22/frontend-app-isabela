@@ -65,10 +65,10 @@ export class SidenavComponent {
       texto: 'Salidas de almacén',
       ruta: 'list-exit-materials'
      },    
-     /* {
-      texto: 'Listas salida de almacén',
-      ruta: 'list-table-exit'
-     },   */  
+     {
+      texto: 'Salidas Serv. Adicionales',
+      ruta: 'list-exit-serv-aditionals'
+     },  
     {
       texto: 'Asignación de Pe al pe',
       ruta: 'list-assignment-pe-al-pe'
@@ -94,7 +94,7 @@ export class SidenavComponent {
       ruta: 'list-meters'
      },
      {
-      texto: 'Herramientas',
+      texto: 'Herramientas de almacén',
       ruta: 'list-tools'
      },
      {
@@ -124,6 +124,10 @@ export class SidenavComponent {
      {
       texto: 'Proyectos',
       ruta: 'list-proyect'
+     },
+     {
+      texto: 'Reporte Movimientos',
+      ruta: 'report'
      },
      {
       texto: 'Usuarios',

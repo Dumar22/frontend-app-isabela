@@ -4,6 +4,7 @@ export class User {
 constructor (
   public id: string,
   public fullName: string,
+  public document: string,
   public user: string,
   public isActive: boolean,
   public rol: string[],
@@ -14,6 +15,7 @@ constructor (
 export interface UserForm {
   id?: string,
   fullName: string,
+  document: string,
   user: string,
   password?:string,
   isActive?: boolean,

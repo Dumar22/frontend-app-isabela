@@ -12,7 +12,7 @@ import { interval } from 'rxjs';
   styleUrls: ['./navar.component.css']
 })
 export class NavarComponent implements AfterViewInit{
-  username: string;
+  username?: string ;
   currentTime: Date;
   elapsedTime: number;
   
@@ -25,7 +25,7 @@ export class NavarComponent implements AfterViewInit{
  
    getCurrentUser(){
     this.username = this.authService.currentUser().fullName
-    console.log(this.username);
+    
     
   }
 

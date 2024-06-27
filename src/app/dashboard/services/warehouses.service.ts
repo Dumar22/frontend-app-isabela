@@ -46,6 +46,8 @@ export class WarehousesService {
         .set('Authorization', `Bearer ${ token }`)
       }
     } 
+
+    
   }
 
 

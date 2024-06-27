@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
@@ -14,6 +14,9 @@ export class EntriesService {
 
 
   constructor(private http: HttpClient, private createHeaders: WarehousesService) { }
+  getToken(): string {
+    return localStorage.getItem('token');
+  }
 
    getEntries():Observable<Entries[]> {
     
@@ -63,6 +66,19 @@ export class EntriesService {
 
   searchEntry(term: string): Observable<Entries[]> {
     return this.http.get<Entries[]>(`${this.baseUrl}/entries/search/${term}`,this.createHeaders.createHeaders());
+  }
+
+  
+  reportExcelEntry(dates: { startDate: string; endDate: string }): Observable<ArrayBuffer> {
+    const url = `${this.baseUrl}/entries/report/excel`;
+    const token = this.getToken();
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    });
+
+    return this.http.post(url, dates, { headers, responseType: 'arraybuffer' });
   }
 
   

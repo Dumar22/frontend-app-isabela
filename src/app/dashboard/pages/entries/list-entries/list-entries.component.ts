@@ -5,11 +5,12 @@ import Swal from 'sweetalert2';
 import { Entries } from 'src/app/dashboard/interfaces/entriesInterfaces';
 import { EntriesService } from 'src/app/dashboard/services/entries.service';
 import { UiModulesModule } from 'src/app/dashboard/components/ui-modules/ui-modules.module';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-list-innvoice',
   standalone: true,
-  imports: [CommonModule, UiModulesModule],
+  imports: [CommonModule,ReactiveFormsModule, UiModulesModule],
   templateUrl: './list-entries.component.html',
   styleUrls: ['./list-entries.component.css']
 })
@@ -29,13 +30,21 @@ export class ListEntriesComponent {
   tableSize: number = 10;
   tableSizes: any = [3, 6, 9, 12];
 
+  
+  startDate: string;
+  endDate: string;
+  reportForm: FormGroup;
   constructor(private entryService: EntriesService,
+    private fb: FormBuilder,
     private router: Router) { }
 
     ngOnInit(): void{
 
       this.getListEntries();
-  
+      this.reportForm = this.fb.group({
+        startDate: ['', Validators.required],
+        endDate: ['', Validators.required],
+      });
      };
   
   
@@ -95,6 +104,8 @@ export class ListEntriesComponent {
      
     });
   }
+
+  
   
   detailsEntry(entry: Entries){      
   this.router.navigate(['dashboard/details-entries', entry.id]);

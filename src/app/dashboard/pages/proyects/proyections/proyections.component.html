@@ -1,0 +1,84 @@
+
+
+<div class="container">
+    <h3 class="text-center mb-5">Agregar Proyección</h3>
+
+
+    <table class="table">
+      <thead>
+        <tr  >          
+          <th scope="col">Fecha Inicio</th>
+          <th scope="col">Proyecto</th>
+          <th scope="col">municipality </th>
+          <th scope="col">address </th>
+          <th scope="col">install </th>
+          <th scope="col">install2 </th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        <tr >
+          <td>{{proyect.name}}</td>
+          <td>{{proyect.initialize | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
+          <td>{{proyect.municipality}}</td>
+          <td>{{proyect.address}}</td>
+          <td>{{proyect.install}}</td>
+          <td>{{proyect.install2}}</td>     
+          
+        </tr>
+      </tbody>
+    </table>
+    <table class="table">
+      <thead>
+        <tr  >          
+        
+          <th scope="col">type </th>
+          <th scope="col">house </th>
+          <th scope="col">apt </th>
+          <th scope="col">tower </th>
+          <th scope="col">floor </th>
+          <th scope="col">modifications </th>
+          
+         
+          
+        </tr>
+      </thead>
+      <tbody>
+        <tr >         
+          <td>{{proyect.type}}</td>
+          <td>{{proyect.house}}</td>
+          <td>{{proyect.apt}}</td>
+          <td>{{proyect.tower}}</td>
+          <td>{{proyect.floor}}</td>
+          <td>{{proyect.modifications}}</td>
+          <td>{{proyect.obs}}</td>
+         
+          
+          
+        </tr>
+      </tbody>
+    </table>
+  
+    <form class="row" (ngSubmit)="addProyection()" autocomplete="off" [formGroup]="formProyection">
+      
+      
+  
+      <details-proyection
+        [materials]="materials"
+        [houses]="houses"
+       [apartments]="apartments"
+        (materialsChange)="onMaterialsChange($event)"
+      ></details-proyection>
+  
+      <hr />
+  
+      <div class="col-12">
+        <button type="submit" class="btn btn-primary">Guardar Entrada</button>
+      </div>
+  
+    </form>
+  
+  </div>
+  
+  
+  

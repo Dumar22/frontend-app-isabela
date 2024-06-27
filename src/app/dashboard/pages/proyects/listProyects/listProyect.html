@@ -19,7 +19,7 @@
     
     <button type="button"
      class="btn btn-primary"
-      (click)="addTool()">Nuevo Proyecto</button>
+      (click)="addProyect()">Nuevo Proyecto</button>
   </div>
   <div class="row animated fadeIn fast"
   *ngIf="loading">
@@ -39,8 +39,8 @@
           <th scope="col">#</th>
           <th scope="col">Proyecto</th>
           <th scope="col">Fecah Inicio</th>
-          <th scope="col">Observaciones </th>
-          <th scope="col">Asiganar materiales </th>
+          <th scope="col">Detalles de proyección </th>
+          <th scope="col">Proyección</th>
           <th scope="col"> </th>
           <th scope="col"> </th>
          
@@ -58,11 +58,16 @@
           <th scope="row">{{i + 1}}</th>
           <td>{{item.name}}</td>
           <td>{{item.initialize | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
-          <td>{{item.obs}}</td>
           <td>  <button type="button"
             class="btn btn-secondary btn-sm btn-rounded text-primary"
-            (click)=" updateTool(item)">
-            Asignar
+            (click)=" proyectionDetail(item)">
+            Detalles...
+          </button>
+        </td>
+          <td>  <button type="button"
+            class="btn btn-secondary btn-sm btn-rounded text-primary"
+            (click)=" proyection(item)">
+            Proyección
           </button>
         </td>
           <td>  <button type="button"

@@ -1,20 +1,23 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Invoice } from 'src/app/dashboard/interfaces/invoiceInterface';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
-import Swal, { SweetAlertIcon } from 'sweetalert2';
-import { Exit } from 'src/app/dashboard/interfaces/exitInterfaces';
-import { ExitService } from 'src/app/dashboard/services/exit.service';
 import { UiModulesModule } from 'src/app/dashboard/components/ui-modules/ui-modules.module';
+import { Exit } from 'src/app/dashboard/interfaces/exitInterfaces';
+import { ExitServiceAditionalsService } from 'src/app/dashboard/services/exit-service-aditionals.service';
+import { ExitService } from 'src/app/dashboard/services/exit.service';
+import Swal, { SweetAlertIcon } from 'sweetalert2';
 
 @Component({
-  selector: 'app-listexit-materials',
+  selector: 'app-list-exit-services-aditionals',
   standalone: true,
-  imports: [CommonModule, UiModulesModule],
-  templateUrl: './listexit-materials.component.html',
-  styleUrls: ['./listexit-materials.component.css']
+  imports: [
+    CommonModule,UiModulesModule
+  ],
+  templateUrl: './list-exit-services-aditionals.component.html',
+  styleUrls: ['./list-exit-services-aditionals.component.css'],
+ 
 })
-export class ListexitMaterialsComponent {
+export class ListExitServicesAditionalsComponent {
 
   route: [] = [];
 
@@ -30,7 +33,7 @@ export class ListexitMaterialsComponent {
   tableSizes: any = [3, 6, 9, 12];
  
 
-  constructor(private exitService: ExitService,
+  constructor(private exitService: ExitServiceAditionalsService,
     
     private router: Router) { }
 
@@ -131,7 +134,7 @@ export class ListexitMaterialsComponent {
   }
   
   detailExit(entry: Exit){          
-    this.router.navigate(['dashboard/details-exit', entry.id]);
+    this.router.navigate(['dashboard/details-exit-serv-aditionals', entry.id]);
     }
 
 
@@ -166,7 +169,7 @@ export class ListexitMaterialsComponent {
   }
 
 addExit(){
-    this.router.navigate(['dashboard/add-exit-material']);
+    this.router.navigate(['dashboard/exit-serv-aditionals']);
   }
 addExitList(){
     this.router.navigate(['dashboard/add-list']);
@@ -204,5 +207,4 @@ showNotification(title: string, message: string, icon: string) {
     text: message,
   });
 }
-
-}
+ }

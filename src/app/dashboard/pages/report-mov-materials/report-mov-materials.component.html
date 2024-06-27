@@ -1,0 +1,17 @@
+<!-- report.component.html -->
+  <div class="mt-4 mb-4">
+    <h2>Descargar Informe de Entrada</h2>
+    <form [formGroup]="reportForm" (ngSubmit)="downloadExcel()">
+      <div class="form-group">
+        <label for="startDate">Fecha de Inicio:</label>
+        <input type="date" id="startDate" formControlName="startDate" class="form-control" required />
+      </div>
+  
+      <div class="form-group">
+        <label for="endDate">Fecha de Fin:</label>
+        <input type="date" id="endDate" formControlName="endDate" class="form-control" required />
+      </div>
+  
+      <button type="submit" class="btn btn-primary ml-2">Descargar Reporte en Excel</button>
+    </form>
+  </div>   

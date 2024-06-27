@@ -1,40 +1,43 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormArray, Validators, FormBuilder, ReactiveFormsModule, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { UiModulesModule } from 'src/app/dashboard/components/ui-modules/ui-modules.module';
-import { Collaborator } from 'src/app/dashboard/interfaces/collaboratorInterface';
-import { Contract, Exit } from 'src/app/dashboard/interfaces/exitInterfaces';
-import { CollaboratorService } from 'src/app/dashboard/services/collaborator.service';
-import { ExitService } from 'src/app/dashboard/services/exit.service';
-import { WorkRegisterService } from 'src/app/dashboard/services/work-install.service';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { FormArray, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AddDetailsExitComponent } from '../add-details/add-details.component';
 import Swal, { SweetAlertIcon } from 'sweetalert2';
-import { DetailsEditExitComponent } from '../details-edit-exit/details-edit-exit.component';
-
+import { Collaborator } from 'src/app/dashboard/interfaces/collaboratorInterface';
+import { Contract } from 'src/app/dashboard/interfaces/exitInterfaces';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CollaboratorService } from 'src/app/dashboard/services/collaborator.service';
+import { WorkRegisterService } from 'src/app/dashboard/services/work-install.service';
+import { ExitService } from 'src/app/dashboard/services/exit.service';
+import { ValidatorsService } from 'src/app/dashboard/services/Validate.service';
+import { Material } from 'src/app/dashboard/interfaces/materialsInterface';
+import { ExitServiceAditionalsService } from 'src/app/dashboard/services/exit-service-aditionals.service';
 
 @Component({
-  selector: 'app-edit-exit',
+  selector: 'app-exit-materials-service-aditionals',
   standalone: true,
   imports: [
-    CommonModule, ReactiveFormsModule, UiModulesModule, DetailsEditExitComponent
+    CommonModule,ReactiveFormsModule, AddDetailsExitComponent,
   ],
-  templateUrl: './edit-exit.component.html',
-  styleUrls: ['./edit-exit.component.css'],
+  templateUrl: './exit-materials-service-aditionals.component.html',
+  styleUrls: ['./exit-materials-service-aditionals.component.css'],
+  
 })
-export class EditExitComponent { 
+export class ExitMaterialsServiceAditionalsComponent { 
 
   materials:any [] = [];
   detailsArray: FormArray;
-  newMaterials: any[] = [];
+  type: string;
   id: string ;
   mode: string = 'Agregar '; 
   public collaborator: Collaborator[];
   public contract: Contract[];
+  public contractPost: Contract[];
 
   typeAssinment = [
+    //{ name: 'Servicios adicionales'},
+    
     { name: 'Servicios adicionales'},
-    { name: 'Puesta en servicio'},
-    { name: 'Instalación'},
     { name: 'Retail'},
   ]
   stateAssinment = [
@@ -51,7 +54,7 @@ export class EditExitComponent {
     observation: [''],
     collaboratorId: ['', Validators.required],
     contractId: ['', Validators.required],
-    details: this.formBuilder.array([]),
+    details: this.formBuilder.array([ ]),
   });
 
  
@@ -61,7 +64,8 @@ export class EditExitComponent {
     private router:Router,
     private collaboratorService: CollaboratorService,
     private contractService: WorkRegisterService,
-    private exitService:ExitService,) { 
+    private exitService:ExitServiceAditionalsService,
+    private validatorsService:ValidatorsService) { 
          // Inicializa detailsArray como un FormArray
     this.detailsArray = this.formExit.get('details') as FormArray;
         this.id = this.aRouter.snapshot.paramMap.get('id')?? '';
@@ -69,105 +73,61 @@ export class EditExitComponent {
 
   ngOnInit(): void {
     this.getListCollaborator()
-    this.getListContract()
-    if (this.id != '') {
-  
-      this.getExit(this.id);
-    }    
+   
+    this.getListContractPostSerice()
+    
   }
-
+  onMaterialsChange(materials: Material[]) {
+    this.materials = materials;
+  }
 
   getListCollaborator(){
     this.collaboratorService.getCollaborators()
     .subscribe((data:any) =>{      
       this.collaborator = data.filter(collaborator => collaborator.status === true);
-      this.collaborator.sort((a, b) => a.name.localeCompare(b.name));
+      this.collaborator.sort((a, b) => a.name.localeCompare(b.name));  
       
   });
   }
-  getListContract(){
-    this.contractService.getWorkRegister()
+  
+  getListContractPostSerice(){
+    this.contractService.getWorkRegisterPostService()
     .subscribe((data:any) =>{      
-      this.contract = data;      
+      this.contractPost = data; 
+      this.contractPost.sort((a, b) => b.contractNumber - a.contractNumber);      
   });
   }
-
-  loadMaterialsDetails(exit: any) {
-    this.materials = exit.details; // Asegúrate de que exit.details tenga los datos necesarios
-    this.materials.forEach((detail: any, index: number) => {
-      this.addMaterialDetail(detail, index);
-    });
+  onTypeChange(event: any) {
+    this.type = event.target.value;
   }
   
-  getExit(id: string){
-    if (id) {
-      // Carga los datos de la salida existente
-      this.exitService.getExitById(this.id).subscribe((exit: any) => {
-        // Llena el formulario con los datos existentes
 
-        // const formattedDate = moment(exit.date).format('YYYY-MM-DD');
-        const formattedDate = new Date(exit.date).toISOString().slice(0, 16); // Formatear la fecha y hora
-
-        this.formExit.patchValue({
-          date: formattedDate,
-          type: exit.type,
-          state: exit.state,
-          observation: exit.observation,
-          collaboratorId: exit.collaborator.id,
-          contractId: exit.contract.id,
-          
-        });
-        this.loadMaterialsDetails(exit);
-      });
-  }}
-
-  addMaterialDetail(detail: any, index: number) {
-    const materialDetail = this.formBuilder.group({
-      materialId: [detail.materialId],
-      assignedQuantity: [detail.assignedQuantity],
-      restore: [detail.restore],
-      
-    });
-  
-    // Escucha los cambios en el control 'restore'
-    materialDetail.get('restore').valueChanges.subscribe((newValue) => {
-      // Actualiza el valor en el modelo
-      this.materials[index].restore = newValue;
-    });
-    materialDetail.get('assignedQuantity').valueChanges.subscribe((newValue) => {
-      // Actualiza el valor en el modelo
-      this.materials[index].assignedQuantity = newValue;
-    });
-   
-    this.detailsArray.push(materialDetail);
+  isValidField(field: string) {
+    return this.validatorsService.isValidField(this.formExit, field);
   }
-
 
     
   addExit() {
+   const newExit: any = {
 
-    
-   const newExit:Exit = {
-     date: this.formExit.value.date,
-     type: this.formExit.value.type,
-     state: this.formExit.value.state,
-     observation: this.formExit.value.observation,
-     collaboratorId: this.formExit.value.collaboratorId,
-     contractId: this.formExit.value.contractId,
-     details: this.materials,
-     newDetails:this.newMaterials
-
+date: this.formExit.value.date,
+type: this.formExit.value.type,
+state: this.formExit.value.state,
+observation: this.formExit.value.observation,
+collaboratorId: this.formExit.value.collaboratorId,
+contractId: this.formExit.value.contractId,
+details: this.materials
    }
-   
-   this.exitService.updateExit(this.id, newExit)
+  //  console.log(newExit)
+   this.exitService.saveExit(newExit)
       .subscribe({
         next: () => {
           this.showNotification(
             '¡Éxito!',
-            'Salida editada con éxito:',
+            'Asignación Agregada con éxito:',
             'success'
           );
-          this.router.navigate(['dashboard/list-exit-materials']);
+          this.router.navigate(['dashboard/list-exit-serv-aditionals']);
         },
         error: (error) => {
           this.handleError(error);
@@ -177,10 +137,9 @@ export class EditExitComponent {
 
 
       handleError(error: any) {    
-       console.log(error);
+        // console.log(error);
     
         if (error.status === 0) {
-          
             // Error de conexión
             this.showNotification('¡Error!', 'Hubo un error de conexión con el servidor.', 'error');
         } else if (error.status === 500) {

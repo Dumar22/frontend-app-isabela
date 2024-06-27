@@ -50,6 +50,13 @@ import { AddEditAsiignmentPeAlPeComponent } from './pages/assignment-pe-al-pe/ad
 import { DetailsAssignmentPeAlPeComponent } from './pages/assignment-pe-al-pe/details-assignment-pe-al-pe/details-assignment-pe-al-pe.component';
 import { ExitForListComponent } from './pages/exit-materials/exit-for-list/exit-for-list.component';
 import { EntriFileComponent } from './pages/entries/entriFile/entriFile.component';
+import { ProyectionsComponent } from './pages/proyects/proyections/proyections.component';
+import { ProyectionDetailComponent } from './pages/proyects/proyection-detail/proyection-detail.component';
+import { ExitMaterialsServiceAditionalsComponent } from './pages/exit-materials/exit-materials-service-aditionals/exit-materials-service-aditionals.component';
+import { ListExitServicesAditionalsComponent } from './pages/exit-materials/list-exit-services-aditionals/list-exit-services-aditionals.component';
+import { DetailsExitServicesAditionalsComponent } from './pages/exit-materials/details-exit-services-aditionals/details-exit-services-aditionals.component';
+import { EditExitServicesAditionalsComponent } from './pages/exit-materials/edit-exit-services-aditionals/edit-exit-services-aditionals.component';
+import { ReportMovMaterialsComponent } from './pages/report-mov-materials/report-mov-materials.component';
 
 
 
@@ -74,7 +81,9 @@ export const routes: Routes = [
   {path: 'addwarehuse',component:AddEditWarehouseComponent},
   {path: 'editwarehuse/:id',component:AddEditWarehouseComponent},  
   {path: 'list-proyect',component:ListProyectsComponent},
-  {path: 'editproyect/:id',component:AddEditProyectComponent},  
+  {path: 'editproyect/:id',component:AddEditProyectComponent}, 
+  {path: 'addproyection/:id',component:ProyectionsComponent},  
+  {path: 'proyection-detail/:id',component:ProyectionDetailComponent},   
   {path: 'addproyect',component:AddEditProyectComponent},
   {path: 'list-providers',component:ListProvidersComponent},
   {path: 'list-vehicles',component:ListVehiclesComponent},
@@ -124,6 +133,11 @@ export const routes: Routes = [
   {path: 'details-entries-tools/:id',component:DetailsEnriesToolsComponent},
   {path: 'add-entry-tools',component:AddEditEntriesToolsComponent},
   {path: 'edit-entry-tools/:id',component:AddEditEntriesToolsComponent},
+  {path: 'exit-serv-aditionals',component:ExitMaterialsServiceAditionalsComponent},
+  {path: 'list-exit-serv-aditionals',component:ListExitServicesAditionalsComponent},
+  {path: 'details-exit-serv-aditionals/:id',component:DetailsExitServicesAditionalsComponent},
+  {path: 'edit-exit-serv-aditionals/:id',component:EditExitServicesAditionalsComponent},
+  { path: 'report',component:ReportMovMaterialsComponent},
  
 ]
 }

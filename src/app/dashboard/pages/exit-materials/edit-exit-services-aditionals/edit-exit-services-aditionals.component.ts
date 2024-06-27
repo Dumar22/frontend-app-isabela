@@ -1,27 +1,26 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormArray, Validators, FormBuilder, ReactiveFormsModule, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { FormArray, FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UiModulesModule } from 'src/app/dashboard/components/ui-modules/ui-modules.module';
-import { Collaborator } from 'src/app/dashboard/interfaces/collaboratorInterface';
-import { Contract, Exit } from 'src/app/dashboard/interfaces/exitInterfaces';
-import { CollaboratorService } from 'src/app/dashboard/services/collaborator.service';
-import { ExitService } from 'src/app/dashboard/services/exit.service';
-import { WorkRegisterService } from 'src/app/dashboard/services/work-install.service';
-import Swal, { SweetAlertIcon } from 'sweetalert2';
 import { DetailsEditExitComponent } from '../details-edit-exit/details-edit-exit.component';
-
+import Swal, { SweetAlertIcon } from 'sweetalert2';
+import { Collaborator, Contract, Exit } from 'src/app/dashboard/interfaces/exitInterfaces';
+import { ExitServiceAditionalsService } from 'src/app/dashboard/services/exit-service-aditionals.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { CollaboratorService } from 'src/app/dashboard/services/collaborator.service';
+import { WorkRegisterService } from 'src/app/dashboard/services/work-install.service';
 
 @Component({
-  selector: 'app-edit-exit',
+  selector: 'app-edit-exit-services-aditionals',
   standalone: true,
   imports: [
     CommonModule, ReactiveFormsModule, UiModulesModule, DetailsEditExitComponent
   ],
-  templateUrl: './edit-exit.component.html',
-  styleUrls: ['./edit-exit.component.css'],
+  templateUrl: './edit-exit-services-aditionals.component.html',
+  styleUrls: ['./edit-exit-services-aditionals.component.css'],
+ 
 })
-export class EditExitComponent { 
+export class EditExitServicesAditionalsComponent { 
 
   materials:any [] = [];
   detailsArray: FormArray;
@@ -32,9 +31,7 @@ export class EditExitComponent {
   public contract: Contract[];
 
   typeAssinment = [
-    { name: 'Servicios adicionales'},
-    { name: 'Puesta en servicio'},
-    { name: 'Instalación'},
+    { name: 'Servicios adicionales'},    
     { name: 'Retail'},
   ]
   stateAssinment = [
@@ -61,7 +58,7 @@ export class EditExitComponent {
     private router:Router,
     private collaboratorService: CollaboratorService,
     private contractService: WorkRegisterService,
-    private exitService:ExitService,) { 
+    private exitService:ExitServiceAditionalsService,) { 
          // Inicializa detailsArray como un FormArray
     this.detailsArray = this.formExit.get('details') as FormArray;
         this.id = this.aRouter.snapshot.paramMap.get('id')?? '';
@@ -86,7 +83,7 @@ export class EditExitComponent {
   });
   }
   getListContract(){
-    this.contractService.getWorkRegister()
+    this.contractService.getWorkRegisterPostService()
     .subscribe((data:any) =>{      
       this.contract = data;      
   });
@@ -167,7 +164,7 @@ export class EditExitComponent {
             'Salida editada con éxito:',
             'success'
           );
-          this.router.navigate(['dashboard/list-exit-materials']);
+          this.router.navigate(['dashboard/list-exit-serv-aditionals']);
         },
         error: (error) => {
           this.handleError(error);
