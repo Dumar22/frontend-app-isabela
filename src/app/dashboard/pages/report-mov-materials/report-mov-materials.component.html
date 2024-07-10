@@ -1,17 +1,19 @@
 <!-- report.component.html -->
-  <div class="mt-4 mb-4">
-    <h2>Descargar Informe de Entrada</h2>
+  <div class="m-4 mt-4 mb-4">
+    <h2 class="ml-4">Descargar Informe de movimientos</h2>
     <form [formGroup]="reportForm" (ngSubmit)="downloadExcel()">
-      <div class="form-group">
+      <div class="form-group ml-4 col-4">
         <label for="startDate">Fecha de Inicio:</label>
         <input type="date" id="startDate" formControlName="startDate" class="form-control" required />
       </div>
   
-      <div class="form-group">
+      <div class="form-group ml-4 col-4">
         <label for="endDate">Fecha de Fin:</label>
         <input type="date" id="endDate" formControlName="endDate" class="form-control" required />
       </div>
   
-      <button type="submit" class="btn btn-primary ml-2">Descargar Reporte en Excel</button>
+      <div class="col-4">
+        <button type="submit" class="btn btn-primary ml-4">Descargar Reporte en Excel</button>
+      </div>
     </form>
   </div>   
