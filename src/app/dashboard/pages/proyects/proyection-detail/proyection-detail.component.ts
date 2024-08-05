@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProyectionsService } from 'src/app/dashboard/services/proyections.service';
+import { ProyectsService } from 'src/app/dashboard/services/proyects.service';
 
 @Component({
   selector: 'app-proyection-detail',
@@ -11,7 +12,7 @@ import { ProyectionsService } from 'src/app/dashboard/services/proyections.servi
   ],
   templateUrl: './proyection-detail.component.html',
   styleUrls: ['./proyection-detail.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+ 
 })
 export class ProyectionDetailComponent {
   proyect: any;
@@ -22,20 +23,21 @@ export class ProyectionDetailComponent {
 constructor(
   private route: ActivatedRoute,
   private router: Router,
+  private proyectService: ProyectsService,
   private proyectionService: ProyectionsService
 
 ){}
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    this.proyectionService.searchProyection(id)
-    .subscribe((data:any) =>{      
-      console.log(data);
-      this.proyect = data[0].proyect
-      this.details = data[0].details
+    const id:string = this.route.snapshot.paramMap.get('id');
+    this.proyectService.getProyectById(id)
+    .subscribe((data: any) =>{     
       
       
-    });
+      this.proyect = data;
+
+     
+    } );
       
     }
 

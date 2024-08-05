@@ -50,8 +50,6 @@ export class MaterialDetailsComponent {
   
   }
 
-  
-
  
   getListMaterials(){
     this.materialService.getMaterials()

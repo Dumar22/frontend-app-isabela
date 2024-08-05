@@ -15,7 +15,7 @@ import Swal, { SweetAlertIcon } from 'sweetalert2';
   selector: 'app-add-edit-proyect',
   standalone: true,
   imports: [
-    CommonModule, UiModulesModule, ReactiveFormsModule
+    CommonModule, UiModulesModule, ReactiveFormsModule,
   ],
   template: `
  <div class="container d-flex justify-content-center">
@@ -107,7 +107,7 @@ import Swal, { SweetAlertIcon } from 'sweetalert2';
   
   `,
   styleUrls: ['./addEditProyect.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  
 })
 export class AddEditProyectComponent {
 

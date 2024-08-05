@@ -64,12 +64,12 @@ export class DetailsProyectionComponent {
  
   getListMaterials(){
     this.materialService.getMaterials()
-    .subscribe((data:Material[]) =>{                
+    .subscribe((data:Material[]) =>{        
       this.material = data;
       this.material.sort((a, b) => a.name.localeCompare(b.name));
       
       this.toolService.getTools()
-      .subscribe((data:Tool[]) =>{                
+      .subscribe((data:Tool[]) =>{          
         this.tool = data;
         this.tool.sort((a, b) => a.name.localeCompare(b.name));
 

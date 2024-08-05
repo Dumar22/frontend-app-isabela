@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { WarehousesService } from './warehouses.service';
-import { Exit } from '../interfaces/exitInterfaces';
+import { Exit, PaginationResponse } from '../interfaces/exitInterfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -17,9 +17,19 @@ export class ExitService {
     private http: HttpClient, 
     private createHeaders: WarehousesService) { }
 
-   getExit():Observable<Exit[]> {
+   getExit(limit: number, offset: number):Observable<PaginationResponse<Exit>> {
     
-   return  this.http.get<Exit[]>(`${this.baseUrl}/exit-materials`, this.createHeaders.createHeaders())
+    let params = new HttpParams()
+      .set('limit', limit.toString())
+      .set('offset', offset.toString());
+
+      const token = localStorage.getItem('token');
+      let headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Authorization', `Bearer ${ token }`);
+    
+    
+   return  this.http.get<PaginationResponse<Exit>>(`${this.baseUrl}/exit-materials`, { params, headers});
 
    }
 

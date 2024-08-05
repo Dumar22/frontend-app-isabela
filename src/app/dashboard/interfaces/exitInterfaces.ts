@@ -11,6 +11,7 @@ export interface Exit {
   state:     string;
   details?:      any[];
   newDetails?:      any[];
+  data?:          any[];
  
 }
 
@@ -60,4 +61,12 @@ export interface Warehouse {
   name:      string;
   createdAt: Date;
   updatedAt: Date;
+}
+
+
+export interface PaginationResponse<T> {
+  data: T[];
+  totalItems: number;
+  limit: number;
+  offset: number;
 }

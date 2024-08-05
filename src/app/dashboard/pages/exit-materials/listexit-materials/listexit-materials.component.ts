@@ -23,11 +23,14 @@ export class ListexitMaterialsComponent {
   public exitTemp: Exit[] = [];
   public loading: boolean = true;
 
-  limit = 20; // Establecer el límite de unidades para marcar en amarillo
+   // Establecer el límite de unidades para marcar en amarillo
   page: number = 1;
   count: number = 0;
+  totalItems: number = 0;
   tableSize: number = 10;
   tableSizes: any = [3, 6, 9, 12];
+  limit: number = 10;
+  offset: number = 0;
  
 
   constructor(private exitService: ExitService,
@@ -44,18 +47,20 @@ export class ListexitMaterialsComponent {
      getListExits(){
   
       this.loading = true;
-      this.exitService.getExit()
-      .subscribe((data:Exit[]) =>{     
-        this.exit = data;   
-        this.exit.sort((a, b) => b.ExitNumber - a.ExitNumber);          
-        this.exitTemp = data;
-        this.exit.forEach(salida => {
-          salida.details.forEach(detail => {
-            if (detail.meter) {
-              
-            }
-          });
-        });
+      this.exitService.getExit(this.limit, this.offset)
+      .subscribe(response =>{  
+                   
+        this.exit = response.data;         
+         //this.exit.sort((a, b) => b.ExitNumber - a.ExitNumber);          
+         this.exitTemp = response.data;
+         this.totalItems = response.totalItems;
+         this.exit.forEach(salida => {
+           salida.details.forEach(detail => {
+             if (detail.meter) {
+               
+             }
+           });
+         });
         this.loading = false;
       } );
      }
@@ -70,18 +75,42 @@ export class ListexitMaterialsComponent {
     }
   
 
-    onTableDataChange(event: any) {
-      this.page = event;
+    setPage(pageIndex: number): void {
+      this.offset = pageIndex * this.limit;
       this.getListExits();
     }
-    
-    onTableSizeChange(event: any): void {
-      this.tableSize = event.target.value;
-      this.page = 1;
-      this.getListExits();
+  
+    previousPage(): void {
+      if (this.offset > 0) {
+        this.offset -= this.limit;
+        this.getListExits();
+      }
     }
-
-     
+  
+    nextPage(): void {
+      if (this.offset + this.limit < this.totalItems) {
+        this.offset += this.limit;
+        this.getListExits();
+      }
+    }
+  
+    totalPagesArray(): number[] {
+      const totalPages = Math.ceil(this.totalItems / this.limit);
+      const currentPage = this.offset / this.limit;
+      let pages = [];
+  
+      if (totalPages <= 10) {
+        pages = Array.from({ length: totalPages }, (_, i) => i);
+      } else {
+        pages = [0, 1, 2, 3, 4]; // First 5 pages
+        if (currentPage > 4 && currentPage < totalPages - 5) {
+          pages.push(currentPage - 1, currentPage, currentPage + 1);
+        }
+        pages.push(totalPages - 3, totalPages - 2, totalPages - 1); // Last 3 pages
+        pages = Array.from(new Set(pages)).sort((a, b) => a - b);
+      }
+      return pages;
+    }     
 
     // Buscar
     search(term: string) {
